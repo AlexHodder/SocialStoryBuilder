@@ -7,6 +7,15 @@
     android:background="@color/adultColor">
 
     <Button
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout_button"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/create_new_story"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -37,5 +46,17 @@
         app:layout_constraintStart_toStartOf="@+id/read_story"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.7" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/help_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:visibility="visible"
+        app:backgroundTint="#00C2FF"
+        app:layout_constraintBottom_toBottomOf="@+id/create_new_story"
+        app:layout_constraintStart_toEndOf="@+id/create_new_story"
+        app:layout_constraintTop_toTopOf="@+id/create_new_story"
+        app:srcCompat="@android:drawable/ic_menu_help" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

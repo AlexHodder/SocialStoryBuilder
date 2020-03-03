@@ -90,7 +90,7 @@
         android:id="@+id/create_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/action_register_adult"
+        android:text="@string/action_register_short"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -99,7 +99,7 @@
         android:id="@+id/text_create_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/create_account"
+        android:text="@string/create_account_adult"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold"
