@@ -2,22 +2,36 @@
     <string name="app_name">Social Story Builder</string>
     <string name="title_home">Home</string>
     <string name="back_button">Back</string>
-
+    <string name="logout_button">Logout</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_adult_login">Sign in</string>
     <string name="title_activity_adult_login_long">Sign In to Your Account</string>
     <string name="no_account">Don\'t Have An Account?</string>
     <string name="prompt_email">Email</string>
+    <string name="prompt_child_login">Select your name</string>
+
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_new_username">Enter Username</string>
     <string name="prompt_new_password">Choose Password</string>
     <string name="prompt_password_confirmation">Confirm Password</string>
+    <string name="prompt_new_child_name">Enter Name</string>
+    <string name="prompt_avatar_select">Select Avatar</string>
+
+    <string name="read">Read</string>
+
+
     <string name="create_account">Create Account</string>
+    <string name="create_account_adult">Create Adult Account</string>
+    <string name="create_account_child">Create Child Account</string>
+
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register_adult">Create New Adult</string>
+    <string name="action_register_child">Create New Child</string>
+    <string name="action_register_short">Create</string>
+
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
