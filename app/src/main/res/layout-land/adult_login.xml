@@ -117,11 +117,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.socialstorybuilder.TextViewOutline
+    <TextView
         android:id="@+id/register_prompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_account"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"

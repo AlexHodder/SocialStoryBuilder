@@ -5,11 +5,13 @@
 
 
     <Button
+        style="?android:attr/buttonBarButtonStyle"
         android:id="@+id/child_button"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@color/childColor"
+        android:onClick="toChildLogin"
         android:shadowRadius="3"
         android:text="Child"
         android:textColor="#FFFFFF"
@@ -17,10 +19,12 @@
 
     <Button
         android:id="@+id/adult_button"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@color/adultColor"
+        android:onClick="toAdultLogin"
         android:text="Adult"
         android:textColor="#FFFFFF"
         android:textSize="36sp" />
