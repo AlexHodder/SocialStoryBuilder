@@ -63,6 +63,7 @@
         android:layout_height="200dp"
         android:choiceMode="singleChoice"
         android:layout_weight="0"
+        android:listSelector="@color/adultColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
@@ -71,4 +72,5 @@
         app:layout_constraintVertical_bias="0.4">
 
     </ListView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

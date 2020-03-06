@@ -3,7 +3,10 @@ package com.example.socialstorybuilder;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +23,11 @@ import java.util.Set;
 
 public class ChildLoginActivity extends AppCompatActivity {
 
+    // Defining string adapter to handle ListView data
+    ArrayAdapter<String> adapter;
+    ListView childLayout;
+    int selectedItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,22 +37,28 @@ public class ChildLoginActivity extends AppCompatActivity {
         List<String> childList = new ArrayList<>();
         if (fetch != null) childList = new ArrayList<>(fetch);
 
-//        childList.add("Jeff");
-//        childList.add("John");
-//        childList.add("Ruth");
+        // Test list
+        childList.add("Jeff");
+        childList.add("John");
+        childList.add("Ruth");
 
-        ListView childLayout = findViewById(R.id.child_accounts);
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, childList);
 
-        for (int i = 1; i <= childList.size(); i++){
-            TextView childName = new TextView(this);
-            childName.setText(childList.get(i));
-            childLayout.addView(childName);
-        }
+        childLayout = findViewById(R.id.child_accounts);
+        childLayout.setAdapter(adapter);
+        childLayout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedItem = position;
+            }
+        });
     }
 
 
     public void signIn(){
-
+        if (childLayout.isItemChecked(selectedItem)){
+            //TODO write sign in code - passing which user
+        };
     }
 
     public void toChildInitial(View view){
