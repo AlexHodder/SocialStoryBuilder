@@ -27,6 +27,7 @@ public class ChildLoginActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ListView childLayout;
     int selectedItem;
+    List<String> childList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class ChildLoginActivity extends AppCompatActivity {
         setContentView(R.layout.child_login);
         SharedPreferences childPreferences = getSharedPreferences("child_users",MODE_PRIVATE);
         Set<String> fetch = childPreferences.getStringSet("child", null);
-        List<String> childList = new ArrayList<>();
+        childList = new ArrayList<>();
         if (fetch != null) childList = new ArrayList<>(fetch);
 
         // Test list
@@ -55,19 +56,25 @@ public class ChildLoginActivity extends AppCompatActivity {
     }
 
 
-    public void signIn(){
-        if (childLayout.isItemChecked(selectedItem)){
-            //TODO write sign in code - passing which user
-        };
-    }
-
     public void toChildInitial(View view){
-        Intent intent = new Intent(this, ChildInitialActivity.class);
-        startActivity(intent);
+        if (childLayout.isItemChecked(selectedItem)) {
+            Intent intent = new Intent(this, ChildInitialActivity.class);
+            intent.putExtra("user", childList.get(selectedItem));
+            startActivity(intent);
+        }
+        else{
+            Log.d("Selected Item","Selected item is: " + selectedItem);
+        }
     }
 
     public void toChildCreate(View view){
         Intent intent = new Intent(this, ChildCreateActivity.class);
         startActivity(intent);
     }
+
+    public void back(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }
