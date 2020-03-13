@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popup_error_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/child_name_error"
+        app:layout_constraintBottom_toTopOf="@+id/closePopUp"
+        app:layout_constraintEnd_toEndOf="@+id/closePopUp"
+        app:layout_constraintStart_toStartOf="@+id/closePopUp" />
+
+    <Button
+        android:id="@+id/closePopUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/popupClose"
+        tools:layout_editor_absoluteX="335dp"
+        tools:layout_editor_absoluteY="193dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

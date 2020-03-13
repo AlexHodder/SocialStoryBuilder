@@ -20,7 +20,8 @@
     <string name="prompt_avatar_select">Select Avatar</string>
 
     <string name="read">Read</string>
-
+    <string name="child_name_error">Child name is not unique</string>
+    <string name="popupClose">Close</string>
 
     <string name="create_account">Create Account</string>
     <string name="create_account_adult">Create Adult Account</string>
