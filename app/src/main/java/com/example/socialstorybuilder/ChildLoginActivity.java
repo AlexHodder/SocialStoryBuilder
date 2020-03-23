@@ -38,11 +38,6 @@ public class ChildLoginActivity extends AppCompatActivity {
         childList = getChildUsers();
         System.out.println(childList);
 
-        // Test list
-        childList.add("Jeff");
-        childList.add("John");
-        childList.add("Ruth");
-
         adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, childList);
 
         childLayout = findViewById(R.id.child_accounts);

@@ -21,7 +21,7 @@
 
     <string name="read">Read</string>
     <string name="child_name_error">Child name is not unique</string>
-    <string name="popupClose">Close</string>
+    <string name="popup_close">Close</string>
 
     <string name="create_account">Create Account</string>
     <string name="create_account_adult">Create Adult Account</string>
@@ -42,4 +42,6 @@
     <string name="new_story">Create New Story</string>
     <string name="read_story">Read Existing Story</string>
     <string name="edit_story">Edit Existing Story</string>
+
+    <string name="image_not_chosen">No Avatar Selected</string>
 </resources>

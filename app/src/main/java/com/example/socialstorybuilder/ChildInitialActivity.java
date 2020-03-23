@@ -1,6 +1,11 @@
 package com.example.socialstorybuilder;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,8 +26,22 @@ public class ChildInitialActivity extends AppCompatActivity {
         welcomeMessage.setText("Hi, " + user);
 
         ImageView avatar = findViewById(R.id.avatar);
+
         //TODO - set up preferences for individual users (find default resource for no avatar)
-//        int avatarResource = getSharedPreferences(user, MODE_PRIVATE).getInt("avatar", R.drawable.)
-//        avatar.setImageResource(avatarResource);
+        SharedPreferences prefs = getSharedPreferences(user + "Prefs", Context.MODE_PRIVATE);
+        String avatarFile = prefs.getString("avatar", "android.resource://SocialStoryBuilder/drawable/default_avatar.png");
+        System.out.println(avatarFile);
+        if (avatarFile != getString(R.string.image_not_chosen)) {
+            System.out.println("WOW reached the first if" + ", name: " + user);
+            Uri path = Uri.parse(avatarFile);
+            avatar.setImageURI(path);
+        }
+        else{
+            System.out.println("WOW reached the else" + ", name: " + user);
+            avatar.setImageResource(R.drawable.default_avatar);
+        }
+
+
+
     }
 }

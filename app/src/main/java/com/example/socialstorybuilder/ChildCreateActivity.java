@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,15 +19,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ChildCreateActivity extends AppCompatActivity {
@@ -36,7 +39,8 @@ public class ChildCreateActivity extends AppCompatActivity {
     private ImageView avatar;
     private EditText nameInput;
     private ArrayList<String> childList;
-    private PopupWindow errorWindow;
+
+    PopupWindow errorWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,30 +89,61 @@ public class ChildCreateActivity extends AppCompatActivity {
 
         if (childList.contains(name) || name.trim().isEmpty()){
             System.out.println("Name EMPTY/DUPL.");
-            LayoutInflater layoutInflater =((LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
-            View errorView = layoutInflater.inflate(R.layout.popup_error, null);
-            ConstraintLayout errorConstraint = findViewById(R.id.popup_error_layout);
-            Button closePopup = findViewById(R.id.closePopUp);
-            errorWindow = new PopupWindow(errorView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            errorWindow.showAtLocation(errorConstraint, Gravity.CENTER, 0,0);
+
+            errorWindow = new PopupWindow(this);
+
+            LinearLayout errorLayout = new LinearLayout(this);
+            errorLayout.setOrientation(LinearLayout.VERTICAL);
+
+            TextView textPopup = new TextView(this);
+            textPopup.setText(R.string.child_name_error);
+            textPopup.setTextColor(Color.WHITE);
+
+            Button closePopup = new Button(this);
+            closePopup.setText(R.string.popup_close);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
+
+            errorLayout.addView(textPopup, params);
+            errorLayout.addView(closePopup, params);
+
+            errorWindow.setContentView(errorLayout);
+
+            errorWindow.showAtLocation(view, Gravity.CENTER, 0,0);
             closePopup.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
                     errorWindow.dismiss();
                 }
             });
-
         }
+
         else{
             String childPreferencesFileName = name + "Prefs";
-            SharedPreferences prefs = getSharedPreferences(childPreferencesFileName, Context.MODE_PRIVATE);
+            SharedPreferences prefs = getSharedPreferences(childPreferencesFileName, MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("avatar", childAvatarImage.toString());
+            if (childAvatarImage != null) editor.putString("avatar", childAvatarImage.toString());
+            else editor.putString("avatar", getString(R.string.image_not_chosen));
             editor.putString("name", name);
             editor.apply();
+
+            SharedPreferences childPreferences = getSharedPreferences("child_users", MODE_PRIVATE);
+            SharedPreferences.Editor childListEditor = childPreferences.edit();
+            childList.add(name);
+            childListEditor.putStringSet("child" , new HashSet<String>(childList));
+            childListEditor.apply();
+
+            switchToChildInitial(view);
         }
+
 
     }
 
+    public void switchToChildInitial(View view) {
+        Intent intent = new Intent(this, ChildInitialActivity.class);
+        intent.putExtra("user", nameInput.getText().toString());
+        startActivity(intent);
+    }
 }
 
