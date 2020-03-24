@@ -35,8 +35,8 @@ public class ChildLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.child_login);
 
-        childList = getChildUsers();
-        System.out.println(childList);
+        childList = ActivityHelper.getChildUsers(getApplicationContext());
+        System.out.println("Child list: " + childList);
 
         adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, childList);
 
@@ -70,15 +70,6 @@ public class ChildLoginActivity extends AppCompatActivity {
     public void back(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    public ArrayList<String> getChildUsers(){
-        ArrayList<String> childList;
-        SharedPreferences childPreferences = getSharedPreferences("child_users",MODE_PRIVATE);
-        Set<String> fetch = childPreferences.getStringSet("child", null);
-        childList = new ArrayList<>();
-        if (fetch != null) childList = new ArrayList<>(fetch);
-        return childList;
     }
 
 }
