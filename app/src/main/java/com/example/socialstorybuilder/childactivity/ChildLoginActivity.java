@@ -1,25 +1,20 @@
-package com.example.socialstorybuilder;
+package com.example.socialstorybuilder.childactivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import com.example.socialstorybuilder.ActivityHelper;
+import com.example.socialstorybuilder.MainActivity;
+import com.example.socialstorybuilder.R;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class ChildLoginActivity extends AppCompatActivity {
 

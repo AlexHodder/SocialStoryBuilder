@@ -22,6 +22,11 @@
     <string name="read">Read</string>
     <string name="child_name_error">Child name is not unique</string>
     <string name="popup_close">Close</string>
+    <string name="adult_name_error">Adult username is not unique</string>
+    <string name="password_error">Passwords don\'t match</string>
+
+    <string name="story_create_help">CREATE NEW STORY takes you to the story creation page. Here you can find tips for creating a social story.</string>
+
 
     <string name="create_account">Create Account</string>
     <string name="create_account_adult">Create Adult Account</string>
@@ -44,4 +49,5 @@
     <string name="edit_story">Edit Existing Story</string>
 
     <string name="image_not_chosen">No Avatar Selected</string>
+    <string name="title_activity_login">Sign in</string>
 </resources>

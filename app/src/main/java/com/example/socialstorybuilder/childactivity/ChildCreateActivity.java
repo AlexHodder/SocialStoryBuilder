@@ -1,12 +1,9 @@
-package com.example.socialstorybuilder;
+package com.example.socialstorybuilder.childactivity;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
@@ -14,11 +11,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,14 +23,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.socialstorybuilder.DatabaseNameHelper.*;
+import com.example.socialstorybuilder.database.DatabaseHelper;
+import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
+import com.example.socialstorybuilder.R;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class ChildCreateActivity extends AppCompatActivity {
 
@@ -43,9 +37,8 @@ public class ChildCreateActivity extends AppCompatActivity {
 
     private ImageView avatar;
     private EditText nameInput;
-    private ArrayList<String> childList;
 
-    PopupWindow errorWindow;
+    private PopupWindow errorWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +46,6 @@ public class ChildCreateActivity extends AppCompatActivity {
         setContentView(R.layout.child_create);
         avatar = findViewById(R.id.imageView);
         nameInput = findViewById(R.id.child_name_input);
-        childList = ActivityHelper.getChildUsers(getApplicationContext());
     }
 
 
@@ -84,60 +76,10 @@ public class ChildCreateActivity extends AppCompatActivity {
         System.out.println("CREATE CHILD CALLED");
         String name = nameInput.getText().toString();
 
-        /*
-        if (childList.contains(name) || name.trim().isEmpty()) {
-            System.out.println("Name EMPTY/DUPL.");
-
-            errorWindow = new PopupWindow(this);
-
-            LinearLayout errorLayout = new LinearLayout(this);
-            errorLayout.setOrientation(LinearLayout.VERTICAL);
-
-            TextView textPopup = new TextView(this);
-            textPopup.setText(R.string.child_name_error);
-            textPopup.setTextColor(Color.WHITE);
-
-            Button closePopup = new Button(this);
-            closePopup.setText(R.string.popup_close);
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
-            params.gravity = Gravity.CENTER;
-
-            errorLayout.addView(textPopup, params);
-            errorLayout.addView(closePopup, params);
-
-            errorWindow.setContentView(errorLayout);
-
-            errorWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-            closePopup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    errorWindow.dismiss();
-                }
-            });
-        } else {
-            // SharedPreferences solution
-
-            String childPreferencesFileName = name + "Prefs";
-            SharedPreferences prefs = getSharedPreferences(childPreferencesFileName, MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            if (childAvatarImage != null) editor.putString("avatar", childAvatarImage.toString());
-            else editor.putString("avatar", getString(R.string.image_not_chosen));
-            editor.putString("name", name);
-            editor.apply();
-
-            SharedPreferences childPreferences = getSharedPreferences("child_users", MODE_PRIVATE);
-            SharedPreferences.Editor childListEditor = childPreferences.edit();
-            childList.add(name);
-            childListEditor.putStringSet("child", new HashSet<String>(childList));
-            childListEditor.apply();
-
-
-
-            switchToChildInitial(view);
+        if(TextUtils.isEmpty(name)) {
+            nameInput.setError("Name can't be empty");
+            return;
         }
-
-         */
 
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -152,8 +94,10 @@ public class ChildCreateActivity extends AppCompatActivity {
 
         long rowID = db.insert(ChildUserEntry.TABLE_NAME, null, values);
 
+        System.out.println(rowID);
+
         if (rowID == -1){
-            System.out.println("Name EMPTY/DUPL.");
+            System.out.println("Name DUPL.");
 
             errorWindow = new PopupWindow(this);
 

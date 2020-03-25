@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.socialstorybuilder.database.DatabaseHelper;
+import com.example.socialstorybuilder.database.DatabaseNameHelper;
+
 import java.util.ArrayList;
 
 public class ActivityHelper {
@@ -13,16 +16,6 @@ public class ActivityHelper {
     }
 
     public static ArrayList<String> getChildUsers(Context context) {
-        /*
-        ArrayList<String> childList;
-        SharedPreferences childPreferences = getSharedPreferences("child_users", MODE_PRIVATE);
-        Set<String> fetch = childPreferences.getStringSet("child", null);
-        childList = new ArrayList<>();
-        if (fetch != null) childList = new ArrayList<>(fetch);
-        return childList;
-
-         */
-
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 

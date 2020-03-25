@@ -5,6 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="childColor">#497A89</color>
     <color name="adultColor">#894949</color>
+    <color name="helpColor">#00FFFF</color>
 
 
 </resources>

@@ -6,10 +6,25 @@
     android:layout_height="match_parent"
     android:background="@color/adultColor">
 
+    <TextView
+        android:id="@+id/welcome_adult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/create_new_story"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        tools:text="@string/welcome" />
+
     <Button
         android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="switchToHomeScreen"
         android:text="@string/logout_button"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,13 +62,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.7" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:onClick="helpPopup"
         android:visibility="visible"
-        app:backgroundTint="#00C2FF"
         app:layout_constraintBottom_toBottomOf="@+id/create_new_story"
         app:layout_constraintStart_toEndOf="@+id/create_new_story"
         app:layout_constraintTop_toTopOf="@+id/create_new_story"

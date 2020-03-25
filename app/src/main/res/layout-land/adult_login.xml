@@ -8,7 +8,7 @@
     android:background="@color/adultColor"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context=".ui.login.AdultLoginActivity">
+    tools:context=".adultactivity.AdultLoginActivity">
 
     <Button
         android:id="@+id/back_button2"
@@ -41,10 +41,8 @@
         android:id="@+id/password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:background="@android:drawable/edit_text"
         android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
@@ -60,21 +58,22 @@
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
-        android:enabled="false"
         android:text="@string/action_sign_in_short"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/register_prompt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        android:onClick="signIn"
+        />
 
     <Button
         android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:enabled="false"
+        android:onClick="switchToAdultCreate"
         android:text="@string/action_register_adult"
         android:textColor="@android:color/black"
         android:textSize="18sp"

@@ -1,4 +1,4 @@
-package com.example.socialstorybuilder;
+package com.example.socialstorybuilder.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

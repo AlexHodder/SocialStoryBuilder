@@ -1,11 +1,13 @@
-package com.example.socialstorybuilder;
+package com.example.socialstorybuilder.childactivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.example.socialstorybuilder.DatabaseNameHelper.*;
+
+import com.example.socialstorybuilder.database.DatabaseHelper;
+import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
+import com.example.socialstorybuilder.R;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -17,7 +19,6 @@ public class ChildInitialActivity extends AppCompatActivity {
 
     private String user;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +29,6 @@ public class ChildInitialActivity extends AppCompatActivity {
         welcomeMessage.setText("Hi, " + user);
 
         ImageView avatar = findViewById(R.id.avatar);
-
-        /* SharedPreferences method
-        SharedPreferences prefs = getSharedPreferences(user + "Prefs", Context.MODE_PRIVATE);
-        String avatarFile = prefs.getString("avatar", "android.resource://SocialStoryBuilder/drawable/default_avatar.png");
-        System.out.println(avatarFile);
-
-         */
-
-        // Database method
 
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -61,8 +53,6 @@ public class ChildInitialActivity extends AppCompatActivity {
         else{
             avatar.setImageResource(R.drawable.default_avatar);
         }
-
-
 
     }
 }
