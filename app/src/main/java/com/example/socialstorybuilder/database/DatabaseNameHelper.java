@@ -15,14 +15,12 @@ public class DatabaseNameHelper {
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_AUTHOR = "author";
         public static final String COLUMN_DATE = "date";
-        public static final String COLUMN_USER_ID = "userID";
     }
 
     public static final class ChildUserEntry implements BaseColumns {
         public static final String TABLE_NAME = "child_users";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_AVATAR = "avatar_uri";
-
     }
 
     public static final class AdultUserEntry implements BaseColumns {
@@ -49,9 +47,14 @@ public class DatabaseNameHelper {
         public static final String TABLE_NAME = "images";
         public static final String COLUMN_URI = "uri";
         public static final String COLUMN_PAGE_ID = "page_ID";
-
-
     }
+
+    public static final class UserStoryEntry implements BaseColumns {
+        public static final String TABLE_NAME = "user_stories";
+        public static final String COLUMN_USER_ID = "user_ID";
+        public static final String COLUMN_STORY_ID = "story_ID";
+    }
+
 
 
 

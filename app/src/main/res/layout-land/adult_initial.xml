@@ -13,11 +13,11 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/create_new_story"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_bias="0.1"
         tools:text="@string/welcome" />
 
     <Button
@@ -34,38 +34,31 @@
         android:id="@+id/create_new_story"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="switchToConfigureStoryNew"
         android:text="@string/new_story"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/read_story"
         app:layout_constraintStart_toStartOf="@+id/read_story"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome_adult"
+        app:layout_constraintVertical_bias="0.25" />
 
     <Button
         android:id="@+id/read_story"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/read_story"
-        app:layout_constraintBottom_toTopOf="@+id/edit_story"
+        android:onClick="switchToReadEditStory"
+        android:text="@string/read_edit_story"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_new_story" />
-
-    <Button
-        android:id="@+id/edit_story"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_story"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/read_story"
-        app:layout_constraintStart_toStartOf="@+id/read_story"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintTop_toBottomOf="@+id/create_new_story"
+        app:layout_constraintVertical_bias="0.25" />
 
     <ImageButton
         android:id="@+id/help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#3C3F41"
         android:clickable="true"
         android:onClick="helpPopup"
         android:visibility="visible"

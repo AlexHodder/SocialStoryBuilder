@@ -8,9 +8,9 @@
     <string name="title_activity_adult_login">Sign in</string>
     <string name="title_activity_adult_login_long">Sign In to Your Account</string>
     <string name="no_account">Don\'t Have An Account?</string>
+
     <string name="prompt_email">Email</string>
     <string name="prompt_child_login">Select your name</string>
-
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_new_username">Enter Username</string>
@@ -18,8 +18,21 @@
     <string name="prompt_password_confirmation">Confirm Password</string>
     <string name="prompt_new_child_name">Enter Name</string>
     <string name="prompt_avatar_select">Select Avatar</string>
+    <string name="prompt_story_name">Story Name</string>
+    <string name="prompt_background_colour_select">Background Colour</string>
+
 
     <string name="read">Read</string>
+    <string name="edit">Edit</string>
+    <string name="page">Page</string>
+    <string name="sample_sentences">Sample Sentences</string>
+    <string name="new_image">Add Image</string>
+    <string name="remove_image">Remove Image</string>
+    <string name="new_sound">Add Sound</string>
+    <string name="remove_sound">Remove Sound</string>
+
+
+
     <string name="child_name_error">Child name is not unique</string>
     <string name="popup_close">Close</string>
     <string name="adult_name_error">Adult username is not unique</string>
@@ -47,6 +60,21 @@
     <string name="new_story">Create New Story</string>
     <string name="read_story">Read Existing Story</string>
     <string name="edit_story">Edit Existing Story</string>
+    <string name="read_edit_story">Read/Edit Existing Story</string>
+
+    <string name="story_select">Select Story</string>
+    <string name="story_create_and_edit">Configure Story</string>
+
+    <string name="new_page">New</string>
+    <string name="edit_page">Edit</string>
+    <string name="remove_page">Remove</string>
+    <string name="new_user">Add User</string>
+    <string name="remove_user">Remove User</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="preview">Preview</string>
+    <string name="cancel">Cancel</string>
+
 
     <string name="image_not_chosen">No Avatar Selected</string>
     <string name="title_activity_login">Sign in</string>

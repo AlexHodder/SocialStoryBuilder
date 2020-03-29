@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/adultColor">
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/cancel_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/text_select_story"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/page"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <EditText
+        android:id="@+id/page_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:drawable/edit_text"
+        android:inputType="textLongMessage|textAutoCorrect"
+        app:layout_constraintBottom_toTopOf="@+id/image_layout"
+        app:layout_constraintEnd_toEndOf="@+id/text_select_story"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_select_story" />
+
+    <Button
+        android:id="@+id/new_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="selectImage"
+        android:text="@string/new_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/page_text"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/new_sound_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/new_sound"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/delete_sound_button"
+        app:layout_constraintStart_toStartOf="@+id/delete_sound_button"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/delete_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_image"
+        app:layout_constraintStart_toEndOf="@+id/page_text"
+        app:layout_constraintTop_toBottomOf="@+id/new_image_button" />
+
+    <Button
+        android:id="@+id/delete_sound_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_sound"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/new_sound_button" />
+
+    <Button
+        android:id="@+id/sample_sentence_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_sentences"
+        app:layout_constraintStart_toEndOf="@+id/page_text"
+        app:layout_constraintTop_toTopOf="@+id/page_text" />
+
+    <LinearLayout
+        android:id="@+id/image_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:drawable/editbox_background"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/cancel_button"
+        app:layout_constraintEnd_toEndOf="@+id/text_select_story"
+        app:layout_constraintStart_toStartOf="@+id/page_text"
+        app:layout_constraintTop_toTopOf="@+id/new_image_button"></LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.33"
+        app:layout_constraintStart_toEndOf="@+id/delete_image_button"
+        app:layout_constraintTop_toTopOf="@+id/new_image_button"
+        app:srcCompat="@android:drawable/ic_lock_silent_mode_off" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

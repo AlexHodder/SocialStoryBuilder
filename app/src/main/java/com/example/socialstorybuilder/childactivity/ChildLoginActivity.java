@@ -20,6 +20,7 @@ public class ChildLoginActivity extends AppCompatActivity {
 
     // Defining string adapter to handle ListView data
     ArrayAdapter<String> adapter;
+
     ListView childLayout;
     int selectedItem;
 

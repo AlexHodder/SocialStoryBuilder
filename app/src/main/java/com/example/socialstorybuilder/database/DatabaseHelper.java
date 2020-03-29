@@ -22,9 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 StoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 StoryEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 StoryEntry.COLUMN_AUTHOR + " TEXT NOT NULL, " +
-                StoryEntry.COLUMN_DATE + " TEXT NOT NULL, " +
-                StoryEntry.COLUMN_USER_ID + " INTEGER, " +
-                " FOREIGN KEY ("+StoryEntry.COLUMN_USER_ID+") REFERENCES "+ChildUserEntry.TABLE_NAME+
+                StoryEntry.COLUMN_DATE + " TEXT NOT NULL " +
                 ")";
 
         final String SQL_CREATE_PAGES_TABLE = "CREATE TABLE " +
@@ -35,7 +33,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 PageEntry.COLUMN_TEXT + " TEXT, " +
                 " FOREIGN KEY ("+PageEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+
                 ")";
-
 
         final String SQL_CREATE_ANSWER_PAGES_TABLE = "CREATE TABLE " +
                 AnswerPageEntry.TABLE_NAME + " (" +
@@ -69,13 +66,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 AdultUserEntry.COLUMN_PASSWORD + " TEXT NOT NULL " +
                 ")";
 
+        final String SQL_CREATE_USER_STORY_TABLE = "CREATE TABLE " +
+                UserStoryEntry.TABLE_NAME + " (" +
+                UserStoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                UserStoryEntry.COLUMN_USER_ID + " INTEGER NOT NULL, " +
+                UserStoryEntry.COLUMN_STORY_ID + " INTEGER NOT NULL, " +
+                " FOREIGN KEY ("+UserStoryEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+" ,"+
+                " FOREIGN KEY ("+UserStoryEntry.COLUMN_USER_ID+") REFERENCES "+ChildUserEntry.TABLE_NAME+
+                ")";
+
         db.execSQL(SQL_CREATE_STORY_TABLE);
         db.execSQL(SQL_CREATE_PAGES_TABLE);
         db.execSQL(SQL_CREATE_ANSWER_PAGES_TABLE);
         db.execSQL(SQL_CREATE_IMAGES_TABLE);
         db.execSQL(SQL_CREATE_CHILD_USERS_TABLE);
         db.execSQL(SQL_CREATE_ADULT_USERS_TABLE);
-
+        db.execSQL(SQL_CREATE_USER_STORY_TABLE);
 
     }
 

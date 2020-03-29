@@ -14,7 +14,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,23 +22,37 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".storyedit.PageEditor"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".storyedit.ReadEditSelect"
+            android:screenOrientation="landscape"
+            ></activity>
+
+        <activity
             android:name=".childactivity.ChildLoginActivity"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="landscape"  />
         <activity
             android:name=".childactivity.ChildInitialActivity"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".childactivity.ChildCreateActivity"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="landscape"  />
         <activity
             android:name=".adultactivity.AdultCreateActivity"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="landscape"  />
         <activity
             android:name=".adultactivity.AdultInitialActivity"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".adultactivity.AdultLoginActivity"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".storyedit.ConfigureStory"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

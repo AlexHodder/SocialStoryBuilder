@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/adultColor">
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="switchToAdultInitial"
+        android:text="@string/cancel"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/preview_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/preview"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/remove_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_user"
+        app:layout_constraintBottom_toBottomOf="@+id/user_list"
+        app:layout_constraintStart_toEndOf="@+id/user_list" />
+
+    <Button
+        android:id="@+id/new_user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/new_user"
+        app:layout_constraintEnd_toEndOf="@+id/remove_user"
+        app:layout_constraintStart_toEndOf="@+id/user_list"
+        app:layout_constraintTop_toBottomOf="@+id/page_list" />
+
+    <Button
+        android:id="@+id/delete_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/page_list" />
+
+    <Button
+        android:id="@+id/edit_page"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_page"
+        app:layout_constraintBottom_toTopOf="@+id/delete_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/delete_page"
+        app:layout_constraintTop_toBottomOf="@+id/new_page" />
+
+    <Button
+        android:id="@+id/new_page"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="newPage"
+        android:text="@string/new_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/delete_page"
+        app:layout_constraintTop_toTopOf="@+id/page_list" />
+
+    <EditText
+        android:id="@+id/story_name_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:background="@android:drawable/edit_text"
+        android:hint="@string/prompt_story_name"
+        android:inputType="textShortMessage"
+        android:selectAllOnFocus="true"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_create_story"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/bg_colour_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prompt_background_colour_select"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/story_name_input"
+        app:layout_constraintStart_toStartOf="@+id/story_name_input"
+        app:layout_constraintTop_toBottomOf="@+id/story_name_input" />
+
+    <ListView
+        android:id="@+id/page_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0"
+        android:choiceMode="singleChoice"
+        android:listSelector="@color/adultColor"
+        app:layout_constraintBottom_toTopOf="@id/user_list"
+        app:layout_constraintEnd_toStartOf="@+id/delete_page"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/text_create_story"
+        app:layout_constraintTop_toBottomOf="@+id/text_create_story"
+        app:layout_constraintVertical_bias="0.0"></ListView>
+
+    <ListView
+        android:id="@+id/user_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0"
+        android:choiceMode="singleChoice"
+        android:listSelector="@color/adultColor"
+        app:layout_constraintBottom_toTopOf="@+id/preview_button"
+        app:layout_constraintEnd_toEndOf="@+id/text_create_story"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/text_create_story"
+        app:layout_constraintTop_toBottomOf="@+id/page_list"
+        app:layout_constraintVertical_bias="0.0">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/text_create_story"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/story_create_and_edit"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

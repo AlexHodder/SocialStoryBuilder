@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.socialstorybuilder.ActivityHelper;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 import com.example.socialstorybuilder.R;
@@ -32,7 +33,6 @@ import java.io.IOException;
 
 public class ChildCreateActivity extends AppCompatActivity {
 
-    public static final int GALLERY_REQUEST_CODE = 123;
     private Uri childAvatarImage;
 
     private ImageView avatar;
@@ -48,11 +48,10 @@ public class ChildCreateActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.child_name_input);
     }
 
-
     public void selectImage(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+        startActivityForResult(intent, ActivityHelper.GALLERY_REQUEST_CODE);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class ChildCreateActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
             switch (requestCode) {
-                case GALLERY_REQUEST_CODE:
+                case ActivityHelper.GALLERY_REQUEST_CODE:
                     childAvatarImage = data.getData();
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), childAvatarImage);

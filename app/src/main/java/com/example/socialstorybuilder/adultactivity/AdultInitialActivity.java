@@ -11,10 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialstorybuilder.MainActivity;
 import com.example.socialstorybuilder.R;
+import com.example.socialstorybuilder.storyedit.ConfigureStory;
+import com.example.socialstorybuilder.storyedit.ReadEditSelect;
 
 public class AdultInitialActivity extends AppCompatActivity {
 
@@ -30,7 +33,8 @@ public class AdultInitialActivity extends AppCompatActivity {
         user = intent.getStringExtra("user");
 
         TextView welcomeMessage = findViewById(R.id.welcome_adult);
-        welcomeMessage.setText(getString(R.string.welcome) + ", " + user);
+        String welcome = getString(R.string.welcome) + ", " + user;
+        welcomeMessage.setText(welcome);
 
         popupWindow = new PopupWindow(this);
         LinearLayout layout = new LinearLayout(this);
@@ -61,12 +65,34 @@ public class AdultInitialActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     public void helpPopup(View view){
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 
     public void switchToHomeScreen(View view){
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void switchToConfigureStoryNew(View view){
+        Intent intent = new Intent(this, ConfigureStory.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
+    public void switchToReadEditStory(View view){
+        Intent intent = new Intent(this, ReadEditSelect.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
