@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,36 +24,38 @@
         </activity>
         <activity
             android:name=".storyedit.PageEditor"
-            android:screenOrientation="landscape"
-            />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".storyedit.ReadEditSelect"
-            android:screenOrientation="landscape"
-            ></activity>
-
+            android:screenOrientation="landscape" />
         <activity
             android:name=".childactivity.ChildLoginActivity"
-            android:screenOrientation="landscape"  />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".childactivity.ChildInitialActivity"
-            android:screenOrientation="landscape"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".childactivity.ChildCreateActivity"
-            android:screenOrientation="landscape"  />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".adultactivity.AdultCreateActivity"
-            android:screenOrientation="landscape"  />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".adultactivity.AdultInitialActivity"
-            android:screenOrientation="landscape"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".adultactivity.AdultLoginActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".storyedit.ConfigureStory"
+            android:launchMode="singleTop"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".storyedit.StoryReader"
+            android:screenOrientation="landscape" />
+
     </application>
 
 </manifest>

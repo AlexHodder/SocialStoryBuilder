@@ -1,10 +1,9 @@
 package com.example.socialstorybuilder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.View;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +11,7 @@ import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ActivityHelper extends AppCompatActivity {
 
@@ -57,6 +57,28 @@ public class ActivityHelper extends AppCompatActivity {
         cursor.close();
 
         return storyList;
+    }
+
+    public static HashMap<String, String> getStoryMap(Context context, String user){
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {DatabaseNameHelper.StoryEntry._ID, DatabaseNameHelper.StoryEntry.COLUMN_TITLE};
+        String selection = DatabaseNameHelper.StoryEntry.COLUMN_AUTHOR + " = ?";
+        String[] selectionArgs = {user};
+
+        Cursor cursor = db.query(DatabaseNameHelper.StoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, DatabaseNameHelper.StoryEntry.COLUMN_TITLE + " ASC");
+
+        HashMap<String, String> map = new HashMap<>();
+        while(cursor.moveToNext()) {
+            String storyTitle = cursor.getString(cursor.getColumnIndex(DatabaseNameHelper.StoryEntry.COLUMN_TITLE));
+            String storyID = cursor.getString(cursor.getColumnIndex(DatabaseNameHelper.StoryEntry._ID));
+            map.put(storyID, storyTitle);
+        }
+
+        cursor.close();
+
+        return map;
     }
 
     public static ArrayList<String> getChildStories(Context context, String user_id) {

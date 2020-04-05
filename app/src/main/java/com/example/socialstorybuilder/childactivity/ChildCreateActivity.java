@@ -57,18 +57,18 @@ public class ChildCreateActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
-            switch (requestCode) {
-                case ActivityHelper.GALLERY_REQUEST_CODE:
-                    childAvatarImage = data.getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), childAvatarImage);
-                        avatar.setImageBitmap(bitmap);
-                    } catch (IOException e) {
-                        Log.i("TAG", "Some exception " + e);
-                    }
-                    break;
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode != ActivityHelper.GALLERY_REQUEST_CODE) {
+                return;
             }
+            childAvatarImage = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), childAvatarImage);
+                avatar.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                Log.i("TAG", "Some exception " + e);
+            }
+        }
     }
 
     public void createChild(View view) {

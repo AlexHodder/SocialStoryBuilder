@@ -1,7 +1,8 @@
 package com.example.socialstorybuilder.adultactivity;
 
 import android.content.Intent;
-import android.database.Cursor;
+
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,7 +12,6 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialstorybuilder.R;
-import com.example.socialstorybuilder.childactivity.ChildInitialActivity;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
@@ -45,12 +45,10 @@ public class AdultLoginActivity extends AppCompatActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String[] projection = {AdultUserEntry.COLUMN_PASSWORD};
         String selection = AdultUserEntry.COLUMN_NAME + " = ?" + " AND " + AdultUserEntry.COLUMN_PASSWORD + " = ?";
-        Cursor passwordCursor = db.query(AdultUserEntry.TABLE_NAME, projection, selection, new String[]{username, password}, null, null, null);
-        int cursorCount = passwordCursor.getCount();
-        passwordCursor.close();
-
+        String[] selectionArgs = new String[]{username, password};
+        long cursorCount = DatabaseUtils.queryNumEntries(db, AdultUserEntry.TABLE_NAME, selection, selectionArgs);
+        db.close();
         if (cursorCount > 0){
             switchToAdultInitial(view);
         }

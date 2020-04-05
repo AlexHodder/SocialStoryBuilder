@@ -18,7 +18,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialstorybuilder.R;
-import com.example.socialstorybuilder.childactivity.ChildInitialActivity;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper;
 

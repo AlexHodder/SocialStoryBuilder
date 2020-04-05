@@ -1,10 +1,9 @@
 package com.example.socialstorybuilder.database;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.provider.BaseColumns;
 
-import java.util.ArrayList;
+
 
 public class DatabaseNameHelper {
 

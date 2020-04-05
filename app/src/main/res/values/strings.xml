@@ -31,6 +31,7 @@
     <string name="new_sound">Add Sound</string>
     <string name="remove_sound">Remove Sound</string>
 
+    <string name="page_no">Page: </string>
 
 
     <string name="child_name_error">Child name is not unique</string>
@@ -75,6 +76,9 @@
     <string name="preview">Preview</string>
     <string name="cancel">Cancel</string>
 
+    <string name="next_page">Next</string>
+    <string name="back_page">Back</string>
+    <string name="exit_story">Exit</string>
 
     <string name="image_not_chosen">No Avatar Selected</string>
     <string name="title_activity_login">Sign in</string>
