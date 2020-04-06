@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -64,23 +65,35 @@ public class ReadEditSelect extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        storyMap.clear();
+        storyMap = ActivityHelper.getStoryMap(getApplicationContext(), user);
+        hashAdapter.refresh(storyMap);
     }
 
     public void switchToRead(View view){
-
+        Intent intent = new Intent(this, StoryReader.class);
+        intent.putExtra("story_id", selectedID);
+        intent.putExtra("statistics", false);
+        startActivity(intent);
     }
 
     public void switchToEdit(View view){
-        Intent intent = new Intent(this, ConfigureStory.class);
-        intent.putExtra("user", user);
-        intent.putExtra("story_id", selectedID);
-        startActivity(intent);
+        if (selectedID!=null){
+            Intent intent = new Intent(this, ConfigureStory.class);
+            intent.putExtra("user", user);
+            intent.putExtra("story_id", selectedID);
+            startActivity(intent);
+        }
     }
 
     public void switchToCreate(View view){
         Intent intent = new Intent(this, ConfigureStory.class);
         intent.putExtra("user", user);
         startActivity(intent);
+    }
+
+    public void back(View view){
+        finish();
     }
 
 

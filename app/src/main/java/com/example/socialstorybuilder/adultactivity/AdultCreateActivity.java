@@ -1,6 +1,7 @@
 package com.example.socialstorybuilder.adultactivity;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,43 +27,21 @@ public class AdultCreateActivity extends AppCompatActivity {
     private EditText nameInput;
     private EditText passwordInput;
     private EditText passwordConfirmationInput;
-    private PopupWindow errorWindow;
-    private TextView textPopup;
+    private AlertDialog.Builder errorDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.adult_create);
 
+        errorDialog = new AlertDialog.Builder(AdultCreateActivity.this);
+        errorDialog.setTitle("Error");
+        errorDialog.setPositiveButton(R.string.popup_close, null);
+
         nameInput = findViewById(R.id.username_input);
         passwordInput = findViewById(R.id.password_input);
         passwordConfirmationInput = findViewById(R.id.password_input_confirm);
-
-        errorWindow = new PopupWindow(this);
-
-        LinearLayout errorLayout = new LinearLayout(this);
-        errorLayout.setOrientation(LinearLayout.VERTICAL);
-
-        textPopup = new TextView(this);
-        textPopup.setTextColor(Color.WHITE);
-
-        Button closePopup = new Button(this);
-        closePopup.setText(R.string.popup_close);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
-
-        errorLayout.addView(textPopup, params);
-        errorLayout.addView(closePopup, params);
-
-        errorWindow.setContentView(errorLayout);
-
-        closePopup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                errorWindow.dismiss();
-            }
-        });
 
     }
 
@@ -96,17 +75,16 @@ public class AdultCreateActivity extends AppCompatActivity {
             System.out.println(rowID);
 
             if (rowID == -1){
-                textPopup.setText(R.string.adult_name_error);
-                errorWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                errorDialog.setMessage(R.string.adult_name_error);
+                errorDialog.show();
             }
 
             switchToAdultInitial(view);
 
         }
         else{
-            System.out.println("passwords don't match");
-            textPopup.setText(R.string.password_error);
-            errorWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            errorDialog.setMessage(R.string.password_error);
+            errorDialog.show();
         }
     }
 

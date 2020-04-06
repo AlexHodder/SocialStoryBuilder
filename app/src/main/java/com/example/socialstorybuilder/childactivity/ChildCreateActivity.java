@@ -2,6 +2,7 @@ package com.example.socialstorybuilder.childactivity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,12 +20,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialstorybuilder.ActivityHelper;
+import com.example.socialstorybuilder.adultactivity.AdultInitialActivity;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 import com.example.socialstorybuilder.R;
@@ -38,7 +40,7 @@ public class ChildCreateActivity extends AppCompatActivity {
     private ImageView avatar;
     private EditText nameInput;
 
-    private PopupWindow errorWindow;
+    private AlertDialog.Builder hintDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,34 +99,10 @@ public class ChildCreateActivity extends AppCompatActivity {
 
         if (rowID == -1){
             System.out.println("Name DUPL.");
-
-            errorWindow = new PopupWindow(this);
-
-            LinearLayout errorLayout = new LinearLayout(this);
-            errorLayout.setOrientation(LinearLayout.VERTICAL);
-
-            TextView textPopup = new TextView(this);
-            textPopup.setText(R.string.child_name_error);
-            textPopup.setTextColor(Color.WHITE);
-
-            Button closePopup = new Button(this);
-            closePopup.setText(R.string.popup_close);
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
-            params.gravity = Gravity.CENTER;
-
-            errorLayout.addView(textPopup, params);
-            errorLayout.addView(closePopup, params);
-
-            errorWindow.setContentView(errorLayout);
-
-            errorWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-            closePopup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    errorWindow.dismiss();
-                }
-            });
+            hintDialog = new AlertDialog.Builder(ChildCreateActivity.this);
+            hintDialog.setMessage(R.string.child_name_error);
+            hintDialog.setPositiveButton(R.string.popup_close, null);
+            hintDialog.show();
         }
         else switchToChildInitial(view);
     }

@@ -30,6 +30,7 @@
     <string name="remove_image">Remove Image</string>
     <string name="new_sound">Add Sound</string>
     <string name="remove_sound">Remove Sound</string>
+    <string name="finish_story">Finish</string>
 
     <string name="page_no">Page: </string>
 
@@ -62,6 +63,10 @@
     <string name="read_story">Read Existing Story</string>
     <string name="edit_story">Edit Existing Story</string>
     <string name="read_edit_story">Read/Edit Existing Story</string>
+
+    <string name="story_readers">Story can be read by:</string>
+    <string name="child_select">Select Child To Add</string>
+
 
     <string name="story_select">Select Story</string>
     <string name="story_create_and_edit">Configure Story</string>

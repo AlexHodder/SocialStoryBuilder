@@ -11,6 +11,7 @@
         android:id="@+id/prev_pg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="prevPage"
         android:text="@string/back_page"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -28,6 +29,7 @@
         android:id="@+id/next_pg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="nextPage"
         android:text="@string/next_page"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -74,7 +76,8 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:background="@android:drawable/editbox_background">
 
             <TextView
                 android:id="@+id/display_text"

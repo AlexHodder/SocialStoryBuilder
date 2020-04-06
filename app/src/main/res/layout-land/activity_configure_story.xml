@@ -40,6 +40,7 @@
         android:id="@+id/remove_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="removeChild"
         android:text="@string/remove_user"
         app:layout_constraintBottom_toBottomOf="@+id/user_list"
         app:layout_constraintStart_toEndOf="@+id/user_list" />
@@ -48,18 +49,20 @@
         android:id="@+id/new_user"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="newChild"
         android:text="@string/new_user"
         app:layout_constraintEnd_toEndOf="@+id/remove_user"
         app:layout_constraintStart_toEndOf="@+id/user_list"
-        app:layout_constraintTop_toBottomOf="@+id/page_list" />
+        app:layout_constraintTop_toTopOf="@+id/user_list" />
 
     <Button
         android:id="@+id/delete_page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="removePage"
         android:text="@string/remove_page"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/page_list" />
+        app:layout_constraintBottom_toBottomOf="@id/page_list"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/edit_page"
@@ -115,12 +118,11 @@
         android:layout_weight="0"
         android:choiceMode="singleChoice"
         android:listSelector="@color/cardview_light_background"
-        app:layout_constraintBottom_toTopOf="@id/user_list"
+        app:layout_constraintBottom_toTopOf="@+id/text_user_list"
         app:layout_constraintEnd_toStartOf="@+id/delete_page"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/text_create_story"
-        app:layout_constraintTop_toBottomOf="@+id/text_create_story"
-        app:layout_constraintVertical_bias="0.0"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/text_page_list"></ListView>
 
     <ListView
         android:id="@+id/user_list"
@@ -133,8 +135,7 @@
         app:layout_constraintEnd_toEndOf="@+id/text_create_story"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/text_create_story"
-        app:layout_constraintTop_toBottomOf="@+id/page_list"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/text_user_list">
 
     </ListView>
 
@@ -149,4 +150,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_page_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Page List"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/edit_page"
+        app:layout_constraintStart_toStartOf="@+id/page_list"
+        app:layout_constraintTop_toBottomOf="@+id/text_create_story" />
+
+    <TextView
+        android:id="@+id/text_user_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/story_readers"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/preview_button"
+        app:layout_constraintEnd_toEndOf="@+id/user_list"
+        app:layout_constraintStart_toStartOf="@+id/user_list"
+        app:layout_constraintTop_toBottomOf="@+id/text_create_story"
+        app:layout_constraintVertical_bias="0.65" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class StoryReader extends AppCompatActivity {
 
     private int pageNo;
     private String storyId;
+    private boolean statistics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class StoryReader extends AppCompatActivity {
         Intent intent = getIntent();
         pageNo = intent.getIntExtra("page_no", 1);
         storyId = intent.getStringExtra("story_id");
+        statistics = intent.getBooleanExtra("statistics", false);
 
         // LOAD ALL VARIABLES FROM DATABASE
 
@@ -48,15 +51,14 @@ public class StoryReader extends AppCompatActivity {
 
         //Page_ID selection
         String[] pageProjection = {PageEntry.COLUMN_TEXT, PageEntry._ID};
-        String pageSelection = PageEntry.COLUMN_STORY_ID + " = ?";
-        String[] pageSelectionArgs = { storyId };
+        String pageSelection = PageEntry.COLUMN_STORY_ID + " = ? AND " + PageEntry.COLUMN_PAGE_NO + " = ?" ;
+        String[] pageSelectionArgs = { storyId, String.valueOf(pageNo) };
 
         Cursor pageCursor = db.query(PageEntry.TABLE_NAME, pageProjection, pageSelection, pageSelectionArgs, null, null, PageEntry._ID);
         pageCursor.moveToFirst();
-        pageCursor.moveToPosition(pageNo);
         pageId = pageCursor.getString(pageCursor.getColumnIndex(PageEntry._ID));
         text = pageCursor.getString(pageCursor.getColumnIndex(PageEntry.COLUMN_TEXT));
-        pageTotal = pageCursor.getCount();
+        pageTotal = (int) DatabaseUtils.queryNumEntries(db, PageEntry.TABLE_NAME, PageEntry.COLUMN_STORY_ID + " = ?", new String[]{storyId});
         pageCursor.close();
 
         textView.setText(text);
@@ -73,31 +75,54 @@ public class StoryReader extends AppCompatActivity {
             String uri = imageCursor.getString(imageCursor.getColumnIndex(ImageEntry.COLUMN_URI));
             ImageView imageView = new ImageView(getApplicationContext());
             imageView.setImageURI(Uri.parse(uri));
-            imageLayout.addView(imageLayout);
+            imageLayout.addView(imageView);
         }
         imageCursor.close();
-
+        db.close();
         // BUTTON LOGIC
         if (pageNo == 1){
             prevPgButton.setVisibility(View.INVISIBLE);
             prevPgButton.setEnabled(false);
         }
         if (pageNo == pageTotal){
-            nextPgButton.setVisibility(View.INVISIBLE);
-            nextPgButton.setEnabled(false);
+            nextPgButton.setText(R.string.finish_story);
+            nextPgButton.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    finishStory(v);
+                }
+            });
         }
 
     }
 
     public void nextPage(View view){
-        pageNo = pageNo++;
-
+        Intent intent = new Intent(this, StoryReader.class);
+        intent.putExtra("page_no", pageNo + 1);
+        intent.putExtra("story_id", storyId);
+        intent.putExtra("statistics", statistics);
+        startActivity(intent);
+        finish();
     }
 
-    public void loadNewPage(View view){
+    public void prevPage(View view){
         Intent intent = new Intent(this, StoryReader.class);
-        intent.putExtra("page_no", pageNo);
+        intent.putExtra("page_no", pageNo - 1);
         intent.putExtra("story_id", storyId);
+        intent.putExtra("statistics", statistics);
         startActivity(intent);
+        finish();
+    }
+
+    public void finishStory(View v){
+        if (statistics){
+            recordStatistics();
+        }
+        finish();
+    }
+
+    public void recordStatistics(){
+        //WRITE STATISTICS RECORDING DATABASE TABLE
     }
 }

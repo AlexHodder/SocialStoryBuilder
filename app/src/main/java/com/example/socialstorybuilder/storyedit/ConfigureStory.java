@@ -2,18 +2,31 @@ package com.example.socialstorybuilder.storyedit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import android.widget.TextView;
 
 import com.example.socialstorybuilder.ActivityHelper;
 import com.example.socialstorybuilder.HashMapAdapter;
+import com.example.socialstorybuilder.MainActivity;
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 
@@ -116,10 +129,14 @@ public class ConfigureStory extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        pageNumberMap.clear();
         pageNumberMap = getPageMap();
+        pageHashAdapter.refresh(pageNumberMap);
+
+        childMap.clear();
         childMap = getUserMap();
-        childListAdapter.notifyDataSetChanged();
-        pageHashAdapter.notifyDataSetChanged();
+        childListAdapter.refresh(childMap);
     }
 
     public HashMap<String, String> getPageMap(){
@@ -165,6 +182,7 @@ public class ConfigureStory extends AppCompatActivity {
     }
 
     public void newPage(View view){
+        flushDynamicChanges();
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -174,16 +192,143 @@ public class ConfigureStory extends AppCompatActivity {
         long pageID = db.insert(PageEntry.TABLE_NAME,null,values);
         Intent intent = new Intent(this, PageEditor.class);
         intent.putExtra("story_id", storyID);
-        intent.putExtra("page_id", pageID);
+        intent.putExtra("page_id", String.valueOf(pageID));
         startActivity(intent);
     }
 
-    public void editPage(View view){ ;
+    public void editPage(View view){
+        flushDynamicChanges();
         Intent intent = new Intent(this, PageEditor.class);
         intent.putExtra("story_id", storyID);
         intent.putExtra("page_id", selectedPageID);
         startActivity(intent);
     }
+
+    public void removePage(View view){
+        if (selectedPageID == null){
+            return;
+        }
+        String positionS = pageNumberMap.get(selectedPageID);
+        Integer position = Integer.valueOf(positionS);
+        for (String key : pageNumberMap.keySet()){
+            Integer pageNumber = Integer.valueOf(pageNumberMap.get(key));
+            if (pageNumber > position){
+                String value = String.valueOf(pageNumber - 1);
+                pageNumberMap.put(key, value);
+            }
+        }
+        pageNumberMap.remove(selectedPageID);
+        pageHashAdapter.refresh(pageNumberMap);
+        selectedPageID = null;
+    }
+
+    public void newChild(View view){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ConfigureStory.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View convertView = inflater.inflate(R.layout.custom, null);
+        alertDialog.setView(convertView);
+        alertDialog.setTitle(R.string.child_select);
+        ListView listView = convertView.findViewById(R.id.listView1);
+
+        HashMap<String, String> childUsers = ActivityHelper.getChildUserMap(getApplicationContext());
+        for (String key : childMap.keySet()){
+            if (childUsers.containsKey(key)) childUsers.remove(key);
+        }
+        final HashMapAdapter childAdapter = new HashMapAdapter(childUsers);
+        final String[] key = new String[1];
+        final String[] value = new String[1];
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map.Entry<Object, Object> map = (Map.Entry<Object, Object>) parent.getItemAtPosition(position);
+                key[0] = (String) map.getKey();
+                value[0] = (String) map.getValue();
+            }
+        });
+
+        listView.setAdapter(childAdapter);
+
+        alertDialog.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                childMap.put(key[0], value[0]);
+                childListAdapter.refresh(childMap);
+            }
+        });
+        alertDialog.setNegativeButton(R.string.cancel, null);
+        alertDialog.show();
+
+    }
+    public void removeChild(View view){
+        if (selectedChildID == null){
+            return;
+        }
+        if (childMap.containsKey(selectedChildID)) childMap.remove(selectedChildID);
+        childListAdapter.refresh(childMap);
+        selectedChildID = null;
+    }
+
+    public void flushDynamicChanges(){
+
+        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        if (!pageNumberMap.isEmpty()) {
+            for (String id : pageNumberMap.keySet()){
+                ContentValues values = new ContentValues();
+                String[] args = {id};
+                String pageNumberString = pageNumberMap.get(id);
+                assert pageNumberString != null;
+                Integer pageNumber = Integer.valueOf(pageNumberString);
+                values.put(PageEntry.COLUMN_PAGE_NO, pageNumber);
+                db.update(PageEntry.TABLE_NAME, values, "_id = ?", args);
+            }
+
+            StringBuilder inQuery = new StringBuilder();
+
+            inQuery.append("(");
+            boolean first = true;
+            for (String item : pageNumberMap.keySet()) {
+                if (first) {
+                    first = false;
+                    inQuery.append("'").append(item).append("'");
+                } else {
+                    inQuery.append(", '").append(item).append("'");
+                }
+            }
+            inQuery.append(")");
+
+
+            String selection = PageEntry._ID + " NOT IN " + inQuery.toString();
+            db.delete(PageEntry.TABLE_NAME, selection, null);
+        }
+
+        if (!childMap.isEmpty()) {
+            HashMap<String, String> currentUserMapDB = getUserMap();
+            for (String key : currentUserMapDB.keySet()) {
+                if (!childMap.containsKey(key)) {
+                    String selection = UserStoryEntry.COLUMN_STORY_ID + " = ? AND " + UserStoryEntry.COLUMN_USER_ID + " = ?";
+                    String[] args = {storyID, key};
+                    db.delete(UserStoryEntry.TABLE_NAME, selection, args);
+                }
+            }
+            for (String key : childMap.keySet()) {
+                if (!currentUserMapDB.containsKey(key)) {
+                    ContentValues values = new ContentValues();
+                    values.put(UserStoryEntry.COLUMN_STORY_ID, storyID);
+                    values.put(UserStoryEntry.COLUMN_USER_ID, key);
+                    long rowID = db.insert(UserStoryEntry.TABLE_NAME, null, values);
+                    if (rowID < 0) {
+                        System.out.println("Insert failed");
+                    }
+                }
+            }
+        }
+
+        db.close();
+    }
+
 
     public void finish(View view){
         finish();
@@ -199,6 +344,7 @@ public class ConfigureStory extends AppCompatActivity {
         String[] args = {storyID};
         db.update(StoryEntry.TABLE_NAME, values, "_id = ?", args);
         db.close();
+        flushDynamicChanges();
         finish();
     }
 

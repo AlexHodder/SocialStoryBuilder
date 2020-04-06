@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.pdf.PdfDocument;
 import android.media.Image;
 import android.net.Uri;
@@ -37,7 +38,7 @@ public class PageEditor extends AppCompatActivity {
     private String pageID;
     private ArrayList<String> addImageUriList;
     private ArrayList<String> removeImageUriList;
-
+    private ImageView selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +46,19 @@ public class PageEditor extends AppCompatActivity {
         setContentView(R.layout.activity_page_editor);
         text = findViewById(R.id.page_text);
         imageLayout = findViewById(R.id.image_layout);
+
+        Intent intent = getIntent();
+        storyID = intent.getStringExtra("story_id");
+        pageID = intent.getStringExtra("page_id");
+
+        addImageUriList = new ArrayList<>();
+        removeImageUriList = new ArrayList<>();
+
         try {
             populateLayout();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Intent intent = getIntent();
-        storyID = intent.getStringExtra("story_id");
-        Long pageIDLong = intent.getLongExtra("page_id", -1);
-        pageID = String.valueOf(pageIDLong);
-        addImageUriList = new ArrayList<>();
-        removeImageUriList = new ArrayList<>();
     }
 
 
@@ -72,6 +75,14 @@ public class PageEditor extends AppCompatActivity {
                     imageView.setClickable(true);
                     imageView.setImageBitmap(bitmap);
                     imageView.setTag(image.toString());
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (selectedImage != null) selectedImage.setColorFilter(null);
+                            selectedImage = (ImageView) v;
+                            selectedImage.setColorFilter(Color.argb(50, 169, 169, 169));
+                        }
+                    });
                     imageLayout.addView(imageView);
                     addImageUriList.add(image.toString());
                 } catch (IOException e) {
@@ -99,31 +110,42 @@ public class PageEditor extends AppCompatActivity {
             //TODO write something if an image isn't correctly put into database
             if (imageRowID < 0) {
                 System.out.println("IMAGE NOT STORED PROPERLY, URI: " + uri);
+                db.close();
                 return;
             }
         }
 
         for (String uri : removeImageUriList){
-            String selection = ImageEntry.COLUMN_URI + " = ? WHERE " + ImageEntry._ID + " = ";
-            String[] selectionArgs = { uri };
+            String selection = ImageEntry.COLUMN_URI + " = ? AND " + ImageEntry.COLUMN_PAGE_ID + " = ?";
+            String[] selectionArgs = { uri, pageID };
 
             long imageRowID = db.delete(ImageEntry.TABLE_NAME, selection, selectionArgs);
             //TODO write something if an image isn't correctly put into database
             if (imageRowID < 0) {
                 System.out.println("IMAGE NOT REMOVED PROPERLY, URI: " + uri);
+                db.close();
                 return;
             }
         }
-
+        db.close();
         if (rowID > 0) finish();
     }
 
     public void removeImage(View view){
+        if (selectedImage != null){
+            String uri = (String) selectedImage.getTag();
+            if (addImageUriList.contains(uri)){
+                addImageUriList.remove(uri);
+            }
+            else removeImageUriList.add(uri);
+            imageLayout.removeView(selectedImage);
+            selectedImage = null;
+        }
     }
 
 
     public void selectImage(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("image/*");
         startActivityForResult(intent, ActivityHelper.GALLERY_REQUEST_CODE);
     }
@@ -135,8 +157,10 @@ public class PageEditor extends AppCompatActivity {
         String[] selectionArgs = {pageID};
 
         Cursor textCursor = db.rawQuery("SELECT "+ PageEntry.COLUMN_TEXT + " FROM " + PageEntry.TABLE_NAME + " WHERE " + PageEntry._ID + " = ?", selectionArgs);
+        System.out.println(textCursor.getCount());
         textCursor.moveToFirst();
         text.setText(textCursor.getString(textCursor.getColumnIndex(PageEntry.COLUMN_TEXT)));
+        textCursor.close();
 
         String[] projection = {ImageEntry.COLUMN_URI};
         String selection = ImageEntry.COLUMN_PAGE_ID + "= ?";
@@ -150,6 +174,14 @@ public class PageEditor extends AppCompatActivity {
             imageView.setClickable(true);
             imageView.setImageBitmap(bitmap);
             imageView.setTag(uriString);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (selectedImage != null) selectedImage.setColorFilter(null);
+                    selectedImage = (ImageView) v;
+                    selectedImage.setColorFilter(Color.argb(50, 169, 169, 169));
+                }
+            });
             imageLayout.addView(imageView);
         }
         imageCursor.close();

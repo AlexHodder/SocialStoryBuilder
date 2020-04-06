@@ -35,9 +35,28 @@ public class ActivityHelper extends AppCompatActivity {
             childList.add(childName);
         }
         nameCursor.close();
-
+        db.close();
         return childList;
     }
+
+    public static HashMap<String, String> getChildUserMap(Context context) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {DatabaseNameHelper.ChildUserEntry.COLUMN_NAME, DatabaseNameHelper.ChildUserEntry._ID};
+
+        Cursor nameCursor = db.query(DatabaseNameHelper.ChildUserEntry.TABLE_NAME, projection, null, null, null, null, null);
+        HashMap<String, String> childMap = new HashMap<>();
+        while(nameCursor.moveToNext()) {
+            String childName = nameCursor.getString(nameCursor.getColumnIndex(DatabaseNameHelper.ChildUserEntry.COLUMN_NAME));
+            String childID = nameCursor.getString(nameCursor.getColumnIndex(DatabaseNameHelper.ChildUserEntry._ID));
+            childMap.put(childID, childName);
+        }
+        nameCursor.close();
+        db.close();
+        return childMap;
+    }
+
 
     public static ArrayList<String> getAdultStoryId(Context context, String user) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
@@ -55,7 +74,7 @@ public class ActivityHelper extends AppCompatActivity {
             storyList.add(storyTitle);
         }
         cursor.close();
-
+        db.close();
         return storyList;
     }
 
@@ -77,7 +96,7 @@ public class ActivityHelper extends AppCompatActivity {
         }
 
         cursor.close();
-
+        db.close();
         return map;
     }
 
@@ -96,7 +115,7 @@ public class ActivityHelper extends AppCompatActivity {
             storyList.add(storyTitle);
         }
         cursor.close();
-
+        db.close();
         return storyList;
     }
 
@@ -112,6 +131,7 @@ public class ActivityHelper extends AppCompatActivity {
         cursor.moveToFirst();
         String title = cursor.getString(cursor.getColumnIndex(DatabaseNameHelper.StoryEntry.COLUMN_TITLE));
         cursor.close();
+        db.close();
         return title;
     }
 
@@ -127,6 +147,7 @@ public class ActivityHelper extends AppCompatActivity {
         cursor.moveToFirst();
         String name = cursor.getString(cursor.getColumnIndex(DatabaseNameHelper.ChildUserEntry.COLUMN_NAME));
         cursor.close();
+        db.close();
         return name;
     }
 

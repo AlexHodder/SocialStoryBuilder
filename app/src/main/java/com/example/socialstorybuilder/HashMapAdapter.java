@@ -66,4 +66,11 @@ public class HashMapAdapter extends BaseAdapter {
 
         return result;
     }
+
+    public void refresh(@NonNull Map<String, String> map)
+    {
+        this.mData.clear();
+        this.mData.addAll(map.entrySet());
+        notifyDataSetChanged();
+    }
 }
