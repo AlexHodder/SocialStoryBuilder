@@ -3,6 +3,8 @@ package com.example.socialstorybuilder.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
+
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 import androidx.annotation.Nullable;
 
@@ -31,8 +33,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 PageEntry.COLUMN_STORY_ID + " INTEGER NOT NULL, " +
                 PageEntry.COLUMN_PAGE_NO + " INTEGER NOT NULL, " +
                 PageEntry.COLUMN_TEXT + " TEXT, " +
-                " FOREIGN KEY ("+PageEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+
-                ")";
+                " FOREIGN KEY ("+PageEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+"("+ StoryEntry._ID +
+                ") ON DELETE CASCADE)";
 
         final String SQL_CREATE_ANSWER_PAGES_TABLE = "CREATE TABLE " +
                 AnswerPageEntry.TABLE_NAME + " (" +
@@ -40,17 +42,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 AnswerPageEntry.COLUMN_PAGE_ID + " INTEGER NOT NULL, " +
                 AnswerPageEntry.COLUMN_QUESTION_PAGE_ID + " INTEGER NOT NULL, " +
                 AnswerPageEntry.COLUMN_ANSWER + " TEXT NOT NULL, " +
-                " FOREIGN KEY ("+AnswerPageEntry.COLUMN_PAGE_ID+") REFERENCES "+PageEntry.TABLE_NAME+" ,"+
-                " FOREIGN KEY ("+AnswerPageEntry.COLUMN_QUESTION_PAGE_ID+") REFERENCES "+PageEntry.TABLE_NAME+
-                ")";
+                " FOREIGN KEY ("+AnswerPageEntry.COLUMN_PAGE_ID+") REFERENCES "+PageEntry.TABLE_NAME+"("+PageEntry._ID+
+                ") ON DELETE CASCADE)";
 
         final String SQL_CREATE_IMAGES_TABLE = "CREATE TABLE " +
                 ImageEntry.TABLE_NAME + " (" +
                 ImageEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ImageEntry.COLUMN_URI + " TEXT NOT NULL, " +
                 ImageEntry.COLUMN_PAGE_ID + " INTEGER NOT NULL, " +
-                " FOREIGN KEY ("+ImageEntry.COLUMN_PAGE_ID+") REFERENCES "+PageEntry.TABLE_NAME+
-                ")";
+                " FOREIGN KEY ("+ImageEntry.COLUMN_PAGE_ID+") REFERENCES "+PageEntry.TABLE_NAME+"("+PageEntry._ID+
+                ") ON DELETE CASCADE)";
 
         final String SQL_CREATE_CHILD_USERS_TABLE = "CREATE TABLE " +
                 ChildUserEntry.TABLE_NAME + " (" +
@@ -71,9 +72,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 UserStoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 UserStoryEntry.COLUMN_USER_ID + " INTEGER NOT NULL, " +
                 UserStoryEntry.COLUMN_STORY_ID + " INTEGER NOT NULL, " +
-                " FOREIGN KEY ("+UserStoryEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+" ,"+
-                " FOREIGN KEY ("+UserStoryEntry.COLUMN_USER_ID+") REFERENCES "+ChildUserEntry.TABLE_NAME+
-                ")";
+                " FOREIGN KEY ("+UserStoryEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+"("
+                +StoryEntry._ID+") ON DELETE CASCADE ,"+
+                " FOREIGN KEY ("+UserStoryEntry.COLUMN_USER_ID+") REFERENCES "+ChildUserEntry.TABLE_NAME+"("
+                +ChildUserEntry._ID+") ON DELETE CASCADE)";
+
+        final String SQL_CREATE_PAGE_STORY_TABLE = "CREATE TABLE " +
+                PageStoryEntry.TABLE_NAME + " (" +
+                PageStoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                PageStoryEntry.COLUMN_PAGE_ID + " INTEGER NOT NULL, " +
+                PageStoryEntry.COLUMN_STORY_ID + " INTEGER NOT NULL, " +
+                " FOREIGN KEY ("+PageStoryEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+"("
+                +StoryEntry._ID+") ON DELETE CASCADE ,"+
+                " FOREIGN KEY ("+PageStoryEntry.COLUMN_PAGE_ID+") REFERENCES "+ChildUserEntry.TABLE_NAME+"("
+                +ChildUserEntry._ID+") ON DELETE CASCADE)";
 
         db.execSQL(SQL_CREATE_STORY_TABLE);
         db.execSQL(SQL_CREATE_PAGES_TABLE);
@@ -82,6 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_CHILD_USERS_TABLE);
         db.execSQL(SQL_CREATE_ADULT_USERS_TABLE);
         db.execSQL(SQL_CREATE_USER_STORY_TABLE);
+        db.execSQL(SQL_CREATE_PAGE_STORY_TABLE);
 
     }
 
@@ -91,5 +104,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN){
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
+        else db.setForeignKeyConstraintsEnabled(true);
 
+    }
 }

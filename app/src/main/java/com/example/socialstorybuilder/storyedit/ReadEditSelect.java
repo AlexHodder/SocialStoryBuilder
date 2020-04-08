@@ -1,39 +1,37 @@
 package com.example.socialstorybuilder.storyedit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.example.socialstorybuilder.ActivityHelper;
-import com.example.socialstorybuilder.HashMapAdapter;
+import com.example.socialstorybuilder.DecoratedRecyclerView;
+import com.example.socialstorybuilder.IdData;
+import com.example.socialstorybuilder.ListRecyclerAdapter;
 import com.example.socialstorybuilder.R;
+import com.example.socialstorybuilder.database.DatabaseHelper;
+import com.example.socialstorybuilder.database.DatabaseNameHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
 
 
 public class ReadEditSelect extends AppCompatActivity {
 
-    private HashMapAdapter hashAdapter;
-    private TreeMap<String, String> storyMap;
+    private ListRecyclerAdapter listAdapter;
+    private ArrayList<IdData> storyList;
+    private DecoratedRecyclerView storyView;
 
-    private ListView storyView;
     private int selectedItem;
-    private String selectedID;
+    private IdData selectedStory;
     private String user;
-    private ArrayList<String> storyIDList;
+    private AlertDialog.Builder deleteConfirmDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +41,17 @@ public class ReadEditSelect extends AppCompatActivity {
         Intent intent = getIntent();
         user = intent.getStringExtra("user");
 
-        storyMap = ActivityHelper.getStoryMap(getApplicationContext(), user);
-        hashAdapter = new HashMapAdapter(storyMap);
+        storyList = ActivityHelper.getAdultStoryList(getApplicationContext(), user);
+        listAdapter = new ListRecyclerAdapter(storyList);
 
         storyView = findViewById(R.id.story_select);
+        storyView.setAdapter(listAdapter);
 
-        storyView.setAdapter(hashAdapter);
-        storyView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listAdapter.setClickListener(new ListRecyclerAdapter.ItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(View view, int position) {
+                if (position != RecyclerView.NO_POSITION) selectedStory = listAdapter.getItem(position);
                 selectedItem = position;
-                System.out.println("Position: " + position);
-                Map.Entry<Object, Object> map = (Map.Entry<Object, Object>) parent.getItemAtPosition(position);
-                selectedID = (String) map.getKey();
-                System.out.println("Selected ID: " + selectedID);
-
-
             }
         });
     }
@@ -66,25 +59,49 @@ public class ReadEditSelect extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        storyMap.clear();
-        storyMap = ActivityHelper.getStoryMap(getApplicationContext(), user);
-        hashAdapter.refresh(storyMap);
+        storyList = new ArrayList<>(ActivityHelper.getAdultStoryList(getApplicationContext(), user));
+        listAdapter.refresh(storyList);
     }
 
     public void switchToRead(View view){
         Intent intent = new Intent(this, StoryReader.class);
-        intent.putExtra("story_id", selectedID);
+        intent.putExtra("story_id", selectedStory.getId());
         intent.putExtra("statistics", false);
         startActivity(intent);
     }
 
     public void switchToEdit(View view){
-        if (selectedID!=null){
+        if (selectedItem != RecyclerView.NO_POSITION){
             Intent intent = new Intent(this, ConfigureStory.class);
             intent.putExtra("user", user);
-            intent.putExtra("story_id", selectedID);
+            intent.putExtra("story_id", selectedStory.getId());
             startActivity(intent);
         }
+    }
+
+    public void deletePage(final View view){
+        if (selectedItem != RecyclerView.NO_POSITION) {
+            deleteConfirmDialog = new AlertDialog.Builder(ReadEditSelect.this);
+            deleteConfirmDialog.setMessage(getString(R.string.delete_confirm, selectedStory.getData()));
+            deleteConfirmDialog.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    confirmDelete(view);
+                }
+            });
+            deleteConfirmDialog.setNegativeButton(R.string.cancel, null);
+            deleteConfirmDialog.show();
+        }
+
+    }
+
+    public void confirmDelete(View view){
+        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String[] selectionArgs = {selectedStory.getId()};
+        db.delete(DatabaseNameHelper.StoryEntry.TABLE_NAME, "_id = ?", selectionArgs);
+        storyList.remove(selectedItem);
+        listAdapter.itemRemoved(selectedItem);
     }
 
     public void switchToCreate(View view){

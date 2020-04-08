@@ -54,6 +54,11 @@ public class DatabaseNameHelper {
         public static final String COLUMN_STORY_ID = "story_ID";
     }
 
+    public static final class PageStoryEntry implements BaseColumns {
+        public static final String TABLE_NAME = "user_stories";
+        public static final String COLUMN_PAGE_ID = "user_ID";
+        public static final String COLUMN_STORY_ID = "story_ID";
+    }
 
 
 

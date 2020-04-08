@@ -24,6 +24,9 @@
 
     <string name="read">Read</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_confirm">Are you sure you want to delete this story: %s. \nThis can\'t be undone.</string>
+
     <string name="page">Page</string>
     <string name="sample_sentences">Sample Sentences</string>
     <string name="new_image">Add Image</string>

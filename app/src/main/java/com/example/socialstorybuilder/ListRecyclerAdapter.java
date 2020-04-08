@@ -1,7 +1,6 @@
 package com.example.socialstorybuilder;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,33 +8,32 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
-public class MapRecyclerAdapter extends RecyclerView.Adapter<MapRecyclerAdapter.ViewHolder> {
-    private final ArrayList mData;
+public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.ViewHolder> {
+    private ArrayList<IdData> mData;
     private ItemClickListener mClickListener;
     private int selectedPosition = -1;
+    private int bgColor;
 
-    public MapRecyclerAdapter(){
-        this.mData = new ArrayList();
+    public ListRecyclerAdapter(){
+        this.mData = new ArrayList<>();
+        this.bgColor = Color.WHITE;
     }
 
-    public MapRecyclerAdapter(@NonNull Map<String, String> map) {
-        this.mData = new ArrayList();
-        this.mData.addAll(map.entrySet());
+    public ListRecyclerAdapter(@NonNull ArrayList<IdData> map) {
+        this.mData = new ArrayList<>(map);
+        this.bgColor = Color.WHITE;
+    }
+    public ListRecyclerAdapter(@NonNull ArrayList<IdData> map, int bgColor) {
+        this.mData = new ArrayList<>(map);
+        this.bgColor = bgColor;
     }
 
-    // THIS CONSTRUCTOR IS USED WHEN WANTING TO REORDER ITEMS
-    public MapRecyclerAdapter(@NonNull ArrayList<Map.Entry<String, String>> map){
-        this.mData = map;
-    }
 
     @NonNull
     @Override
@@ -50,20 +48,14 @@ public class MapRecyclerAdapter extends RecyclerView.Adapter<MapRecyclerAdapter.
             holder.changeToSelect(true);
         }
         else holder.changeToSelect(false);
-        String value = getValue(position);
+        String value = getItem(position).getData();
         holder.myTextView.setText(value);
     }
 
-    private Map.Entry<Object, Object> getItem(int position) {
-        return (Map.Entry) mData.get(position);
+    public IdData getItem(int position) {
+        return mData.get(position);
     }
 
-    public String getKey(int position) {
-        return getItem(position).getKey().toString();
-    }
-    public String getValue(int position) {
-        return getItem(position).getValue().toString();
-    }
 
 
     @Override
@@ -103,7 +95,7 @@ public class MapRecyclerAdapter extends RecyclerView.Adapter<MapRecyclerAdapter.
             }
         }
         public void changeToSelect(boolean setColor) {
-            if (setColor) background.setBackgroundColor(Color.WHITE);
+            if (setColor) background.setBackgroundColor(bgColor);
             else background.setBackgroundResource(0);
         }
     }
@@ -122,22 +114,14 @@ public class MapRecyclerAdapter extends RecyclerView.Adapter<MapRecyclerAdapter.
         void onItemClick(View view, int position);
     }
 
-    public void refresh(@NonNull Map<String, String> map)
-    {
-        this.mData.clear();
-        this.mData.addAll(map.entrySet());
-        notifyDataSetChanged();
+    public void itemAdded(int position, IdData data){
+        this.mData.add(data);
+        this.notifyItemInserted(position);
     }
 
-    public void itemRemoved(int position){
-        this.mData.remove(position);
-        this.notifyItemRemoved(position);
-    }
-    public void itemAdded(String key, String value){
-        AbstractMap.SimpleEntry<String, String> mapItem = new AbstractMap.SimpleEntry<>(key, value);
-        this.mData.add(mapItem);
-        int position = mData.indexOf(mapItem);
-        this.notifyItemInserted(position);
+    public void itemRemoved(int index){
+        this.mData.remove(index);
+        this.notifyItemRemoved(index);
     }
 
     public boolean itemSelected(){
@@ -146,6 +130,12 @@ public class MapRecyclerAdapter extends RecyclerView.Adapter<MapRecyclerAdapter.
 
     public void deselect(){
         selectedPosition = RecyclerView.NO_POSITION;
+    }
+
+    public void refresh(@NonNull ArrayList<IdData> data)
+    {
+        this.mData = new ArrayList<>(data);
+        notifyDataSetChanged();
     }
 
     public void sortDataOnInt(){

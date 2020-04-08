@@ -9,38 +9,38 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialstorybuilder.ActivityHelper;
 import com.example.socialstorybuilder.DecoratedRecyclerView;
-import com.example.socialstorybuilder.MapRecyclerAdapter;
+import com.example.socialstorybuilder.IdData;
+import com.example.socialstorybuilder.ListRecyclerAdapter;
 import com.example.socialstorybuilder.R;
 
-import java.util.HashMap;
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 public class ChildLoginActivity extends AppCompatActivity {
 
     // Defining string adapter to handle ListView data
-    private MapRecyclerAdapter adapter;
+    private ListRecyclerAdapter adapter;
 
     private DecoratedRecyclerView childLayout;
     private String selectedUserID;
     private String selectedUser;
     private int selectedItem;
 
-    private TreeMap<String, String> childMap;
+    private ArrayList<IdData> childMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.child_login);
-        childMap = ActivityHelper.getChildUserMap(getApplicationContext());
+        childMap = ActivityHelper.getChildUserArray(getApplicationContext());
         childLayout = findViewById(R.id.child_accounts);
 
-        adapter = new MapRecyclerAdapter(childMap);
-        adapter.setClickListener(new MapRecyclerAdapter.ItemClickListener() {
+        adapter = new ListRecyclerAdapter(childMap);
+        adapter.setClickListener(new ListRecyclerAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (position > -1){
-                    selectedUserID = adapter.getKey(position);
-                    selectedUser = adapter.getValue(position);
+                    selectedUserID = adapter.getItem(position).getId();
+                    selectedUser = adapter.getItem(position).getData();
                 }
                 selectedItem = position;
                 System.out.println(selectedItem);
