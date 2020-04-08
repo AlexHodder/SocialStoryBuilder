@@ -31,8 +31,9 @@
     <string name="new_sound">Add Sound</string>
     <string name="remove_sound">Remove Sound</string>
     <string name="finish_story">Finish</string>
+    <string name="book_empty">Sorry this book is empty</string>
 
-    <string name="page_no">Page: </string>
+    <string name="page_no">Page: %d</string>
 
 
     <string name="child_name_error">Child name is not unique</string>

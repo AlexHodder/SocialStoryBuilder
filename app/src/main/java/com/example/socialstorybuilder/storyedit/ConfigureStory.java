@@ -1,32 +1,25 @@
 package com.example.socialstorybuilder.storyedit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import android.widget.TextView;
-
 import com.example.socialstorybuilder.ActivityHelper;
+import com.example.socialstorybuilder.DecoratedRecyclerView;
 import com.example.socialstorybuilder.HashMapAdapter;
-import com.example.socialstorybuilder.MainActivity;
+import com.example.socialstorybuilder.MapRecyclerAdapter;
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 
@@ -34,16 +27,17 @@ import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ConfigureStory extends AppCompatActivity {
 
-    private HashMap<String, String> pageNumberMap;
-    private HashMapAdapter pageHashAdapter;
-    private ListView pageView;
+    private TreeMap<String, String> pageNumberMap;
+    private MapRecyclerAdapter pageHashAdapter;
+    private DecoratedRecyclerView pageView;
 
-    private HashMap<String, String> childMap;
-    private HashMapAdapter childListAdapter;
-    private ListView childListView;
+    private TreeMap<String, String> childMap;
+    private MapRecyclerAdapter childListAdapter;
+    private DecoratedRecyclerView childListView;
 
     private String title;
     private String author;
@@ -54,6 +48,10 @@ public class ConfigureStory extends AppCompatActivity {
     private String storyID;
     private String selectedChildID;
     private String selectedPageID;
+    private int selectedChildPosition = -1;
+    private int selectedPagePosition = -1;
+
+    private AlertDialog.Builder reorderDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +60,7 @@ public class ConfigureStory extends AppCompatActivity {
         Intent intent = getIntent();
         storyTitle = findViewById(R.id.story_name_input);
 
+        //Retrieve values and setup database
         if (intent.hasExtra("story_id")){
             storyID = intent.getStringExtra("story_id");
             System.out.println("Story ID: " + storyID);
@@ -96,50 +95,72 @@ public class ConfigureStory extends AppCompatActivity {
             long rowID = db.insert(StoryEntry.TABLE_NAME, null, values);
             System.out.println("Inserted, at row: " + rowID);
             if (rowID>0) storyID = Long.toString(rowID);
+            db.close();
         }
-
 
         pageNumberMap = getPageMap();
         pageView = findViewById(R.id.page_list);
-        pageHashAdapter = new HashMapAdapter(pageNumberMap);
+        pageHashAdapter = new MapRecyclerAdapter(pageNumberMap);
         pageView.setAdapter(pageHashAdapter);
-        pageView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        pageHashAdapter.setClickListener(new MapRecyclerAdapter.ItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map.Entry<Object, Object> map = (Map.Entry<Object, Object>) parent.getItemAtPosition(position);
-                selectedPageID = (String) map.getKey();
+            public void onItemClick(View view, int position) {
+                if (position > -1) {
+                    selectedPageID = pageHashAdapter.getKey(position);
+                    System.out.println(selectedPageID);
+                }
+                selectedPagePosition = position;
             }
         });
 
         childMap = getUserMap();
         childListView = findViewById(R.id.user_list);
-        childListAdapter = new HashMapAdapter(childMap);
+        childListAdapter = new MapRecyclerAdapter(childMap);
         childListView.setAdapter(childListAdapter);
-        childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        childListAdapter.setClickListener(new MapRecyclerAdapter.ItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map.Entry<Object, Object> map = (Map.Entry<Object, Object>) parent.getItemAtPosition(position);
-                selectedChildID = (String) map.getKey();
+            public void onItemClick(View view, int position) {
+                if (position > -1){
+                    selectedChildID = childListAdapter.getKey(position);
+                }
+                selectedChildPosition = position;
             }
         });
 
         storyTitle.setText(title);
+
+        // Setup reorder dialog
+        reorderDialog = new AlertDialog.Builder(ConfigureStory.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View convertView = inflater.inflate(R.layout.custom_recycle, null);
+        reorderDialog.setView(convertView);
+        DecoratedRecyclerView pageView = findViewById(R.id.recycleView1);
+        MapRecyclerAdapter adapter = new MapRecyclerAdapter(childMap);
+
+        pageView.setAdapter(adapter);
+
+        reorderDialog.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                flushDynamicChanges();
+            }
+        });
+        reorderDialog.setNegativeButton(R.string.cancel, null);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         pageNumberMap.clear();
         pageNumberMap = getPageMap();
         pageHashAdapter.refresh(pageNumberMap);
-
         childMap.clear();
         childMap = getUserMap();
         childListAdapter.refresh(childMap);
     }
 
-    public HashMap<String, String> getPageMap(){
+    public TreeMap<String, String> getPageMap(){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
         String[] projection = {PageEntry._ID, PageEntry.COLUMN_PAGE_NO};
@@ -149,7 +170,7 @@ public class ConfigureStory extends AppCompatActivity {
         assert storyID!= null;
         Cursor countCursor = dbRead.query(PageEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
 
-        HashMap<String, String> pageMap = new HashMap<>();
+        TreeMap<String, String> pageMap = new TreeMap<>();
         while(countCursor.moveToNext()) {
             int page = countCursor.getInt(countCursor.getColumnIndex(PageEntry.COLUMN_PAGE_NO));
             String pageS = Integer.toString(page);
@@ -161,7 +182,7 @@ public class ConfigureStory extends AppCompatActivity {
     }
 
 
-    public HashMap<String, String> getUserMap(){
+    public TreeMap<String, String> getUserMap(){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -171,7 +192,7 @@ public class ConfigureStory extends AppCompatActivity {
 
         Cursor userCursor = db.query(UserStoryEntry.TABLE_NAME, user_projection, user_selection, user_selection_args, null, null, null);
 
-        HashMap<String, String> userList = new HashMap<>();
+        TreeMap<String, String> userList = new TreeMap<>();
         while(userCursor.moveToNext()) {
             Integer childID = userCursor.getInt(userCursor.getColumnIndex(UserStoryEntry.COLUMN_USER_ID));
             String childName = ActivityHelper.getChildNameFromID(getApplicationContext(), childID);
@@ -188,11 +209,13 @@ public class ConfigureStory extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(PageEntry.COLUMN_TEXT, "");
         values.put(PageEntry.COLUMN_STORY_ID, storyID);
+        int pageNo = pageNumberMap.size() + 1;
         values.put(PageEntry.COLUMN_PAGE_NO, pageNumberMap.size() + 1);
         long pageID = db.insert(PageEntry.TABLE_NAME,null,values);
         Intent intent = new Intent(this, PageEditor.class);
         intent.putExtra("story_id", storyID);
         intent.putExtra("page_id", String.valueOf(pageID));
+        intent.putExtra("page_no", pageNo);
         startActivity(intent);
     }
 
@@ -201,25 +224,29 @@ public class ConfigureStory extends AppCompatActivity {
         Intent intent = new Intent(this, PageEditor.class);
         intent.putExtra("story_id", storyID);
         intent.putExtra("page_id", selectedPageID);
+        int pageNo = Integer.valueOf(pageNumberMap.get(selectedPageID));
+        intent.putExtra("page_no", pageNo);
         startActivity(intent);
     }
 
     public void removePage(View view){
-        if (selectedPageID == null){
-            return;
-        }
-        String positionS = pageNumberMap.get(selectedPageID);
-        Integer position = Integer.valueOf(positionS);
-        for (String key : pageNumberMap.keySet()){
-            Integer pageNumber = Integer.valueOf(pageNumberMap.get(key));
-            if (pageNumber > position){
-                String value = String.valueOf(pageNumber - 1);
-                pageNumberMap.put(key, value);
+        if (pageHashAdapter.itemSelected()){
+
+            String positionS = pageNumberMap.get(selectedPageID);
+            Integer position = Integer.valueOf(positionS);
+            for (String key : pageNumberMap.keySet()){
+                Integer pageNumber = Integer.valueOf(pageNumberMap.get(key));
+                if (pageNumber > position){
+                    String value = String.valueOf(pageNumber - 1);
+                    pageNumberMap.put(key, value);
+                }
             }
+            pageNumberMap.remove(selectedPageID);
+            pageHashAdapter.itemRemoved(selectedPagePosition);
+            pageHashAdapter.notifyItemRangeChanged(selectedPagePosition, pageNumberMap.size() - selectedPagePosition);
+            pageHashAdapter.deselect();
+            selectedPagePosition = RecyclerView.NO_POSITION;
         }
-        pageNumberMap.remove(selectedPageID);
-        pageHashAdapter.refresh(pageNumberMap);
-        selectedPageID = null;
     }
 
     public void newChild(View view){
@@ -230,7 +257,7 @@ public class ConfigureStory extends AppCompatActivity {
         alertDialog.setTitle(R.string.child_select);
         ListView listView = convertView.findViewById(R.id.listView1);
 
-        HashMap<String, String> childUsers = ActivityHelper.getChildUserMap(getApplicationContext());
+        TreeMap<String, String> childUsers = ActivityHelper.getChildUserMap(getApplicationContext());
         for (String key : childMap.keySet()){
             if (childUsers.containsKey(key)) childUsers.remove(key);
         }
@@ -253,7 +280,7 @@ public class ConfigureStory extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 childMap.put(key[0], value[0]);
-                childListAdapter.refresh(childMap);
+                childListAdapter.itemAdded(key[0], value[0]);
             }
         });
         alertDialog.setNegativeButton(R.string.cancel, null);
@@ -261,12 +288,12 @@ public class ConfigureStory extends AppCompatActivity {
 
     }
     public void removeChild(View view){
-        if (selectedChildID == null){
-            return;
+        if (childListAdapter.itemSelected()){
+            if (childMap.containsKey(selectedChildID)) childMap.remove(selectedChildID);
+            childListAdapter.itemRemoved(selectedChildPosition);
+            childListAdapter.deselect();
+            selectedChildPosition = RecyclerView.NO_POSITION;
         }
-        if (childMap.containsKey(selectedChildID)) childMap.remove(selectedChildID);
-        childListAdapter.refresh(childMap);
-        selectedChildID = null;
     }
 
     public void flushDynamicChanges(){
@@ -305,7 +332,7 @@ public class ConfigureStory extends AppCompatActivity {
         }
 
         if (!childMap.isEmpty()) {
-            HashMap<String, String> currentUserMapDB = getUserMap();
+            TreeMap<String, String> currentUserMapDB = getUserMap();
             for (String key : currentUserMapDB.keySet()) {
                 if (!childMap.containsKey(key)) {
                     String selection = UserStoryEntry.COLUMN_STORY_ID + " = ? AND " + UserStoryEntry.COLUMN_USER_ID + " = ?";

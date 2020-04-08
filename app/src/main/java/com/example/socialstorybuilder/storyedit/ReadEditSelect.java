@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class ReadEditSelect extends AppCompatActivity {
 
     private HashMapAdapter hashAdapter;
-    private HashMap<String, String> storyMap;
+    private TreeMap<String, String> storyMap;
 
     private ListView storyView;
     private int selectedItem;

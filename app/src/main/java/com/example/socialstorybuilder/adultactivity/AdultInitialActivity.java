@@ -55,9 +55,10 @@ public class AdultInitialActivity extends AppCompatActivity {
         hintDialog.show();
     }
 
-    public void switchToHomeScreen(View view){
+    public void logout(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void switchToConfigureStoryNew(View view){

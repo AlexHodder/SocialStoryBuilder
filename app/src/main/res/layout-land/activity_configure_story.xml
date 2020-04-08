@@ -111,33 +111,29 @@
         app:layout_constraintStart_toStartOf="@+id/story_name_input"
         app:layout_constraintTop_toBottomOf="@+id/story_name_input" />
 
-    <ListView
+    <com.example.socialstorybuilder.DecoratedRecyclerView
         android:id="@+id/page_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="0"
-        android:choiceMode="singleChoice"
-        android:listSelector="@color/cardview_light_background"
         app:layout_constraintBottom_toTopOf="@+id/text_user_list"
         app:layout_constraintEnd_toStartOf="@+id/delete_page"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/text_create_story"
-        app:layout_constraintTop_toBottomOf="@+id/text_page_list"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/text_page_list"></com.example.socialstorybuilder.DecoratedRecyclerView>
 
-    <ListView
+    <com.example.socialstorybuilder.DecoratedRecyclerView
         android:id="@+id/user_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="0"
-        android:choiceMode="singleChoice"
-        android:listSelector="@color/adultColor"
         app:layout_constraintBottom_toTopOf="@+id/preview_button"
         app:layout_constraintEnd_toEndOf="@+id/text_create_story"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/text_create_story"
         app:layout_constraintTop_toBottomOf="@+id/text_user_list">
 
-    </ListView>
+    </com.example.socialstorybuilder.DecoratedRecyclerView>
 
     <TextView
         android:id="@+id/text_create_story"

@@ -24,7 +24,7 @@
         android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="switchToHomeScreen"
+        android:onClick="logout"
         android:text="@string/logout_button"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -22,42 +22,21 @@
         android:id="@+id/logout_button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="logout"
         android:text="@string/logout_button"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Spinner
-        android:id="@+id/story_selector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
-
-    <TextView
-        android:id="@+id/selected_story_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:text="@android:string/selectTextMode"
-        android:textColor="#000000"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/story_selector"
-        app:layout_constraintTop_toBottomOf="@+id/story_selector" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="readStory"
         android:text="@string/read"
-        app:layout_constraintBottom_toBottomOf="@+id/selected_story_text"
+        app:layout_constraintBottom_toBottomOf="@+id/child_story_list"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/selected_story_text"
-        app:layout_constraintTop_toTopOf="@+id/selected_story_text" />
+        app:layout_constraintStart_toEndOf="@+id/welcome_msg" />
 
     <TextView
         android:id="@+id/welcome_msg"
@@ -72,4 +51,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25"
         tools:text="@string/welcome" />
+
+    <com.example.socialstorybuilder.DecoratedRecyclerView
+        android:id="@+id/child_story_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

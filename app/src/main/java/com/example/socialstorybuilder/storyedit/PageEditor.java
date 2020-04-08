@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.socialstorybuilder.ActivityHelper;
 import com.example.socialstorybuilder.R;
@@ -44,12 +45,17 @@ public class PageEditor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_editor);
-        text = findViewById(R.id.page_text);
-        imageLayout = findViewById(R.id.image_layout);
 
         Intent intent = getIntent();
         storyID = intent.getStringExtra("story_id");
         pageID = intent.getStringExtra("page_id");
+        TextView title = findViewById(R.id.text_select_story);
+        int pageNo = intent.getIntExtra("page_no", 0);
+        title.setText(getResources().getString(R.string.page_no, pageNo));
+        text = findViewById(R.id.page_text);
+        imageLayout = findViewById(R.id.image_layout);
+
+
 
         addImageUriList = new ArrayList<>();
         removeImageUriList = new ArrayList<>();

@@ -31,7 +31,7 @@ public class StoryReader extends AppCompatActivity {
         setContentView(R.layout.activity_story_reader);
         TextView textView = findViewById(R.id.display_text);
         LinearLayout imageLayout = findViewById(R.id.image_display);
-        TextView pageNoView = findViewById(R.id.page_no_digits);
+        TextView pageNoView = findViewById(R.id.page_no_text);
         Button prevPgButton = findViewById(R.id.prev_pg);
         Button nextPgButton = findViewById(R.id.next_pg);
 
@@ -62,7 +62,7 @@ public class StoryReader extends AppCompatActivity {
         pageCursor.close();
 
         textView.setText(text);
-        String pageText = pageNo + "/" + pageTotal;
+        String pageText = String.format("%s/%d",getResources().getString(R.string.page_no, pageNo), pageTotal);
         pageNoView.setText(pageText);
 
         // Image Selection

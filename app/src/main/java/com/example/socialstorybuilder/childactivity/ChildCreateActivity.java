@@ -39,7 +39,7 @@ public class ChildCreateActivity extends AppCompatActivity {
 
     private ImageView avatar;
     private EditText nameInput;
-
+    private String childID;
     private AlertDialog.Builder hintDialog;
 
     @Override
@@ -104,17 +104,20 @@ public class ChildCreateActivity extends AppCompatActivity {
             hintDialog.setPositiveButton(R.string.popup_close, null);
             hintDialog.show();
         }
-        else switchToChildInitial(view);
+        else {
+            childID = String.valueOf(rowID);
+            switchToChildInitial(view);
+        }
     }
 
     public void switchToChildInitial(View view) {
         Intent intent = new Intent(this, ChildInitialActivity.class);
         intent.putExtra("user", nameInput.getText().toString());
+        intent.putExtra("user_id", childID);
         startActivity(intent);
     }
 
     public void switchToChildLogin(View view) {
-        Intent intent = new Intent(this, ChildLoginActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

@@ -17,12 +17,12 @@ public class HashMapAdapter extends BaseAdapter {
     private final ArrayList mData;
 
     public HashMapAdapter() {
-        mData = new ArrayList();
+        this.mData = new ArrayList();
     }
 
     public HashMapAdapter(@NonNull Map<String, String> map) {
-        mData = new ArrayList();
-        mData.addAll(map.entrySet());
+        this.mData = new ArrayList();
+        this.mData.addAll(map.entrySet());
     }
 
 

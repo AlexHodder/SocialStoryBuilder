@@ -4,53 +4,58 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialstorybuilder.ActivityHelper;
-import com.example.socialstorybuilder.MainActivity;
+import com.example.socialstorybuilder.DecoratedRecyclerView;
+import com.example.socialstorybuilder.MapRecyclerAdapter;
 import com.example.socialstorybuilder.R;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 public class ChildLoginActivity extends AppCompatActivity {
 
     // Defining string adapter to handle ListView data
-    ArrayAdapter<String> adapter;
+    private MapRecyclerAdapter adapter;
 
-    ListView childLayout;
-    int selectedItem;
+    private DecoratedRecyclerView childLayout;
+    private String selectedUserID;
+    private String selectedUser;
+    private int selectedItem;
 
-    private ArrayList<String> childList;
+    private TreeMap<String, String> childMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.child_login);
-
-        childList = ActivityHelper.getChildUsers(getApplicationContext());
-        System.out.println("Child list: " + childList);
-
-        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, childList);
-
+        childMap = ActivityHelper.getChildUserMap(getApplicationContext());
         childLayout = findViewById(R.id.child_accounts);
-        childLayout.setAdapter(adapter);
-        childLayout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        adapter = new MapRecyclerAdapter(childMap);
+        adapter.setClickListener(new MapRecyclerAdapter.ItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(View view, int position) {
+                if (position > -1){
+                    selectedUserID = adapter.getKey(position);
+                    selectedUser = adapter.getValue(position);
+                }
                 selectedItem = position;
+                System.out.println(selectedItem);
             }
         });
+        childLayout.setAdapter(adapter);
+
     }
 
 
     public void toChildInitial(View view){
-        if (childLayout.isItemChecked(selectedItem)) {
+        if (adapter.isItemChecked(selectedItem)) {
             Intent intent = new Intent(this, ChildInitialActivity.class);
-            intent.putExtra("user", childList.get(selectedItem));
+            intent.putExtra("user", selectedUser);
+            intent.putExtra("user_id", selectedUserID);
             startActivity(intent);
         }
         else{
@@ -64,8 +69,7 @@ public class ChildLoginActivity extends AppCompatActivity {
     }
 
     public void back(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 
 }
