@@ -2,39 +2,31 @@ package com.example.socialstorybuilder.childactivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.example.socialstorybuilder.ActivityHelper;
 import com.example.socialstorybuilder.DecoratedRecyclerView;
-import com.example.socialstorybuilder.HashMapAdapter;
+import com.example.socialstorybuilder.IdData;
+import com.example.socialstorybuilder.ListRecyclerAdapter;
 import com.example.socialstorybuilder.MainActivity;
-import com.example.socialstorybuilder.MapRecyclerAdapter;
-import com.example.socialstorybuilder.database.DatabaseHelper;
-import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.storyedit.StoryReader;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 public class ChildInitialActivity extends AppCompatActivity {
 
     private String userID;
     private String selectedStory;
-    private MapRecyclerAdapter adapter;
+    private ListRecyclerAdapter adapter;
     private AlertDialog.Builder emptyBookWarning;
 
     @Override
@@ -53,24 +45,21 @@ public class ChildInitialActivity extends AppCompatActivity {
         welcomeMessage.setText("Hi, " + user);
 
         ImageView avatar = findViewById(R.id.avatar);
-        TreeMap<String, String> map = ActivityHelper.getChildStoryMap(getApplicationContext(), userID);
+        ArrayList<IdData> map = ActivityHelper.getChildStoryList(getApplicationContext(), userID);
         DecoratedRecyclerView list = findViewById(R.id.child_story_list);
-        adapter = new MapRecyclerAdapter(map);
+        adapter = new ListRecyclerAdapter(map);
         list.setAdapter(adapter);
-        adapter.setClickListener(new MapRecyclerAdapter.ItemClickListener() {
+        adapter.setClickListener(new ListRecyclerAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (position > -1){
-                    selectedStory = adapter.getKey(position);
-                    System.out.println(selectedStory);
+                if (position != RecyclerView.NO_POSITION){
+                    selectedStory = adapter.getItem(position).getData();
                 }
             }
         });
         String avatarFile = ActivityHelper.getAvatarURI(getApplicationContext(), user);
 
         if (!avatarFile.equals(getString(R.string.image_not_chosen))) {
-
-            System.out.println(avatarFile + " != " + getString(R.string.image_not_chosen));
             Uri path = Uri.parse(avatarFile);
             avatar.setImageURI(path);
         }

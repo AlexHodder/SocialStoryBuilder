@@ -72,7 +72,6 @@ public class AdultCreateActivity extends AppCompatActivity {
             values.put(DatabaseNameHelper.AdultUserEntry.COLUMN_NAME, username);
             values.put(DatabaseNameHelper.AdultUserEntry.COLUMN_PASSWORD, password);
             long rowID = db.insert(DatabaseNameHelper.AdultUserEntry.TABLE_NAME, null, values);
-            System.out.println(rowID);
 
             if (rowID == -1){
                 errorDialog.setMessage(R.string.adult_name_error);
@@ -92,11 +91,11 @@ public class AdultCreateActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AdultInitialActivity.class);
         intent.putExtra("user", nameInput.getText().toString());
         startActivity(intent);
+        finish();
     }
 
     public void switchToAdultLogin(View view) {
-        Intent intent = new Intent(this, AdultLoginActivity.class);
-        startActivity(intent);
+        finish();
     }
 
 }

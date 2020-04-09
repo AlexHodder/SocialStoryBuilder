@@ -63,7 +63,6 @@ public class ConfigureStory extends AppCompatActivity {
         //Retrieve values and setup database
         if (intent.hasExtra("story_id")){
             storyID = intent.getStringExtra("story_id");
-            System.out.println("Story ID: " + storyID);
 
             DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
             SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -91,9 +90,7 @@ public class ConfigureStory extends AppCompatActivity {
             values.put(StoryEntry.COLUMN_AUTHOR, author);
             values.put(StoryEntry.COLUMN_DATE, date);
             values.put(StoryEntry.COLUMN_TITLE, title);
-            System.out.println("NO CURRENT STORY");
             long rowID = db.insert(StoryEntry.TABLE_NAME, null, values);
-            System.out.println("Inserted, at row: " + rowID);
             if (rowID>0) storyID = Long.toString(rowID);
             db.close();
         }
@@ -318,7 +315,6 @@ public class ConfigureStory extends AppCompatActivity {
                 values.put(UserStoryEntry.COLUMN_USER_ID, idData.getId());
                 long rowID = db.insert(UserStoryEntry.TABLE_NAME, null, values);
                 if (rowID < 0) {
-                    System.out.println("Insert failed");
                 }
             }
         }

@@ -115,7 +115,6 @@ public class PageEditor extends AppCompatActivity {
             long imageRowID = db.insert(ImageEntry.TABLE_NAME, null, imageValues);
             //TODO write something if an image isn't correctly put into database
             if (imageRowID < 0) {
-                System.out.println("IMAGE NOT STORED PROPERLY, URI: " + uri);
                 db.close();
                 return;
             }
@@ -128,7 +127,6 @@ public class PageEditor extends AppCompatActivity {
             long imageRowID = db.delete(ImageEntry.TABLE_NAME, selection, selectionArgs);
             //TODO write something if an image isn't correctly put into database
             if (imageRowID < 0) {
-                System.out.println("IMAGE NOT REMOVED PROPERLY, URI: " + uri);
                 db.close();
                 return;
             }
@@ -163,7 +161,6 @@ public class PageEditor extends AppCompatActivity {
         String[] selectionArgs = {pageID};
 
         Cursor textCursor = db.rawQuery("SELECT "+ PageEntry.COLUMN_TEXT + " FROM " + PageEntry.TABLE_NAME + " WHERE " + PageEntry._ID + " = ?", selectionArgs);
-        System.out.println(textCursor.getCount());
         textCursor.moveToFirst();
         text.setText(textCursor.getString(textCursor.getColumnIndex(PageEntry.COLUMN_TEXT)));
         textCursor.close();

@@ -26,7 +26,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialstorybuilder.ActivityHelper;
-import com.example.socialstorybuilder.adultactivity.AdultInitialActivity;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 import com.example.socialstorybuilder.R;
@@ -74,7 +73,6 @@ public class ChildCreateActivity extends AppCompatActivity {
     }
 
     public void createChild(View view) {
-        System.out.println("CREATE CHILD CALLED");
         String name = nameInput.getText().toString();
 
         if(TextUtils.isEmpty(name)) {
@@ -95,10 +93,8 @@ public class ChildCreateActivity extends AppCompatActivity {
 
         long rowID = db.insert(ChildUserEntry.TABLE_NAME, null, values);
 
-        System.out.println(rowID);
 
         if (rowID == -1){
-            System.out.println("Name DUPL.");
             hintDialog = new AlertDialog.Builder(ChildCreateActivity.this);
             hintDialog.setMessage(R.string.child_name_error);
             hintDialog.setPositiveButton(R.string.popup_close, null);

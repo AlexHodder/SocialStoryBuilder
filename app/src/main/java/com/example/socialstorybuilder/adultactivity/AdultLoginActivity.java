@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialstorybuilder.R;
@@ -19,6 +20,7 @@ public class AdultLoginActivity extends AppCompatActivity {
 
     private EditText nameInput;
     private EditText passwordInput;
+    private AlertDialog.Builder incorrectLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,10 @@ public class AdultLoginActivity extends AppCompatActivity {
         setContentView(R.layout.adult_login);
         nameInput = findViewById(R.id.username);
         passwordInput = findViewById(R.id.password);
+        incorrectLogin = new AlertDialog.Builder(AdultLoginActivity.this);
+        incorrectLogin.setTitle(R.string.login_failed);
+        incorrectLogin.setMessage(R.string.incorrect_login);
+        incorrectLogin.setPositiveButton(R.string.popup_close, null);
     }
 
     public void signIn(View view){
@@ -52,7 +58,7 @@ public class AdultLoginActivity extends AppCompatActivity {
         if (cursorCount > 0){
             switchToAdultInitial(view);
         }
-        else System.out.println("incorrect login details");
+        else incorrectLogin.show();
     }
 
     public void switchToAdultInitial(View view) {

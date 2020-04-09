@@ -37,6 +37,7 @@
     <string name="book_empty">Sorry this book is empty</string>
 
     <string name="page_no">Page: %d</string>
+    <string name="incorrect_login">Sorry, incorrect login details.</string>
 
 
     <string name="child_name_error">Child name is not unique</string>

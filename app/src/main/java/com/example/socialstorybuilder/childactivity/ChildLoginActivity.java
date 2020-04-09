@@ -43,7 +43,6 @@ public class ChildLoginActivity extends AppCompatActivity {
                     selectedUser = adapter.getItem(position).getData();
                 }
                 selectedItem = position;
-                System.out.println(selectedItem);
             }
         });
         childLayout.setAdapter(adapter);
