@@ -53,7 +53,7 @@ public class ChildInitialActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 if (position != RecyclerView.NO_POSITION){
-                    selectedStory = adapter.getItem(position).getData();
+                    selectedStory = adapter.getItem(position).getId();
                 }
             }
         });

@@ -1,9 +1,11 @@
 package com.example.socialstorybuilder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -207,6 +209,21 @@ public class ActivityHelper extends AppCompatActivity {
         return avatarFile;
     }
 
+    public static String getTitleFromID(Context context, String id){
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {DatabaseNameHelper.StoryEntry.COLUMN_TITLE};
+        String selection = DatabaseNameHelper.StoryEntry._ID + " = ?";
+        String[] selectionArgs = { id };
+
+        Cursor titleCursor = db.query(DatabaseNameHelper.StoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+        titleCursor.moveToNext();
+        String title = titleCursor.getString(titleCursor.getColumnIndex(DatabaseNameHelper.StoryEntry.COLUMN_TITLE));
+        titleCursor.close();
+        return title;
+    }
+
 
     public static String getChildNameFromID(Context context, Integer id){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
@@ -233,5 +250,14 @@ public class ActivityHelper extends AppCompatActivity {
         db.close();
         return (numEntries > 0);
     }
+
+    public void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
 
 }

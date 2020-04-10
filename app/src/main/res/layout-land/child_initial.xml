@@ -62,4 +62,15 @@
         app:layout_constraintStart_toEndOf="@+id/avatar"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/childStoryListHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/story_select"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/child_story_list"
+        app:layout_constraintStart_toEndOf="@+id/avatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

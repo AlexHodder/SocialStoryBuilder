@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
-import com.example.socialstorybuilder.database.DatabaseNameHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
 public class StoryReader extends AppCompatActivity {
@@ -28,7 +27,7 @@ public class StoryReader extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_story_reader);
+        setContentView(R.layout.story_reader);
         TextView textView = findViewById(R.id.display_text);
         LinearLayout imageLayout = findViewById(R.id.image_display);
         TextView pageNoView = findViewById(R.id.page_no_text);
@@ -119,6 +118,10 @@ public class StoryReader extends AppCompatActivity {
         if (statistics){
             recordStatistics();
         }
+        finish();
+    }
+
+    public void exitStory(View view){
         finish();
     }
 

@@ -3,14 +3,14 @@ package com.example.socialstorybuilder.storyedit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.pdf.PdfDocument;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -40,11 +40,13 @@ public class PageEditor extends AppCompatActivity {
     private ArrayList<String> addImageUriList;
     private ArrayList<String> removeImageUriList;
     private ImageView selectedImage;
+    private AlertDialog.Builder cancelConfirmDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_page_editor);
+        setContentView(R.layout.page_editor);
 
         Intent intent = getIntent();
         storyID = intent.getStringExtra("story_id");
@@ -188,6 +190,20 @@ public class PageEditor extends AppCompatActivity {
             imageLayout.addView(imageView);
         }
         imageCursor.close();
-
     }
+
+    public void cancel(final View view){
+        cancelConfirmDialog = new AlertDialog.Builder(PageEditor.this);
+        cancelConfirmDialog.setTitle(R.string.cancel);
+        cancelConfirmDialog.setMessage(getString(R.string.cancel_confirm));
+        cancelConfirmDialog.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        cancelConfirmDialog.setNegativeButton(R.string.cancel, null);
+        cancelConfirmDialog.show();
+    }
+
 }

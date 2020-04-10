@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Social Story Builder</string>
+    <string name="app_name">Social Narrative Builder</string>
     <string name="title_home">Home</string>
     <string name="back_button">Back</string>
     <string name="logout_button">Logout</string>
@@ -29,10 +29,26 @@
 
     <string name="page">Page</string>
     <string name="sample_sentences">Sample Sentences</string>
+
+    <string name="new_story">Create New Story</string>
+    <string name="new_user">Add User</string>
+    <string name="new_reader">Add New Reader</string>
+    <string name="new_page">New Page</string>
     <string name="new_image">Add Image</string>
-    <string name="remove_image">Remove Image</string>
     <string name="new_sound">Add Sound</string>
+
+    <string name="remove_image">Remove Image</string>
     <string name="remove_sound">Remove Sound</string>
+    <string name="remove_page">Remove Selected Page</string>
+    <string name="remove_user">Remove User</string>
+    <string name="remove_reader">Remove Selected Child</string>
+
+    <string name="edit_page">Edit Selected Page</string>
+    <string name="edit_story">Edit Existing Story</string>
+
+    <string name="page_editor">Create/Edit Pages</string>
+    <string name="user_editor">Assign Readers To Story</string>
+
     <string name="finish_story">Finish</string>
     <string name="book_empty">Sorry this book is empty</string>
 
@@ -47,7 +63,6 @@
 
     <string name="story_create_help">CREATE NEW STORY takes you to the story creation page. Here you can find tips for creating a social story.</string>
 
-
     <string name="create_account">Create Account</string>
     <string name="create_account_adult">Create Adult Account</string>
     <string name="create_account_child">Create Child Account</string>
@@ -58,33 +73,28 @@
     <string name="action_register_child">Create New Child</string>
     <string name="action_register_short">Create</string>
 
-    <string name="welcome">"Welcome"</string>
+    <string name="welcome">"Welcome, %s"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_main2">Main2Activity</string>
 
-    <string name="new_story">Create New Story</string>
     <string name="read_story">Read Existing Story</string>
-    <string name="edit_story">Edit Existing Story</string>
     <string name="read_edit_story">Read/Edit Existing Story</string>
 
     <string name="story_readers">Story can be read by:</string>
     <string name="child_select">Select Child To Add</string>
 
-
     <string name="story_select">Select Story</string>
     <string name="story_create_and_edit">Configure Story</string>
 
-    <string name="new_page">New</string>
-    <string name="edit_page">Edit</string>
-    <string name="remove_page">Remove</string>
-    <string name="new_user">Add User</string>
-    <string name="remove_user">Remove User</string>
 
+
+    <string name="save">Save</string>
     <string name="confirm">Confirm</string>
     <string name="preview">Preview</string>
     <string name="cancel">Cancel</string>
+    <string name="cancel_confirm">Are you sure you would like to cancel? \nAny unsaved changes will be lost.</string>
 
     <string name="next_page">Next</string>
     <string name="back_page">Back</string>
