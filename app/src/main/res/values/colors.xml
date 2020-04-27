@@ -7,5 +7,18 @@
     <color name="adultColor">#894949</color>
     <color name="helpColor">#00FFFF</color>
 
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#0000FF</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="orange">#FFA500</color>
+    <color name="purple">#800080</color>
+    <color name="yellow_orange">#FFAE42</color>
+    <color name="yellow_green">#9ACD32</color>
+    <color name="red_orange">#FF5349</color>
+    <color name="red_purple">#C71585</color>
+    <color name="blue_purple">#8A2BE2</color>
+    <color name="blue_green">#0D98BA</color>
 
 </resources>

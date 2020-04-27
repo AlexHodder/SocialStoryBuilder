@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.net.Uri;
 
 
@@ -26,6 +27,25 @@ public class ActivityHelper extends AppCompatActivity {
 
     public ActivityHelper(){
 
+    }
+
+    public static ArrayList<IdData> colorWheel(Context context){
+        ArrayList<IdData> colorList = new ArrayList<>();
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.white)), "White"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.red)), "Red"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.blue)), "Blue"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.green)), "Green"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.yellow)), "Yellow" ));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.purple)), "Purple"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.orange)), "Orange"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.yellow_orange)), "Yellow-Orange"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.yellow_green)), "Yellow-Green"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.red_orange)), "Red-Orange"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.red_purple)), "Red-Purple"));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.blue_purple)), "Blue-Purple" ));
+        colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.blue_green)), "Blue-Green"));
+
+        return colorList;
     }
 
     public static ArrayList<String> getChildUsers(Context context) {

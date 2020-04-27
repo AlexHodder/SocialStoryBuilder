@@ -1,15 +1,27 @@
 package com.example.socialstorybuilder.storyedit;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,12 +30,20 @@ import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
+import java.util.Locale;
+
 public class StoryReader extends AppCompatActivity {
 
     private int pageNo;
     private String storyId;
     private boolean statistics;
+    private String userId;
 
+    private ImageButton textToSpeechButton;
+    private TextToSpeech textToSpeech;
+    private Boolean lastPage = false;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,20 +53,32 @@ public class StoryReader extends AppCompatActivity {
         TextView pageNoView = findViewById(R.id.page_no_text);
         Button prevPgButton = findViewById(R.id.prev_pg);
         Button nextPgButton = findViewById(R.id.next_pg);
+        ConstraintLayout background = findViewById(R.id.backgroundLayout);
 
         String pageId;
-        String text;
+        final String text;
         int pageTotal;
 
         Intent intent = getIntent();
         pageNo = intent.getIntExtra("page_no", 1);
         storyId = intent.getStringExtra("story_id");
-        statistics = intent.getBooleanExtra("statistics", false);
+        statistics = false;
+        if (intent.hasExtra("user_id")) {
+            statistics = true;
+            userId = intent.getStringExtra("user_id");
+        }
 
         // LOAD ALL VARIABLES FROM DATABASE
 
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        //Story background color selection
+        Cursor colorQuery = db.rawQuery("SELECT "+ StoryEntry.BACKGROUND_COLOR + " FROM " + StoryEntry.TABLE_NAME + " WHERE " + StoryEntry._ID + " = ?", new String[]{storyId});
+        colorQuery.moveToFirst();
+        String color = colorQuery.getString(colorQuery.getColumnIndex(StoryEntry.BACKGROUND_COLOR));
+        background.setBackgroundColor(Color.parseColor(color));
+        colorQuery.close();
 
         //Page_ID selection
         String[] pageProjection = {PageEntry.COLUMN_TEXT, PageEntry._ID};
@@ -77,6 +109,7 @@ public class StoryReader extends AppCompatActivity {
             imageLayout.addView(imageView);
         }
         imageCursor.close();
+
         db.close();
         // BUTTON LOGIC
         if (pageNo == 1){
@@ -93,14 +126,36 @@ public class StoryReader extends AppCompatActivity {
                 }
             });
         }
+        final String voiceName = "en-gb-x-rjs#female_1-local";
+        textToSpeechButton = findViewById(R.id.textToSpeechButton);
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS){
+                    int result = textToSpeech.setLanguage(Locale.ENGLISH);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.e("TTS", "Language not supported.");
+                    }
+                    else textToSpeechButton.setEnabled(true);
+                    textToSpeech.setVoice(new Voice(voiceName, Locale.UK, Voice.QUALITY_NORMAL, Voice.LATENCY_NORMAL, false, null));
+                }
+                else Log.e("TTS", "Init. failed");
+            }
+        }, "com.google.android.tts");
 
+        textToSpeechButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
     }
 
     public void nextPage(View view){
         Intent intent = new Intent(this, StoryReader.class);
         intent.putExtra("page_no", pageNo + 1);
         intent.putExtra("story_id", storyId);
-        intent.putExtra("statistics", statistics);
+        if (statistics) intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
     }
@@ -109,23 +164,71 @@ public class StoryReader extends AppCompatActivity {
         Intent intent = new Intent(this, StoryReader.class);
         intent.putExtra("page_no", pageNo - 1);
         intent.putExtra("story_id", storyId);
-        intent.putExtra("statistics", statistics);
+        if (statistics) intent.putExtra("user_id", userId);
         startActivity(intent);
         finish();
     }
 
-    public void finishStory(View v){
-        if (statistics){
-            recordStatistics();
-        }
-        finish();
+    public void finishStory(final View v){
+        final AlertDialog.Builder feedbackDialog = new AlertDialog.Builder(StoryReader.this);
+
+        final Integer[] position = {-1};
+        feedbackDialog.setTitle(R.string.feedback);
+        final String[] feedbackList = getResources().getStringArray(R.array.feedback_array);
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(StoryReader.this, android.R.layout.select_dialog_singlechoice);
+        adapter.addAll(feedbackList);
+
+        feedbackDialog.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                position[0] = which;
+                System.out.println(which + ", " + adapter.getItem(which));
+            }
+        });
+        feedbackDialog.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                System.out.println("STATISTICS: " + statistics);
+                if (statistics){
+                    recordStatistics(position[0]);
+                }
+                dialog.dismiss();
+                finish();
+            }
+
+
+        });
+        feedbackDialog.show();
+
     }
 
     public void exitStory(View view){
         finish();
     }
 
-    public void recordStatistics(){
-        //WRITE STATISTICS RECORDING DATABASE TABLE
+    public void recordStatistics(Integer feedback){
+        System.out.println("WRITE TO DB: " + feedback);
+
+
+        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FeedbackEntry.COLUMN_USER_ID, userId);
+        values.put(FeedbackEntry.COLUMN_STORY_ID, storyId);
+        values.put(FeedbackEntry.COLUMN_FEEDBACK, feedback);
+
+        db.insert(FeedbackEntry.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (textToSpeech != null){
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
     }
 }

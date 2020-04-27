@@ -61,6 +61,7 @@
         android:layout_weight="0"
         android:choiceMode="singleChoice"
         android:listSelector="@color/cardview_light_background"
+        android:fadeScrollbars="false"
         app:layout_constraintBottom_toTopOf="@+id/dummyTextView"
         app:layout_constraintEnd_toStartOf="@+id/read_button"
         app:layout_constraintStart_toStartOf="parent"

@@ -58,9 +58,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/prompt_background_colour_select"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/EditPages"
         app:layout_constraintStart_toStartOf="@+id/story_name_input"
-        app:layout_constraintTop_toBottomOf="@+id/story_name_input" />
+        app:layout_constraintTop_toBottomOf="@+id/story_name_input"
+        app:layout_constraintVertical_bias="0.19999999" />
 
     <TextView
         android:id="@+id/textViewStoryTitle"
@@ -97,5 +100,17 @@
         app:layout_constraintStart_toStartOf="@+id/story_name_input"
         app:layout_constraintTop_toBottomOf="@+id/story_name_input"
         app:layout_constraintVertical_bias="0.7" />
+
+    <Button
+        android:id="@+id/colorButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_colour_text"
+        app:layout_constraintEnd_toEndOf="@+id/story_name_input"
+        app:layout_constraintStart_toEndOf="@+id/bg_colour_text"
+        app:layout_constraintTop_toTopOf="@+id/bg_colour_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

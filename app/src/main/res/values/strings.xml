@@ -88,7 +88,33 @@
     <string name="story_select">Select Story</string>
     <string name="story_create_and_edit">Configure Story</string>
 
+    <string name="feedback">This story makes me feel:</string>
+    <string-array name="feedback_array">
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Angry</item>
+        <item>Confused</item>
+    </string-array>
+    <string name="happy">Happy</string>
+    <string name="sad">Sad</string>
+    <string name="angry">Angry</string>
+    <string name="confused">Confused</string>
 
+
+    <string name="color_picker">Select background colour</string>
+    <string name="white">White</string>
+    <string name="blue">Blue</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="yellow">Yellow</string>
+    <string name="orange">Orange</string>
+    <string name="purple">Purple</string>
+    <string name="yellow_orange">Yellow-Orange</string>
+    <string name="yellow_green">Yellow-Green</string>
+    <string name="red_orange">Red-Orange</string>
+    <string name="red_purple">Red-Purple</string>
+    <string name="blue_purple">Blue-Purple</string>
+    <string name="blue_green">Blue-Green</string>
 
     <string name="save">Save</string>
     <string name="confirm">Confirm</string>
@@ -102,4 +128,13 @@
 
     <string name="image_not_chosen">No Avatar Selected</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_statistic_viewer">StatisticViewer</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

@@ -73,7 +73,7 @@ public class ChildInitialActivity extends AppCompatActivity {
             if (ActivityHelper.isStoryReadable(getApplicationContext(), selectedStory)){
                 Intent intent = new Intent(this, StoryReader.class);
                 intent.putExtra("story_id", selectedStory);
-                intent.putExtra("statistics", true);
+                intent.putExtra("user_id", userID);
                 startActivity(intent);
             }
             else {

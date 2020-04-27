@@ -42,7 +42,6 @@ public class PageEditor extends AppCompatActivity {
     private ImageView selectedImage;
     private AlertDialog.Builder cancelConfirmDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +55,6 @@ public class PageEditor extends AppCompatActivity {
         title.setText(getResources().getString(R.string.page_no, pageNo));
         text = findViewById(R.id.page_text);
         imageLayout = findViewById(R.id.image_layout);
-
 
 
         addImageUriList = new ArrayList<>();

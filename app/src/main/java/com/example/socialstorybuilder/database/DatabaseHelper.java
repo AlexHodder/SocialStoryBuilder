@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.provider.ContactsContract;
 
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 import androidx.annotation.Nullable;
@@ -11,7 +12,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "storybuilder.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -24,7 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 StoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 StoryEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 StoryEntry.COLUMN_AUTHOR + " TEXT NOT NULL, " +
-                StoryEntry.COLUMN_DATE + " TEXT NOT NULL " +
+                StoryEntry.COLUMN_DATE + " TEXT NOT NULL, " +
+                StoryEntry.BACKGROUND_COLOR + " TEXT NOT NULL" +
                 ")";
 
         final String SQL_CREATE_PAGES_TABLE = "CREATE TABLE IF NOT EXISTS " +
@@ -77,6 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " FOREIGN KEY ("+UserStoryEntry.COLUMN_USER_ID+") REFERENCES "+ChildUserEntry.TABLE_NAME+"("
                 +ChildUserEntry._ID+") ON DELETE CASCADE)";
 
+
         db.execSQL(SQL_CREATE_STORY_TABLE);
         db.execSQL(SQL_CREATE_PAGES_TABLE);
         db.execSQL(SQL_CREATE_ANSWER_PAGES_TABLE);
@@ -84,13 +87,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_CHILD_USERS_TABLE);
         db.execSQL(SQL_CREATE_ADULT_USERS_TABLE);
         db.execSQL(SQL_CREATE_USER_STORY_TABLE);
-
+        db.execSQL(SQL_CREATE_STATISTICS_STORY_TABLE);
     }
+
+    // Version 2 update
+    private static final String DATABASE_ALTER_STORY_1 = "ALTER TABLE "+ StoryEntry.TABLE_NAME + " ADD COLUMN " + StoryEntry.BACKGROUND_COLOR + " TEXT NOT NULL DEFAULT '#ffffff'";
+
+    // Version 3 update
+    private static final String SQL_CREATE_STATISTICS_STORY_TABLE = "CREATE TABLE IF NOT EXISTS " +
+            FeedbackEntry.TABLE_NAME + " (" +
+            FeedbackEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            FeedbackEntry.COLUMN_USER_ID + " INTEGER NOT NULL, " +
+            FeedbackEntry.COLUMN_STORY_ID + " INTEGER NOT NULL, " +
+            FeedbackEntry.COLUMN_FEEDBACK + " INTEGER, " +
+            " FOREIGN KEY ("+FeedbackEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+"("
+            +StoryEntry._ID+") ON DELETE CASCADE ,"+
+            " FOREIGN KEY ("+FeedbackEntry.COLUMN_USER_ID+") REFERENCES "+ChildUserEntry.TABLE_NAME+"("
+            +ChildUserEntry._ID+") ON DELETE CASCADE)";
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + StoryEntry.TABLE_NAME);
-        onCreate(db);
+        switch(oldVersion) {
+            case 1: {
+                db.execSQL(DATABASE_ALTER_STORY_1);
+            }
+            case 2: {
+                db.execSQL(SQL_CREATE_STATISTICS_STORY_TABLE);
+            }
+        }
     }
 
     @Override

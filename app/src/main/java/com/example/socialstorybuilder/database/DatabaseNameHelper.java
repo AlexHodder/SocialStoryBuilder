@@ -14,6 +14,7 @@ public class DatabaseNameHelper {
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_AUTHOR = "author";
         public static final String COLUMN_DATE = "date";
+        public static final String BACKGROUND_COLOR = "bg_colour";
     }
 
     public static final class ChildUserEntry implements BaseColumns {
@@ -52,6 +53,13 @@ public class DatabaseNameHelper {
         public static final String TABLE_NAME = "user_stories";
         public static final String COLUMN_USER_ID = "user_ID";
         public static final String COLUMN_STORY_ID = "story_ID";
+    }
+
+    public static final class FeedbackEntry implements BaseColumns {
+        public static final String TABLE_NAME = "statistics";
+        public static final String COLUMN_USER_ID = "user_ID";
+        public static final String COLUMN_STORY_ID = "story_ID";
+        public static final String COLUMN_FEEDBACK = "feedback";
     }
 
 
