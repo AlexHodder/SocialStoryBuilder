@@ -179,7 +179,7 @@ public class StoryReader extends AppCompatActivity {
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(StoryReader.this, android.R.layout.select_dialog_singlechoice);
         adapter.addAll(feedbackList);
 
-        feedbackDialog.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
+        feedbackDialog.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 position[0] = which;

@@ -90,16 +90,25 @@
 
     <string name="feedback">This story makes me feel:</string>
     <string-array name="feedback_array">
-        <item>Happy</item>
-        <item>Sad</item>
-        <item>Angry</item>
-        <item>Confused</item>
+        <item>@string/happy </item>
+        <item>@string/sad</item>
+        <item>@string/angry</item>
+        <item>@string/confused </item>
     </string-array>
-    <string name="happy">Happy</string>
-    <string name="sad">Sad</string>
-    <string name="angry">Angry</string>
-    <string name="confused">Confused</string>
 
+
+    <string name="happy">Happy &#128522; </string>
+    <string name="sad">Sad &#128546; </string>
+    <string name="angry">Angry &#128544; </string>
+    <string name="confused">Confused &#128533; </string>
+
+    <string name="view_statistic">View Statistics For Stories</string>
+    <string name="child_statistic_text">Select Child</string>
+
+    <string name="story">Story</string>
+    <string name="child_name">Child</string>
+    <string name="total_reads">Total Reads</string>
+    <string name ="no_feedback">No Response</string>
 
     <string name="color_picker">Select background colour</string>
     <string name="white">White</string>

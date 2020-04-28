@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/adultColor"
+    tools:context=".storyedit.StatisticViewer">
+
+    <LinearLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/headingView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headingView"
+        app:layout_constraintVertical_bias="0.1">
+
+        <TextView
+            android:id="@+id/childText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textAlignment="viewEnd"
+            android:gravity="end"
+            android:text="@string/child_statistic_text"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/childSpinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:dropDownWidth="match_parent"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/headingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_statistic"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/queryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+
+        android:text="@android:string/search_go"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tableLayout2"
+        app:layout_constraintStart_toEndOf="@+id/tableLayout2"
+        app:layout_constraintTop_toTopOf="@+id/tableLayout2" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/queryButton">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:id="@+id/main_table"
+            android:divider="@android:color/black">
+        </TableLayout>
+    </ScrollView>
+
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/queryButton">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tableRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:nestedScrollingEnabled="false"
+            tools:targetApi="lollipop" />
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

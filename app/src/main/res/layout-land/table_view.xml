@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/holder_background"
+    >
+
+    <TextView
+        android:id="@+id/storyNameHeading"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/story"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/nameHeading"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/child_name"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/totalReadHeading"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/total_reads"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/happyHeading"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/happy"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/sadHeading"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/sad"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/angryHeading"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/angry"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/confusedHeading"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/confused"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/noFeedbackHeading"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/no_feedback"
+        android:textAlignment="center" />
+
+</LinearLayout>

@@ -21,6 +21,7 @@ import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper;
 import com.example.socialstorybuilder.storyedit.ConfigureStory;
+import com.example.socialstorybuilder.storyedit.StatisticViewer;
 import com.example.socialstorybuilder.storyedit.StoryReader;
 
 import java.util.ArrayList;
@@ -124,6 +125,11 @@ public class AdultInitialActivity extends AppCompatActivity {
     public void switchToCreate(View view){
         Intent intent = new Intent(this, ConfigureStory.class);
         intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
+    public void switchToStatistics(View view){
+        Intent intent = new Intent(this, StatisticViewer.class);
         startActivity(intent);
     }
 

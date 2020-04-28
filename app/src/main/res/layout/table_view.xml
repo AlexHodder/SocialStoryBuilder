@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/holder_background"
+    >
+
+    <TextView
+        android:id="@+id/storyNameHeading"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="@string/story"
+        android:textAlignment="center"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/nameHeading"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/child_name"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/totalReadHeading"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/total_reads"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/happyHeading"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/happy"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sadHeading"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/sad"
+        android:textStyle="bold"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/angryHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="@string/angry"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/confusedHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="@string/confused"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/noFeedbackHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="@string/no_feedback"
+        android:textStyle="bold" />
+
+</LinearLayout>
