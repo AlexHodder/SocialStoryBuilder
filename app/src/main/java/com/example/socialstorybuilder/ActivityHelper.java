@@ -24,6 +24,7 @@ import static android.database.DatabaseUtils.queryNumEntries;
 public class ActivityHelper extends AppCompatActivity {
 
     public static final int GALLERY_REQUEST_CODE = 123;
+    public static final int AUDIO_REQUEST_CODE = 246;
 
     public ActivityHelper(){
 

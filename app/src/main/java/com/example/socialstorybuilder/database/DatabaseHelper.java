@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "storybuilder.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 PageEntry.COLUMN_STORY_ID + " INTEGER NOT NULL, " +
                 PageEntry.COLUMN_PAGE_NO + " INTEGER NOT NULL, " +
                 PageEntry.COLUMN_TEXT + " TEXT, " +
+                PageEntry.COLUMN_SOUND + " TEXT, " +
                 " FOREIGN KEY ("+PageEntry.COLUMN_STORY_ID+") REFERENCES "+StoryEntry.TABLE_NAME+"("+ StoryEntry._ID +
                 ") ON DELETE CASCADE)";
 
@@ -105,6 +106,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             " FOREIGN KEY ("+FeedbackEntry.COLUMN_USER_ID+") REFERENCES "+ChildUserEntry.TABLE_NAME+"("
             +ChildUserEntry._ID+") ON DELETE CASCADE)";
 
+    // Version 4 update
+    private static final String DATABASE_ALTER_PAGE_1 = "ALTER TABLE "+ PageEntry.TABLE_NAME + " ADD COLUMN " + PageEntry.COLUMN_SOUND + " TEXT";
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -114,6 +117,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             case 2: {
                 db.execSQL(SQL_CREATE_STATISTICS_STORY_TABLE);
+            }
+            case 3: {
+                db.execSQL(DATABASE_ALTER_PAGE_1);
             }
         }
     }

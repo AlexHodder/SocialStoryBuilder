@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/adultColor">
 
-    <ImageButton
-        android:id="@+id/help_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#3C3F41"
-        android:clickable="true"
-        android:onClick="helpPopup"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/new_story_button"
-        app:layout_constraintEnd_toStartOf="@+id/new_story_button"
-        app:layout_constraintTop_toTopOf="@+id/new_story_button"
-        app:srcCompat="@android:drawable/ic_menu_help" />
-
     <Button
         android:id="@+id/logout_button"
         android:layout_width="wrap_content"

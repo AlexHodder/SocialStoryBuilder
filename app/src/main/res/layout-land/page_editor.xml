@@ -64,12 +64,14 @@
     <Button
         android:id="@+id/new_sound_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:onClick="selectSound"
         android:text="@string/new_sound"
         android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/delete_image_button"
         app:layout_constraintEnd_toEndOf="@+id/delete_sound_button"
         app:layout_constraintStart_toStartOf="@+id/delete_sound_button"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="@+id/new_image_button" />
 
     <Button
         android:id="@+id/delete_image_button"
@@ -84,10 +86,11 @@
         android:id="@+id/delete_sound_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="removeSound"
         android:text="@string/remove_sound"
         android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/delete_image_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/new_sound_button" />
 
     <Button
@@ -116,15 +119,14 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.33"
-        app:layout_constraintStart_toEndOf="@+id/delete_image_button"
-        app:layout_constraintTop_toTopOf="@+id/new_image_button"
-        app:srcCompat="@android:drawable/ic_lock_silent_mode_off" />
+        app:layout_constraintBottom_toBottomOf="@+id/new_sound_button"
+        app:layout_constraintEnd_toStartOf="@+id/new_sound_button"
+        app:layout_constraintTop_toTopOf="@+id/new_sound_button"
+        app:srcCompat="@android:drawable/ic_media_play" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

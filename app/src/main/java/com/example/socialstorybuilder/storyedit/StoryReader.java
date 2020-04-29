@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -11,10 +12,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.Voice;
 import android.util.Log;
@@ -25,11 +32,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Locale;
 
 public class StoryReader extends AppCompatActivity {
@@ -41,7 +51,10 @@ public class StoryReader extends AppCompatActivity {
 
     private ImageButton textToSpeechButton;
     private TextToSpeech textToSpeech;
-    private Boolean lastPage = false;
+
+    private MediaPlayer mediaPlayer;
+
+    private ImageButton playSoundImage;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -53,6 +66,8 @@ public class StoryReader extends AppCompatActivity {
         TextView pageNoView = findViewById(R.id.page_no_text);
         Button prevPgButton = findViewById(R.id.prev_pg);
         Button nextPgButton = findViewById(R.id.next_pg);
+        playSoundImage = findViewById(R.id.imageView3);
+
         ConstraintLayout background = findViewById(R.id.backgroundLayout);
 
         String pageId;
@@ -81,13 +96,16 @@ public class StoryReader extends AppCompatActivity {
         colorQuery.close();
 
         //Page_ID selection
-        String[] pageProjection = {PageEntry.COLUMN_TEXT, PageEntry._ID};
+        String[] pageProjection = {PageEntry.COLUMN_TEXT, PageEntry._ID, PageEntry.COLUMN_SOUND};
         String pageSelection = PageEntry.COLUMN_STORY_ID + " = ? AND " + PageEntry.COLUMN_PAGE_NO + " = ?" ;
         String[] pageSelectionArgs = { storyId, String.valueOf(pageNo) };
 
         Cursor pageCursor = db.query(PageEntry.TABLE_NAME, pageProjection, pageSelection, pageSelectionArgs, null, null, PageEntry._ID);
         pageCursor.moveToFirst();
         pageId = pageCursor.getString(pageCursor.getColumnIndex(PageEntry._ID));
+        String sound = null;
+        if (pageCursor.isNull(pageCursor.getColumnIndex(PageEntry.COLUMN_SOUND))) playSoundImage.setVisibility(View.INVISIBLE);
+        else sound = pageCursor.getString(pageCursor.getColumnIndex(PageEntry.COLUMN_SOUND));
         text = pageCursor.getString(pageCursor.getColumnIndex(PageEntry.COLUMN_TEXT));
         pageTotal = (int) DatabaseUtils.queryNumEntries(db, PageEntry.TABLE_NAME, PageEntry.COLUMN_STORY_ID + " = ?", new String[]{storyId});
         pageCursor.close();
@@ -103,14 +121,45 @@ public class StoryReader extends AppCompatActivity {
 
         Cursor imageCursor = db.query(ImageEntry.TABLE_NAME, imageProjection, imageSelection, imageSelectionArgs, null, null, null);
         while(imageCursor.moveToNext()) {
-            String uri = imageCursor.getString(imageCursor.getColumnIndex(ImageEntry.COLUMN_URI));
+            String uriString = imageCursor.getString(imageCursor.getColumnIndex(ImageEntry.COLUMN_URI));
+            Uri uri = Uri.parse(uriString);
             ImageView imageView = new ImageView(getApplicationContext());
-            imageView.setImageURI(Uri.parse(uri));
+            try{
+                Bitmap bitmap;
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                imageView.setImageBitmap(bitmap);
+            }
+            catch (IOException e){
+                imageView.setImageResource(R.drawable.filenotfound);
+            }
             imageLayout.addView(imageView);
         }
         imageCursor.close();
-
         db.close();
+
+        // Sound Logic
+        if (sound != null){
+
+            mediaPlayer = MediaPlayer.create(this, Uri.parse(sound));
+            if (mediaPlayer != null){
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        playSoundImage.setImageDrawable(getDrawable(android.R.drawable.ic_media_play));
+                    }
+                });
+                playSoundImage.setVisibility(View.VISIBLE);
+                playSoundImage.setClickable(true);
+                playSoundImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        playSound(v);
+                    }
+                });
+            }
+            else Toast.makeText(getApplicationContext(), "Sound file doesn't exist.", Toast.LENGTH_LONG).show();
+
+        }
         // BUTTON LOGIC
         if (pageNo == 1){
             prevPgButton.setVisibility(View.INVISIBLE);
@@ -149,6 +198,22 @@ public class StoryReader extends AppCompatActivity {
                 textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
+    }
+
+    public void playSound(View view){
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            mediaPlayer.seekTo(0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                playSoundImage.setImageDrawable(getDrawable(android.R.drawable.ic_media_play));
+            }
+        }
+        else {
+            mediaPlayer.start();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                playSoundImage.setImageDrawable(getDrawable(android.R.drawable.ic_media_pause));
+            }
+        }
     }
 
     public void nextPage(View view){

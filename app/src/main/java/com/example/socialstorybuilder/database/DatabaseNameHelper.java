@@ -34,6 +34,7 @@ public class DatabaseNameHelper {
         public static final String COLUMN_STORY_ID = "story_ID";
         public static final String COLUMN_PAGE_NO = "page_no";
         public static final String COLUMN_TEXT = "text";
+        public static final String COLUMN_SOUND = "sound";
     }
 
     public static final class AnswerPageEntry implements BaseColumns {
