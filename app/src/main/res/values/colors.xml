@@ -3,9 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="childColor">#497A89</color>
-    <color name="adultColor">#894949</color>
+    <color name="childColor">#aac8d3</color>
+    <color name="adultColor">#fffdd0</color>
     <color name="helpColor">#00FFFF</color>
+
+    <color name="childText">#FFFFFF</color>
+    <color name="adultText">#000000</color>
+
 
     <color name="white">#FFFFFF</color>
     <color name="blue">#0000FF</color>

@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/adultColor">
+    android:background="@color/adultColor"
+    tools:context=".adultactivity.AdultInitialActivity">
+
+    <Button
+        android:id="@+id/viewSocialStoryTutorialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:padding="@dimen/fab_margin"
+        android:text="@string/social_story_tutorial"
+        app:layout_constraintBottom_toTopOf="@+id/logout_button"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
 
     <Button
         android:id="@+id/logout_button"
@@ -16,22 +29,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/new_story_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="switchToCreate"
-        android:text="@string/new_story"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logout_button" />
-
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/adultText"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,65 +43,42 @@
         app:layout_constraintVertical_bias="0.02"
         tools:text="@string/welcome" />
 
-    <com.example.socialstorybuilder.DecoratedRecyclerView
-        android:id="@+id/story_select"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0"
-        android:choiceMode="singleChoice"
-        android:listSelector="@color/cardview_light_background"
-        android:fadeScrollbars="false"
-        app:layout_constraintBottom_toTopOf="@+id/dummyTextView"
-        app:layout_constraintEnd_toStartOf="@+id/read_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/read_button" />
-
-    <Button
-        android:id="@+id/read_button"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="switchToRead"
-        android:text="@string/read"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/new_story_button"
-        app:layout_constraintTop_toTopOf="@+id/title"
-        app:layout_constraintVertical_bias="0.3" />
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/viewSocialStoryTutorialButton"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
-    <Button
-        android:id="@+id/edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="switchToEdit"
-        android:text="@string/edit"
-        app:layout_constraintEnd_toEndOf="@+id/read_button"
-        app:layout_constraintStart_toStartOf="@+id/read_button"
-        app:layout_constraintTop_toBottomOf="@+id/read_button" />
+        <Button
+            android:id="@+id/viewStoryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="switchToStoryPageActivity"
+            android:padding="@dimen/activity_vertical_margin"
+            android:text="@string/edit_story" />
 
-    <Button
-        android:id="@+id/delete_story"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="deletePage"
-        android:text="@string/delete"
-        app:layout_constraintEnd_toEndOf="@+id/read_button"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/read_button"
-        app:layout_constraintTop_toBottomOf="@+id/edit_button" />
+        <Button
+            android:id="@+id/createStoryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="switchToCreate"
+            android:padding="@dimen/activity_vertical_margin"
+            android:text="@string/new_story" />
 
-    <TextView
-        android:id="@+id/dummyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/delete_story"
-        app:layout_constraintTop_toBottomOf="@+id/delete_story" />
+        <Button
+            android:id="@+id/viewTutorialButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/fab_margin"
+            android:text="@string/view_tutorial" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="switchToStatistics"
-        android:text="view statistics"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

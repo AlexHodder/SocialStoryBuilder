@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/childColor">
+    android:background="@color/childColor"
+    tools:context=".childactivity.ChildInitialActivity">
 
     <TextView
         android:id="@+id/text_create_account2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_account_child"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/childText"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
@@ -79,7 +80,7 @@
         android:layout_height="wrap_content"
         android:onClick="selectImage"
         android:text="@string/prompt_avatar_select"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/childText"
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="@+id/imageView"

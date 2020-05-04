@@ -29,6 +29,7 @@
 
     <string name="page">Page</string>
     <string name="sample_sentences">Sample Sentences</string>
+<string name="sound_effect">Sound Effect</string>
 
     <string name="new_story">Create New Story</string>
     <string name="new_user">Add User</string>
@@ -108,7 +109,7 @@
     <string name="story">Story</string>
     <string name="child_name">Child</string>
     <string name="total_reads">Total Reads</string>
-    <string name ="no_feedback">No Response</string>
+    <string name="no_feedback">No Response</string>
 
     <string name="color_picker">Select background colour</string>
     <string name="white">White</string>
@@ -138,6 +139,11 @@
     <string name="image_not_chosen">No Avatar Selected</string>
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_statistic_viewer">StatisticViewer</string>
+
+    <string name="social_story_tutorial"><u>Information On Creating A Story</u></string>
+    <string name="view_tutorial">How To Use The App</string>
+
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -146,4 +152,5 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
 </resources>

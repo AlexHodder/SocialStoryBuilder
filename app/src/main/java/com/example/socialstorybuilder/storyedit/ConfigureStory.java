@@ -91,6 +91,7 @@ public class ConfigureStory extends AppCompatActivity {
             long rowID = db.insert(StoryEntry.TABLE_NAME, null, values);
             if (rowID>0) storyID = Long.toString(rowID);
             db.close();
+            title = "";
         }
 
         backgroundColourButton.setOnClickListener(new View.OnClickListener() {

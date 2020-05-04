@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sample_sentence_title">Select a sample sentence</string>
+    <string-array name="sample_sentences">
+        <item> At school, we sometimes line up. </item>
+        <item> Sometimes grown-ups tell me very important things that I need to know. </item>
+        <item> Daniel goes to school and usually he enjoys school </item>
+        <item> Sometimes at school, the fire alarm goes off. </item>
+
+
+        <item> Sometimes my friends and I get excited when we line up. </item>
+        <item> If I don\'t look and listen I might miss something important and make the grown-ups angry. </item>
+        <item> Other students go to school and they enjoy it most of the time. </item>
+        <item> The fire alarm does not bother all people. </item>
+
+        <item> It is okay to get excited, but it is important to try to walk to the line. </item>
+        <item> I know it\'s wrong to keep doing what I\'m doing when grown-ups want me to listen. </item>
+        <item> This is very important. </item>
+
+        <item> I will try to walk to the line. </item>
+        <item> I will listen to grown-ups when they talk to me.  </item>
+        <item> I will always think about what people are saying and doing. </item>
+    </string-array>
+</resources>

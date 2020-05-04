@@ -7,6 +7,16 @@
     android:background="@color/adultColor"
     tools:context=".storyedit.StatisticViewer">
 
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="back"
+        android:text="@string/back_button"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <LinearLayout
         android:id="@+id/tableLayout2"
         android:layout_width="0dp"
@@ -22,9 +32,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:textAlignment="viewEnd"
             android:gravity="end"
             android:text="@string/child_statistic_text"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/adultText"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Spinner
@@ -43,7 +55,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/view_statistic"
-        android:textSize="18sp"
+        android:textColor="@color/adultText"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

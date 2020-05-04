@@ -18,7 +18,8 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:text="@string/story"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/adultText" />
 
     <TextView
         android:id="@+id/nameHeading"
@@ -31,7 +32,8 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:text="@string/child_name"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/totalReadHeading"
@@ -44,7 +46,8 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:text="@string/total_reads"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/happyHeading"
@@ -57,7 +60,8 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:text="@string/happy"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/sadHeading"
@@ -70,7 +74,8 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:text="@string/sad"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/angryHeading"
@@ -83,7 +88,8 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:text="@string/angry"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/confusedHeading"
@@ -96,7 +102,8 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:text="@string/confused"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/noFeedbackHeading"
@@ -109,6 +116,7 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:text="@string/no_feedback"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
 
 </LinearLayout>

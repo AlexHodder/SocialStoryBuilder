@@ -4,4 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/adultColor"/>
+    android:background="@color/adultColor"
+    tools:context=".storyedit.ConfigurePages">
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cancel"
+        android:text="@string/cancel"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="confirm"
+        android:text="@string/save"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.example.socialstorybuilder.DecoratedRecyclerView
+        android:id="@+id/page_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        app:layout_constraintEnd_toEndOf="@+id/textViewStoryTitle"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_page_list" />
+
+    <Button
+        android:id="@+id/new_page"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@android:drawable/ic_input_add"
+        android:drawableLeft="@android:drawable/ic_input_add"
+        android:onClick="newPage"
+        android:text="@string/new_page"
+        app:layout_constraintEnd_toEndOf="@+id/edit_page"
+        app:layout_constraintStart_toEndOf="@+id/page_list"
+        app:layout_constraintTop_toBottomOf="@+id/text_page_list" />
+
+    <Button
+        android:id="@+id/edit_page"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@android:drawable/ic_menu_edit"
+        android:drawableLeft="@android:drawable/ic_menu_edit"
+        android:onClick="editPage"
+        android:text="@string/edit_page"
+        app:layout_constraintEnd_toEndOf="@+id/delete_page"
+        app:layout_constraintStart_toEndOf="@+id/page_list"
+        app:layout_constraintTop_toBottomOf="@+id/new_page" />
+
+    <Button
+        android:id="@+id/delete_page"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@android:drawable/ic_delete"
+        android:drawableLeft="@android:drawable/ic_delete"
+        android:onClick="removePage"
+        android:text="@string/remove_page"
+        app:layout_constraintStart_toEndOf="@+id/page_list"
+        app:layout_constraintTop_toBottomOf="@+id/edit_page" />
+
+    <TextView
+        android:id="@+id/textViewStoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/adultText"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/prompt_story_name" />
+
+    <TextView
+        android:id="@+id/text_page_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Page List"
+        android:textColor="@color/adultText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/cancel_button"
+        app:layout_constraintEnd_toEndOf="@+id/page_list"
+        app:layout_constraintStart_toStartOf="@+id/page_list"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStoryTitle"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

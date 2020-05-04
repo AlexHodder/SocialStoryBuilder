@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/childColor">
+    android:background="@color/childColor"
+    tools:context=".childactivity.ChildInitialActivity">
 
     <ImageView
         android:id="@+id/avatar"
@@ -42,8 +43,8 @@
         android:id="@+id/welcome_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textColor="@color/childText"
+        android:textSize="30sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,4 +63,15 @@
         app:layout_constraintStart_toEndOf="@+id/avatar"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/childStoryListHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/story_select"
+        android:textColor="@color/childText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/child_story_list"
+        app:layout_constraintStart_toEndOf="@+id/avatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

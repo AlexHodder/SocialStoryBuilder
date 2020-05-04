@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/adultColor">
+    android:background="@color/adultColor"
+    tools:context=".storyedit.ConfigureUsers">
 
     <Button
         android:id="@+id/cancel_button"
@@ -63,7 +64,7 @@
         android:id="@+id/textViewStoryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/adultText"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/story_readers"
-        android:textColor="@android:color/white"
+        android:textColor="@color/adultText"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/cancel_button"

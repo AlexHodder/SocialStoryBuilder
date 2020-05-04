@@ -87,11 +87,12 @@ public class StatisticViewer extends AppCompatActivity {
         headings.add(getString(R.string.confused));
         headings.add(getString(R.string.no_feedback));
 
-        data.add(headings);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         table.setLayoutManager(linearLayoutManager);
         adapter = new TableViewAdapter(data);
         table.setAdapter(adapter);
+
+        query("All");
 
     }
 
@@ -119,14 +120,14 @@ public class StatisticViewer extends AppCompatActivity {
         if (childID != null) {
             // Setup correct selection from feedback entry table
             feedbackCursor = db.rawQuery("SELECT " + FeedbackEntry.COLUMN_STORY_ID +
-                            ", count(" + FeedbackEntry._ID + ") as total_reads" +
-                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? THEN 1 END) AS happy_reads " +
-                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? THEN 1 END) AS sad_reads " +
-                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? THEN 1 END) AS angry_reads " +
-                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? THEN 1 END) AS confused_reads " +
-                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? THEN 1 END) AS no_feedback_reads " +
-                            "FROM " + FeedbackEntry.TABLE_NAME + " WHERE " + FeedbackEntry.COLUMN_USER_ID + " = ?" + " GROUP BY " + FeedbackEntry.COLUMN_STORY_ID,
-                    new String[]{"0", "1", "2", "3", "-1", childID});
+                            ", count(CASE WHEN "  + FeedbackEntry.COLUMN_USER_ID + " = ? THEN 1 END) as total_reads" +
+                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? AND "+ FeedbackEntry.COLUMN_USER_ID + " = ? THEN 1 END) AS happy_reads " +
+                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? AND "+ FeedbackEntry.COLUMN_USER_ID + " = ? THEN 1 END) AS sad_reads " +
+                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? AND "+ FeedbackEntry.COLUMN_USER_ID + " = ? THEN 1 END) AS angry_reads " +
+                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? AND "+ FeedbackEntry.COLUMN_USER_ID + " = ? THEN 1 END) AS confused_reads " +
+                            ", count(CASE WHEN " + FeedbackEntry.COLUMN_FEEDBACK + " = ? AND "+ FeedbackEntry.COLUMN_USER_ID + " = ? THEN 1 END) AS no_feedback_reads " +
+                            "FROM " + FeedbackEntry.TABLE_NAME  + " GROUP BY " + FeedbackEntry.COLUMN_STORY_ID,
+                    new String[]{ childID, "0", childID, "1", childID, "2", childID, "3",  childID, "-1",  childID });
         } else {
             feedbackCursor = db.rawQuery("SELECT " + FeedbackEntry.COLUMN_STORY_ID +
                             ", count(" + FeedbackEntry._ID + ") as total_reads" +
@@ -155,6 +156,10 @@ public class StatisticViewer extends AppCompatActivity {
         feedbackCursor.close();
         db.close();
 
+    }
+
+    public void back(View view){
+        finish();
     }
 
 }

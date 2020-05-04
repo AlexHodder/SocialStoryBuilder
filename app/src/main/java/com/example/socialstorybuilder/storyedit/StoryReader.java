@@ -248,13 +248,11 @@ public class StoryReader extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 position[0] = which;
-                System.out.println(which + ", " + adapter.getItem(which));
             }
         });
         feedbackDialog.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                System.out.println("STATISTICS: " + statistics);
                 if (statistics){
                     recordStatistics(position[0]);
                 }
@@ -273,9 +271,6 @@ public class StoryReader extends AppCompatActivity {
     }
 
     public void recordStatistics(Integer feedback){
-        System.out.println("WRITE TO DB: " + feedback);
-
-
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 

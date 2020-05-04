@@ -26,7 +26,7 @@
             android:name=".storyedit.PageEditor"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".adultactivity.AdultInitialActivity"
+            android:name=".adultactivity.AdultStoryPageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
@@ -61,7 +61,12 @@
         <activity
             android:name=".storyedit.StatisticViewer"
             android:screenOrientation="landscape" />
-
+        <activity
+            android:name=".adultactivity.AdultInitialActivity"
+            android:screenOrientation="landscape" />
+    <activity
+        android:name=".adultactivity.Tutorial"
+        android:screenOrientation="landscape" />
     </application>
 
 </manifest>

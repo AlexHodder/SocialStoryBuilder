@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/childColor">
+    android:background="@color/childColor"
+    tools:context=".childactivity.ChildLoginActivity">
 
     <Button
         android:id="@+id/back_button5"
@@ -39,8 +40,6 @@
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toEndOf="@+id/login_prompt_child"
         app:layout_constraintTop_toTopOf="@+id/child_accounts" />
 
     <TextView
@@ -50,8 +49,8 @@
         android:ems="10"
         android:gravity="center"
         android:text="@string/prompt_child_login"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"
+        android:textColor="@color/childText"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/child_accounts"
         app:layout_constraintEnd_toEndOf="parent"

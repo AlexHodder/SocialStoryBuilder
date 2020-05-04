@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/adultColor">
+    android:background="@color/adultColor"
+    tools:context=".storyedit.ConfigureStory">
 
     <Button
         android:id="@+id/cancel_button"
@@ -58,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/prompt_background_colour_select"
+        android:textColor="@color/adultText"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/EditPages"
@@ -70,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/story_create_and_edit"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/adultText"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

@@ -71,9 +71,8 @@ public class TableViewAdapter extends RecyclerView.Adapter {
         tableHolder.col7.setText(data.get(position).get(6));
         tableHolder.col8.setText(data.get(position).get(7));
 
-
-
-
+        // Set column visibility
+        tableHolder.col2.setVisibility(View.GONE);
     }
 
 

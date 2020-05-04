@@ -2,6 +2,7 @@ package com.example.socialstorybuilder.storyedit;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,26 +12,27 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.pdf.PdfDocument;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialstorybuilder.ActivityHelper;
+import com.example.socialstorybuilder.DecoratedRecyclerView;
+import com.example.socialstorybuilder.IdData;
+import com.example.socialstorybuilder.ListRecyclerAdapter;
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
@@ -53,6 +55,7 @@ public class PageEditor extends AppCompatActivity {
     private MediaPlayer mp;
     private Uri soundFile;
     private ImageButton playSoundImage;
+    private AlertDialog.Builder sampleSentenceDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -303,6 +306,20 @@ public class PageEditor extends AppCompatActivity {
         });
         cancelConfirmDialog.setNegativeButton(R.string.cancel, null);
         cancelConfirmDialog.show();
+    }
+
+    public void sampleSentence(View view){
+        sampleSentenceDialog = new AlertDialog.Builder(PageEditor.this);
+        sampleSentenceDialog.setTitle(R.string.sample_sentence_title);
+        final String[] sampleSentenceList = getResources().getStringArray(R.array.sample_sentences);
+        sampleSentenceDialog.setItems(sampleSentenceList, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                text.setText(sampleSentenceList[which]);
+            }
+        });
+        sampleSentenceDialog.setNegativeButton(R.string.cancel, null);
+        sampleSentenceDialog.show();
     }
 
     @Override
