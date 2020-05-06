@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.02"
-        tools:text="@string/welcome" />
+        tools:text="@string/your_stories" />
 
     <com.example.socialstorybuilder.DecoratedRecyclerView
         android:id="@+id/story_select"

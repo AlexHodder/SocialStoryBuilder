@@ -32,7 +32,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        app:layout_constraintEnd_toEndOf="@+id/textViewStoryTitle"
+        app:layout_constraintEnd_toEndOf="@+id/dummyTextView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_page_list" />
@@ -46,7 +46,7 @@
         android:onClick="newPage"
         android:text="@string/new_page"
         app:layout_constraintEnd_toEndOf="@+id/edit_page"
-        app:layout_constraintStart_toEndOf="@+id/page_list"
+        app:layout_constraintStart_toStartOf="@+id/edit_page"
         app:layout_constraintTop_toBottomOf="@+id/text_page_list" />
 
     <Button
@@ -58,7 +58,7 @@
         android:onClick="editPage"
         android:text="@string/edit_page"
         app:layout_constraintEnd_toEndOf="@+id/delete_page"
-        app:layout_constraintStart_toEndOf="@+id/page_list"
+        app:layout_constraintStart_toEndOf="@+id/textViewStoryTitle"
         app:layout_constraintTop_toBottomOf="@+id/new_page" />
 
     <Button
@@ -69,7 +69,7 @@
         android:drawableLeft="@android:drawable/ic_delete"
         android:onClick="removePage"
         android:text="@string/remove_page"
-        app:layout_constraintStart_toEndOf="@+id/page_list"
+        app:layout_constraintStart_toEndOf="@+id/textViewStoryTitle"
         app:layout_constraintTop_toBottomOf="@+id/edit_page" />
 
     <TextView
@@ -97,5 +97,13 @@
         app:layout_constraintStart_toStartOf="@+id/page_list"
         app:layout_constraintTop_toBottomOf="@+id/textViewStoryTitle"
         app:layout_constraintVertical_bias="0.100000024" />
+
+    <TextView
+        android:id="@+id/dummyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/textViewStoryTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewStoryTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStoryTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

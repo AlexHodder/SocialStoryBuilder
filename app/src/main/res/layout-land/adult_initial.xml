@@ -15,6 +15,7 @@
         android:layout_marginBottom="16dp"
         android:padding="@dimen/fab_margin"
         android:text="@string/social_story_tutorial"
+        android:textColor="@color/hyperlink"
         app:layout_constraintBottom_toTopOf="@+id/logout_button"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
@@ -54,15 +55,6 @@
         app:layout_constraintTop_toBottomOf="@+id/title">
 
         <Button
-            android:id="@+id/viewStoryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="switchToStoryPageActivity"
-            android:padding="@dimen/activity_vertical_margin"
-            android:text="@string/edit_story" />
-
-        <Button
             android:id="@+id/createStoryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,10 +64,20 @@
             android:text="@string/new_story" />
 
         <Button
+            android:id="@+id/viewStoryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="switchToStoryPageActivity"
+            android:padding="@dimen/activity_vertical_margin"
+            android:text="@string/edit_story" />
+
+        <Button
             android:id="@+id/viewTutorialButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:onClick="switchToTutorial"
             android:padding="@dimen/fab_margin"
             android:text="@string/view_tutorial" />
 

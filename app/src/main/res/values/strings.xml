@@ -21,7 +21,7 @@
     <string name="prompt_story_name">Story Name</string>
     <string name="prompt_background_colour_select">Background Colour</string>
 
-
+    <string name="help">Help</string>
     <string name="read">Read</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
@@ -29,7 +29,8 @@
 
     <string name="page">Page</string>
     <string name="sample_sentences">Sample Sentences</string>
-<string name="sound_effect">Sound Effect</string>
+    <string name="sound_effect">Sound Effect</string>
+    <string name="your_stories">Your Stories</string>
 
     <string name="new_story">Create New Story</string>
     <string name="new_user">Add User</string>
@@ -108,6 +109,7 @@
 
     <string name="story">Story</string>
     <string name="child_name">Child</string>
+    <string name="adult_name">Adult</string>
     <string name="total_reads">Total Reads</string>
     <string name="no_feedback">No Response</string>
 
@@ -142,6 +144,7 @@
 
     <string name="social_story_tutorial"><u>Information On Creating A Story</u></string>
     <string name="view_tutorial">How To Use The App</string>
+    <string name="tutorial_screen_title">Brief Overview Into The App</string>
 
 
     <!-- Strings used for fragments for navigation -->

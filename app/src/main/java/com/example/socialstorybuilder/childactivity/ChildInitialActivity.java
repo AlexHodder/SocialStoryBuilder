@@ -11,15 +11,19 @@ import com.example.socialstorybuilder.MainActivity;
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.storyedit.StoryReader;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChildInitialActivity extends AppCompatActivity {
@@ -61,7 +65,15 @@ public class ChildInitialActivity extends AppCompatActivity {
 
         if (!avatarFile.equals(getString(R.string.image_not_chosen))) {
             Uri path = Uri.parse(avatarFile);
-            avatar.setImageURI(path);
+            try{
+                Bitmap bitmap;
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), path);
+                avatar.setImageBitmap(bitmap);
+            }
+            catch (IOException e){
+                Toast.makeText(this, "Avatar file could not be found. Displaying default avatar.", Toast.LENGTH_SHORT).show();
+                avatar.setImageResource(R.drawable.default_avatar);
+            }
         }
         else{
             avatar.setImageResource(R.drawable.default_avatar);
