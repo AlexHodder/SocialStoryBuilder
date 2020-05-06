@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,11 @@ import com.example.socialstorybuilder.database.DatabaseHelper;
 
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ConfigureStory extends AppCompatActivity {
 
@@ -76,9 +81,9 @@ public class ConfigureStory extends AppCompatActivity {
         }
         else{
             author = intent.getStringExtra("user");
-            //TODO write a date getter function
-//            date = getCurrentDate();
-            date = "INSERT DATE";
+            Date d = new Date();
+            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
+            date = df.format(d);
             title = "New Book";
             setBackgroundColour("#FFFFFF");
             DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());

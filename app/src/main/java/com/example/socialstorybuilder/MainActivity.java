@@ -3,12 +3,17 @@ package com.example.socialstorybuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.socialstorybuilder.adultactivity.AdultLoginActivity;
 import com.example.socialstorybuilder.adultactivity.Tutorial;
 import com.example.socialstorybuilder.childactivity.ChildLoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
