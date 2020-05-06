@@ -2,6 +2,7 @@ package com.example.socialstorybuilder.adultactivity;
 
 import android.content.Intent;
 
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -51,18 +52,29 @@ public class AdultLoginActivity extends AppCompatActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
+        String[] projection = {AdultUserEntry._ID};
         String selection = AdultUserEntry.COLUMN_NAME + " = ?" + " AND " + AdultUserEntry.COLUMN_PASSWORD + " = ?";
         String[] selectionArgs = new String[]{username, password};
         long cursorCount = DatabaseUtils.queryNumEntries(db, AdultUserEntry.TABLE_NAME, selection, selectionArgs);
-        db.close();
+        Cursor cursor = db.query(AdultUserEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
         if (cursorCount > 0){
-            switchToAdultInitial(view);
+            cursor.moveToFirst();
+            String id = cursor.getString(cursor.getColumnIndex(AdultUserEntry._ID));
+            cursor.close();
+            db.close();
+            switchToAdultInitial(view, id);
         }
-        else incorrectLogin.show();
+        else {
+            cursor.close();
+            db.close();
+            incorrectLogin.show();
+        }
     }
 
-    public void switchToAdultInitial(View view) {
+    public void switchToAdultInitial(View view, String rowID) {
         Intent intent = new Intent(this, AdultInitialActivity.class);
+        intent.putExtra("user_id", rowID);
         intent.putExtra("user", nameInput.getText().toString());
         startActivity(intent);
     }

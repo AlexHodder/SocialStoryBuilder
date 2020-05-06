@@ -12,7 +12,7 @@ public class DatabaseNameHelper {
     public static final class StoryEntry implements BaseColumns {
         public static final String TABLE_NAME = "stories";
         public static final String COLUMN_TITLE = "title";
-        public static final String COLUMN_AUTHOR = "author";
+        public static final String COLUMN_AUTHOR_ID = "author_id";
         public static final String COLUMN_DATE = "date";
         public static final String BACKGROUND_COLOR = "bg_colour";
     }
@@ -35,13 +35,6 @@ public class DatabaseNameHelper {
         public static final String COLUMN_PAGE_NO = "page_no";
         public static final String COLUMN_TEXT = "text";
         public static final String COLUMN_SOUND = "sound";
-    }
-
-    public static final class AnswerPageEntry implements BaseColumns {
-        public static final String TABLE_NAME = "answer_pages";
-        public static final String COLUMN_PAGE_ID = "page_ID";
-        public static final String COLUMN_QUESTION_PAGE_ID = "question_page_ID";
-        public static final String COLUMN_ANSWER = "answer";
     }
 
     public static final class ImageEntry implements BaseColumns {

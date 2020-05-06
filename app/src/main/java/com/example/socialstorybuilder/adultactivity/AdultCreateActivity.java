@@ -70,8 +70,9 @@ public class AdultCreateActivity extends AppCompatActivity {
                 errorDialog.setMessage(R.string.adult_name_error);
                 errorDialog.show();
             }
-
-            switchToAdultInitial(view);
+            else{
+                switchToAdultInitial(view, String.valueOf(rowID));
+            }
 
         }
         else{
@@ -80,8 +81,9 @@ public class AdultCreateActivity extends AppCompatActivity {
         }
     }
 
-    public void switchToAdultInitial(View view) {
+    public void switchToAdultInitial(View view, String rowID) {
         Intent intent = new Intent(this, AdultInitialActivity.class);
+        intent.putExtra("user_id", rowID);
         intent.putExtra("user", nameInput.getText().toString());
         startActivity(intent);
         finish();

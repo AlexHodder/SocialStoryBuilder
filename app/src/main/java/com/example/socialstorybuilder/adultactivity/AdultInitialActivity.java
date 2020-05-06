@@ -15,7 +15,7 @@ import com.example.socialstorybuilder.storyedit.ConfigureStory;
 
 public class AdultInitialActivity extends AppCompatActivity {
 
-    private String user;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,8 @@ public class AdultInitialActivity extends AppCompatActivity {
         setContentView(R.layout.adult_initial);
 
         Intent intent = getIntent();
-        user = intent.getStringExtra("user");
+        userID = intent.getStringExtra("user_id");
+        String user = intent.getStringExtra("user");
 
         TextView welcome = findViewById(R.id.title);
         String welcomeT = getResources().getString(R.string.welcome, user);
@@ -42,7 +43,7 @@ public class AdultInitialActivity extends AppCompatActivity {
 
     public void switchToStoryPageActivity(View view){
         Intent intent = new Intent(this, AdultStoryPageActivity.class);
-        intent.putExtra("user", user);
+        intent.putExtra("user_id", userID);
         startActivity(intent);
     }
 
@@ -53,7 +54,7 @@ public class AdultInitialActivity extends AppCompatActivity {
 
     public void switchToCreate(View view){
         Intent intent = new Intent(this, ConfigureStory.class);
-        intent.putExtra("user", user);
+        intent.putExtra("user_id", userID);
         startActivity(intent);
     }
 

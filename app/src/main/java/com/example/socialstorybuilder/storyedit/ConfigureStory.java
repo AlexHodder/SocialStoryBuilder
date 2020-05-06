@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -35,7 +33,7 @@ import java.util.Locale;
 public class ConfigureStory extends AppCompatActivity {
 
     private String title;
-    private String author;
+    private String authorID;
     private String date;
 
     private String backgroundColour;
@@ -61,14 +59,14 @@ public class ConfigureStory extends AppCompatActivity {
         //Retrieve values and setup database
         if (intent.hasExtra("story_id")){
             storyID = intent.getStringExtra("story_id");
-            author = intent.getStringExtra("user");
+            authorID = intent.getStringExtra("user_id");
 
             DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
             String[] story_projection = {StoryEntry.COLUMN_DATE, StoryEntry.COLUMN_TITLE, StoryEntry.BACKGROUND_COLOR};
-            String story_selection = StoryEntry._ID + " = ?" + " AND " + StoryEntry.COLUMN_AUTHOR + " = ?";
-            String[] story_selection_args = {storyID, author};
+            String story_selection = StoryEntry._ID + " = ?" + " AND " + StoryEntry.COLUMN_AUTHOR_ID + " = ?";
+            String[] story_selection_args = {storyID, authorID};
 
             Cursor storyCursor = db.query(StoryEntry.TABLE_NAME, story_projection, story_selection, story_selection_args, null, null, null);
             storyCursor.moveToNext();
@@ -80,7 +78,7 @@ public class ConfigureStory extends AppCompatActivity {
             storyCursor.close();
         }
         else{
-            author = intent.getStringExtra("user");
+            authorID = intent.getStringExtra("user_id");
             Date d = new Date();
             DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
             date = df.format(d);
@@ -89,7 +87,7 @@ public class ConfigureStory extends AppCompatActivity {
             DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(StoryEntry.COLUMN_AUTHOR, author);
+            values.put(StoryEntry.COLUMN_AUTHOR_ID, authorID);
             values.put(StoryEntry.COLUMN_DATE, date);
             values.put(StoryEntry.COLUMN_TITLE, title);
             values.put(StoryEntry.BACKGROUND_COLOR, getBackgroundDBColour());

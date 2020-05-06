@@ -117,7 +117,7 @@ public class ActivityHelper extends AppCompatActivity {
 
         ArrayList<IdData> userList = new ArrayList<>();
         while(userCursor.moveToNext()) {
-            Integer childID = userCursor.getInt(userCursor.getColumnIndex(DatabaseNameHelper.UserStoryEntry.COLUMN_USER_ID));
+            String childID = userCursor.getString(userCursor.getColumnIndex(DatabaseNameHelper.UserStoryEntry.COLUMN_USER_ID));
             String childName = getChildNameFromID(context, childID);
             userList.add(new IdData(childID.toString(), childName));
         }
@@ -126,34 +126,14 @@ public class ActivityHelper extends AppCompatActivity {
     }
 
 
-    public static ArrayList<String> getAdultStoryId(Context context, String user) {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String[] projection = {DatabaseNameHelper.StoryEntry._ID};
-        String selection = DatabaseNameHelper.StoryEntry.COLUMN_AUTHOR + " = ?";
-        String[] selectionArgs = {user};
-
-        Cursor cursor = db.query(DatabaseNameHelper.StoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, DatabaseNameHelper.StoryEntry.COLUMN_TITLE + " ASC");
-
-        ArrayList<String> storyList = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            String storyTitle = cursor.getString(cursor.getColumnIndex(DatabaseNameHelper.StoryEntry._ID));
-            storyList.add(storyTitle);
-        }
-        cursor.close();
-        db.close();
-        return storyList;
-    }
-
-
-    public static ArrayList<IdData> getAdultStoryList(Context context, String user){
+    public static ArrayList<IdData> getAdultStoryList(Context context, String user_id){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {DatabaseNameHelper.StoryEntry._ID, DatabaseNameHelper.StoryEntry.COLUMN_TITLE};
-        String selection = DatabaseNameHelper.StoryEntry.COLUMN_AUTHOR + " = ?";
-        String[] selectionArgs = {user};
+        String selection = DatabaseNameHelper.StoryEntry.COLUMN_AUTHOR_ID + " = ?";
+        String[] selectionArgs = {user_id};
 
         Cursor cursor = db.query(DatabaseNameHelper.StoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, DatabaseNameHelper.StoryEntry.COLUMN_TITLE + " ASC");
 
@@ -246,7 +226,23 @@ public class ActivityHelper extends AppCompatActivity {
     }
 
 
-    public static String getChildNameFromID(Context context, Integer id){
+    public static String getChildNameFromID(Context context, String id){
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {DatabaseNameHelper.ChildUserEntry.COLUMN_NAME};
+        String selection = DatabaseNameHelper.ChildUserEntry._ID + " = ?";
+        String[] selectionArgs = {id};
+
+        Cursor cursor = db.query(DatabaseNameHelper.ChildUserEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+        cursor.moveToFirst();
+        String name = cursor.getString(cursor.getColumnIndex(DatabaseNameHelper.ChildUserEntry.COLUMN_NAME));
+        cursor.close();
+        db.close();
+        return name;
+    }
+
+    public static String getAdultNameFromID(Context context, Integer id){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -272,13 +268,7 @@ public class ActivityHelper extends AppCompatActivity {
         return (numEntries > 0);
     }
 
-    public void openWebPage(String url) {
-        Uri webpage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
+
 
 
 }

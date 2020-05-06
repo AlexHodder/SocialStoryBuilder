@@ -10,13 +10,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.socialstorybuilder.ActivityHelper;
 import com.example.socialstorybuilder.DecoratedRecyclerView;
 import com.example.socialstorybuilder.IdData;
 import com.example.socialstorybuilder.ListRecyclerAdapter;
-import com.example.socialstorybuilder.MainActivity;
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper;
@@ -35,7 +33,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
 
     private int selectedItem = RecyclerView.NO_POSITION;
     private IdData selectedStory;
-    private String user;
+    private String userID;
 
     private AlertDialog.Builder deleteConfirmDialog;
     private AlertDialog.Builder hintDialog;
@@ -47,13 +45,9 @@ public class AdultStoryPageActivity extends AppCompatActivity {
         setContentView(R.layout.adult_story_page);
 
         Intent intent = getIntent();
-        user = intent.getStringExtra("user");
+        userID = intent.getStringExtra("user_id");
 
-        TextView welcome = findViewById(R.id.title);
-        String welcomeT = getResources().getString(R.string.welcome, user);
-        welcome.setText(welcomeT);
-
-        storyList = ActivityHelper.getAdultStoryList(getApplicationContext(), user);
+        storyList = ActivityHelper.getAdultStoryList(getApplicationContext(), userID);
         listAdapter = new ListRecyclerAdapter(storyList);
 
         storyView = findViewById(R.id.story_select);
@@ -76,7 +70,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        storyList = new ArrayList<>(ActivityHelper.getAdultStoryList(getApplicationContext(), user));
+        storyList = new ArrayList<>(ActivityHelper.getAdultStoryList(getApplicationContext(), userID));
         listAdapter.refresh(storyList);
     }
 
@@ -92,7 +86,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
     public void switchToEdit(View view){
         if (selectedItem != RecyclerView.NO_POSITION){
             Intent intent = new Intent(this, ConfigureStory.class);
-            intent.putExtra("user", user);
+            intent.putExtra("user_id", userID);
             intent.putExtra("story_id", selectedStory.getId());
             startActivity(intent);
         }
@@ -124,7 +118,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
 
     public void switchToCreate(View view){
         Intent intent = new Intent(this, ConfigureStory.class);
-        intent.putExtra("user", user);
+        intent.putExtra("user_id", userID);
         startActivity(intent);
     }
 
