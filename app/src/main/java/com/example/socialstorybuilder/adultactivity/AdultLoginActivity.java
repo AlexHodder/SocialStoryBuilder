@@ -38,7 +38,7 @@ public class AdultLoginActivity extends AppCompatActivity {
     /**
      * Method called on activity creation, initialises properties.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class AdultLoginActivity extends AppCompatActivity {
      * Tests if sign in details are correct in database.
      * If correct switches to signed in adult activity.
      * Else displays error message.
-     * @param view
+     * @param view Current view
      */
     public void signIn(View view){
         String username = getNameInput();
@@ -97,7 +97,7 @@ public class AdultLoginActivity extends AppCompatActivity {
 
     /**
      * Starts a new AdultInitial activity with the created user account.
-     * @param rowID
+     * @param rowID Current view
      */
     public void switchToAdultInitial(String rowID) {
         Intent intent = new Intent(this, AdultInitialActivity.class);
@@ -108,7 +108,7 @@ public class AdultLoginActivity extends AppCompatActivity {
 
     /**
      * Starts a new CreateAdult activity.
-     * @param view
+     * @param view Current view
      */
     public void switchToAdultCreate(View view) {
         Intent intent = new Intent(this, AdultCreateActivity.class);
@@ -117,7 +117,7 @@ public class AdultLoginActivity extends AppCompatActivity {
 
     /**
      * Ends the activity, switching to top of stack.
-     * @param view
+     * @param view Current view
      */
     public void back(View view){
         finish();

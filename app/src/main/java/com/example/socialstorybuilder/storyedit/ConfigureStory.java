@@ -54,7 +54,7 @@ public class ConfigureStory extends AppCompatActivity {
     /**
      * Method called on activity creation.
      * Initialises properties using intent, and calls to the database to retrieve story information.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +161,7 @@ public class ConfigureStory extends AppCompatActivity {
 
     /**
      * Activity switcher to ConfigureUsers, passing current story ID.
-     * @param view
+     * @param view Current view
      */
     public void switchToConfigureUsers(View view){
         Intent intent = new Intent(this, ConfigureUsers.class);
@@ -171,7 +171,7 @@ public class ConfigureStory extends AppCompatActivity {
 
     /**
      * Activity switcher to ConfigurePages, passing current story ID.
-     * @param view
+     * @param view Current view
      */
     public void switchToConfigurePages(View view){
         Intent intent = new Intent(this, ConfigurePages.class);
@@ -195,7 +195,7 @@ public class ConfigureStory extends AppCompatActivity {
 
     /**
      * Activity switcher to StoryReader, passing the story ID.
-     * @param view
+     * @param view Current view
      */
     public void preview(View view){
         flushDynamicChanges();
@@ -207,7 +207,7 @@ public class ConfigureStory extends AppCompatActivity {
     /**
      * Activity switcher, cancelling changes.
      * Creates a pop-up asking if user is sure they want to cancel, and ends current activity if confirmed.
-     * @param view
+     * @param view Current view
      */
     public void cancel(View view){
         cancelConfirmDialog = new AlertDialog.Builder(ConfigureStory.this);
@@ -225,7 +225,7 @@ public class ConfigureStory extends AppCompatActivity {
 
     /**
      * Activity switcher, ends current activity and flushes changes to the database.
-     * @param view
+     * @param view Current view
      */
     public void confirm(View view){
         flushDynamicChanges();

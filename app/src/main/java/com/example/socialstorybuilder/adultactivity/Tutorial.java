@@ -35,7 +35,7 @@ public class Tutorial extends AppCompatActivity {
     /**
      * Method called on activity creation, initialising image roots.
      * Adds description for each image and sets up listeners for next/back buttons.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class Tutorial extends AppCompatActivity {
 
     /**
      * Ends the activity, returning to next top in activity stack.
-     * @param view
+     * @param view Current view
      */
     public void finishTutorial(View view){
         finish();

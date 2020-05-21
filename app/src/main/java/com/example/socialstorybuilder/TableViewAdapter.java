@@ -29,8 +29,8 @@ public class TableViewAdapter extends RecyclerView.Adapter {
 
     /**
      * Method called on creation.
-     * @param parent
-     * @param viewType
+     * @param parent ViewGroup
+     * @param viewType int
      * @return created TableViewHolder from resource layout table_view
      */
     @NonNull
@@ -116,7 +116,7 @@ public class TableViewAdapter extends RecyclerView.Adapter {
 
         /**
          * Constructor initialising fields with respective columns
-         * @param itemView
+         * @param itemView View
          */
         TableViewHolder(@NonNull View itemView) {
             super(itemView);

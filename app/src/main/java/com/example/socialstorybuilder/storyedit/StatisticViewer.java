@@ -47,7 +47,7 @@ public class StatisticViewer extends AppCompatActivity {
     /**
      * Method called on activity creation.
      * Initialises table with all stories, loaded with all children data.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +175,7 @@ public class StatisticViewer extends AppCompatActivity {
 
     /**
      * Activity switcher, ends current activity.
-     * @param view
+     * @param view Current view
      */
     public void back(View view){
         finish();

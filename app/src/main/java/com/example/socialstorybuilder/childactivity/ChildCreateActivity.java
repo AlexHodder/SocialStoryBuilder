@@ -50,7 +50,7 @@ public class ChildCreateActivity extends AppCompatActivity {
 
     /**
      * Method called on activity creation, initialises from layout resource.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class ChildCreateActivity extends AppCompatActivity {
     /**
      * Method to start a new activity for users to select images.
      *
-     * @param view
+     * @param view Current view
      */
     public void selectImage(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -98,7 +98,7 @@ public class ChildCreateActivity extends AppCompatActivity {
     /**
      * Method called on create child button.
      * Tests if name is valid, and if so adds to database. Else displays hint.
-     * @param view
+     * @param view Current view
      */
     public void createChild(View view) {
         String name = getNameInput();
@@ -136,7 +136,7 @@ public class ChildCreateActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to ChildInitial passing child name and database id.
-     * @param view
+     * @param view Current view
      */
     public void switchToChildInitial(View view) {
         Intent intent = new Intent(this, ChildInitialActivity.class);
@@ -147,7 +147,7 @@ public class ChildCreateActivity extends AppCompatActivity {
 
     /**
      * Ends current activity, returning to top of stack.
-     * @param view
+     * @param view Current view
      */
     public void switchToChildLogin(View view) {
         finish();
@@ -155,7 +155,7 @@ public class ChildCreateActivity extends AppCompatActivity {
 
     /**
      * Getter for text in EditText nameInput
-     * @return
+     * @return name in EditText
      */
     public String getNameInput() {
         return nameInput.getText().toString();

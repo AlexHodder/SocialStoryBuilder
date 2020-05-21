@@ -39,7 +39,7 @@ public class AdultCreateActivity extends AppCompatActivity {
     /**
      * Method called on activity creation and initialising the properties
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class AdultCreateActivity extends AppCompatActivity {
      * Create Account and switch to logged in account if new account details valid,
      * else display error messages.
      *
-     * @param view
+     * @param view Current view
      */
     public void createAccount(View view){
         String username = getNameInput();
@@ -121,7 +121,7 @@ public class AdultCreateActivity extends AppCompatActivity {
     /**
      * Ends the activity at the top of the stack
      *
-     * @param view
+     * @param view Current view
      */
     public void switchToAdultLogin(View view) {
         finish();

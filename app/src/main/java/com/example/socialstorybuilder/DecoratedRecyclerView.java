@@ -16,7 +16,7 @@ public class DecoratedRecyclerView extends RecyclerView {
 
     /**
      * Constructor with call to decorate method
-     * @param context
+     * @param context context
      */
     public DecoratedRecyclerView(@NonNull Context context) {
         super(context);
@@ -25,8 +25,8 @@ public class DecoratedRecyclerView extends RecyclerView {
 
     /**
      * Constructor with call to decorate method
-     * @param context
-     * @param attrs
+     * @param context Context
+     * @param attrs AttributeSet
      */
     public DecoratedRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -35,9 +35,9 @@ public class DecoratedRecyclerView extends RecyclerView {
 
     /**
      * Constructor with call to decorate method
-     * @param context
-     * @param attrs
-     * @param defStyle
+     * @param context Context
+     * @param attrs AttributeSet
+     * @param defStyle int
      */
     public DecoratedRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -46,7 +46,7 @@ public class DecoratedRecyclerView extends RecyclerView {
 
     /**
      * Method to add dividers between items in view
-     * @param context
+     * @param context context
      */
     private void decorate(Context context){
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);

@@ -34,7 +34,7 @@ public class ChildLoginActivity extends AppCompatActivity {
 
     /**
      * Method called on activity creation, displaying Child list.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class ChildLoginActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to initial child login passing child's name and id if child selected.
-     * @param view
+     * @param view Current view
      */
     public void toChildInitial(View view){
         if (adapter.isItemChecked(selectedItem)) {
@@ -76,7 +76,7 @@ public class ChildLoginActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to create a new child.
-     * @param view
+     * @param view Current view
      */
     public void toChildCreate(View view){
         Intent intent = new Intent(this, ChildCreateActivity.class);
@@ -85,7 +85,7 @@ public class ChildLoginActivity extends AppCompatActivity {
 
     /**
      * Ends activity, switching to top of stack.
-     * @param view
+     * @param view Current view
      */
     public void back(View view){
         finish();

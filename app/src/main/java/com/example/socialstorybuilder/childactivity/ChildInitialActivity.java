@@ -44,7 +44,7 @@ public class ChildInitialActivity extends AppCompatActivity {
      * Sets up alert for empty book readings.
      * Sets up list of books available to child.
      * Loads saved avatar in.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,7 @@ public class ChildInitialActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to read story, passing story_id and user_id.
-     * @param view
+     * @param view Current view
      */
     public void readStory(View view){
         if (adapter.itemSelected()){
@@ -113,7 +113,7 @@ public class ChildInitialActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to log out user, and switch to the home initial activity.
-     * @param view
+     * @param view Current view
      */
     public void logout(View view){
         Intent intent = new Intent(this, MainActivity.class);

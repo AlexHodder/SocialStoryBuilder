@@ -116,7 +116,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
         /**
          * OnClick method of list. Sets selected position to the position of the list.
-         * @param view
+         * @param view View
          */
         @Override
         public void onClick(View view) {
@@ -135,9 +135,9 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
         /**
          * Method to change the background colour of the currently selected item, to provide feedback to the user.
-         * @param setColor
+         * @param setColor boolean
          */
-        public void changeToSelect(boolean setColor) {
+        void changeToSelect(boolean setColor) {
             if (setColor) background.setBackgroundColor(bgColor);
             else background.setBackgroundResource(0);
         }
@@ -155,7 +155,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
     /**
      * Method to allow click events to be caught
-     * @param itemClickListener
+     * @param itemClickListener click listener
      */
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;

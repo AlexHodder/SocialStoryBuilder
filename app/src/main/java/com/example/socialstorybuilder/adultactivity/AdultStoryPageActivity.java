@@ -45,7 +45,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
     /**
      * Method called on activity creation, initialising properties.
      * ClickListeners generated, and adapters set.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to read selected story.
-     * @param view
+     * @param view Current view
      */
     public void switchToRead(View view){
         if (selectedItem != RecyclerView.NO_POSITION) {
@@ -101,7 +101,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to edit selected story.
-     * @param view
+     * @param view Current view
      */
     public void switchToEdit(View view){
         if (selectedItem != RecyclerView.NO_POSITION){
@@ -115,7 +115,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
     /**
      * Method to ensure user confirms page deletion.
      * Calls confirmDelete if user confirms.
-     * @param view
+     * @param view Current view
      */
     public void deletePage(final View view){
         if (selectedItem != RecyclerView.NO_POSITION) {
@@ -135,7 +135,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
     /**
      * Removes selected story from story database and updates list.
      *
-     * @param view
+     * @param view Current view
      */
     public void confirmDelete(View view){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
@@ -148,7 +148,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to create a new story, passes userID.
-     * @param view
+     * @param view Current view
      */
     public void switchToCreate(View view){
         Intent intent = new Intent(this, ConfigureStory.class);
@@ -158,7 +158,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to statistics viewer.
-     * @param view
+     * @param view Current view
      */
     public void switchToStatistics(View view){
         Intent intent = new Intent(this, StatisticViewer.class);
@@ -167,7 +167,7 @@ public class AdultStoryPageActivity extends AppCompatActivity {
 
     /**
      * Ends the activity, switching to top of stack.
-     * @param view
+     * @param view Current view
      */
     public void back(View view){
         finish();

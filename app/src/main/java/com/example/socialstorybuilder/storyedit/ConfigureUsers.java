@@ -48,7 +48,7 @@ public class ConfigureUsers extends AppCompatActivity {
      * Method called on activity creation.
      * Initialises properties through the intent.
      * Sets up list and adapter to select child users.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class ConfigureUsers extends AppCompatActivity {
      * Method called on button press to add a new user.
      * Creates a pop-up window populated with children not currently able to read the story.
      * On confirm, adds selected child to story.
-     * @param view
+     * @param view Current view
      */
     public void newChild(View view){
         childPickDialog = new AlertDialog.Builder(ConfigureUsers.this);
@@ -126,7 +126,7 @@ public class ConfigureUsers extends AppCompatActivity {
     /**
      * Method called on button press.
      * Removes selected child from story.
-     * @param view
+     * @param view Current view
      */
     public void removeChild(View view){
         if (childListAdapter.itemSelected()){
@@ -167,7 +167,7 @@ public class ConfigureUsers extends AppCompatActivity {
 
     /**
      * Activity switcher, ends current activity after flushing changes to the database.
-     * @param view
+     * @param view Current view
      */
     public void confirm(View view){
         flushDynamicUserChanges();
@@ -177,7 +177,7 @@ public class ConfigureUsers extends AppCompatActivity {
     /**
      * Activity switcher, cancelling changes.
      * Creates a pop-up asking if user is sure they want to cancel, and ends current activity if confirmed.
-     * @param view
+     * @param view Current view
      */
     public void cancel(View view){
         cancelConfirmDialog = new AlertDialog.Builder(ConfigureUsers.this);

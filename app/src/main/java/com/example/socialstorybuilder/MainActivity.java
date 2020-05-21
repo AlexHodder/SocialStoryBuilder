@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Method called on creation.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to child login page
-     * @param view
+     * @param view Current view
      */
     public void toChildLogin(View view){
         Intent intent = new Intent(this, ChildLoginActivity.class);
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to adult login page
-     * @param view
+     * @param view Current view
      */
     public void toAdultLogin(View view){
         Intent intent = new Intent(this, AdultLoginActivity.class);
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to tutorial page
-     * @param view
+     * @param view Current view
      */
     public void toTutorial(View view){
         Intent intent = new Intent(this, Tutorial.class);

@@ -64,7 +64,7 @@ public class PageEditor extends AppCompatActivity {
      * Method called on activity creation.
      * Initialises properties from intent.
      * Sets up the page layout.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +151,7 @@ public class PageEditor extends AppCompatActivity {
     /**
      * Activity switcher that ends the current activity.
      * Method also flushes all changes, to the database.
-     * @param view
+     * @param view Current view
      */
     public void confirm(View view) {
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
@@ -195,7 +195,7 @@ public class PageEditor extends AppCompatActivity {
 
     /**
      * Method to remove selected image from the page.
-     * @param view
+     * @param view Current view
      */
     public void removeImage(View view){
         if (selectedImage != null){
@@ -211,7 +211,7 @@ public class PageEditor extends AppCompatActivity {
 
     /**
      * Activity switcher to select an image from the gallery.
-     * @param view
+     * @param view Current view
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void selectImage(View view) {
@@ -222,7 +222,7 @@ public class PageEditor extends AppCompatActivity {
 
     /**
      * Activity switcher to select a sound file from files.
-     * @param view
+     * @param view Current view
      */
     public void selectSound(View view) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -232,7 +232,7 @@ public class PageEditor extends AppCompatActivity {
 
     /**
      * Method to remove the current sound file.
-     * @param view
+     * @param view Current view
      */
     public void removeSound(View view) {
         soundFile = null;
@@ -241,7 +241,7 @@ public class PageEditor extends AppCompatActivity {
     /**
      * Method to play the currently loaded file.
      * If no file loaded displays message to the user.
-     * @param view
+     * @param view Current view
      * @throws IOException if file not found
      */
     public void playSound(View view) throws IOException {
@@ -288,7 +288,7 @@ public class PageEditor extends AppCompatActivity {
 
     /**
      * Method to populate the layout with information from the database.
-     * @throws IOException
+     * @throws IOException if files not found
      */
     private void populateLayout() throws IOException {
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
@@ -344,7 +344,7 @@ public class PageEditor extends AppCompatActivity {
     /**
      * Activity switcher, cancelling changes.
      * Creates a pop-up asking if user is sure they want to cancel, and ends current activity if confirmed.
-     * @param view
+     * @param view Current view
      */
     public void cancel(final View view){
         cancelConfirmDialog = new AlertDialog.Builder(PageEditor.this);
@@ -362,7 +362,7 @@ public class PageEditor extends AppCompatActivity {
 
     /**
      * Method creating a pop-up, with a list of sample sentences.
-     * @param view
+     * @param view Current view
      */
     public void sampleSentence(View view){
         sampleSentenceDialog = new AlertDialog.Builder(PageEditor.this);

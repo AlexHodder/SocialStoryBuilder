@@ -30,7 +30,7 @@ public class AdultInitialActivity extends AppCompatActivity {
      * Method called on activity creation and initialising the properties
      * Set listeners on required buttons.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class AdultInitialActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to story page activity, with user ID passed.
-     * @param view
+     * @param view Current view
      */
     public void switchToStoryPageActivity(View view){
         Intent intent = new Intent(this, AdultStoryPageActivity.class);
@@ -68,7 +68,7 @@ public class AdultInitialActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to tutorial.
-     * @param view
+     * @param view Current view
      */
     public void switchToTutorial(View view){
         Intent intent = new Intent(this, Tutorial.class);
@@ -77,7 +77,7 @@ public class AdultInitialActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to create a new story, with user ID passed.
-     * @param view
+     * @param view Current view
      */
     public void switchToCreate(View view){
         Intent intent = new Intent(this, ConfigureStory.class);
@@ -87,7 +87,7 @@ public class AdultInitialActivity extends AppCompatActivity {
 
     /**
      * Activity switcher to log out user, and switch to the home initial activity.
-     * @param view
+     * @param view Current view
      */
     public void logout(View view){
         Intent intent = new Intent(this, MainActivity.class);

@@ -66,7 +66,7 @@ public class StoryReader extends AppCompatActivity {
      * Initialises properties with information from intent, and database queries.
      * Sets up text-to-speech and buttons on page (such as next/back)
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -214,7 +214,7 @@ public class StoryReader extends AppCompatActivity {
 
     /**
      * Method called to play loaded sound file.
-     * @param view
+     * @param view View
      */
     public void playSound(View view){
         if (mediaPlayer.isPlaying()) {
@@ -234,7 +234,7 @@ public class StoryReader extends AppCompatActivity {
 
     /**
      * Activity switcher, loads same activity with incremented page number.
-     * @param view
+     * @param view View
      */
     public void nextPage(View view){
         Intent intent = new Intent(this, StoryReader.class);
@@ -247,7 +247,7 @@ public class StoryReader extends AppCompatActivity {
 
     /**
      * Activity switcher, loads same activity with decremented page number.
-     * @param view
+     * @param view View
      */
     public void prevPage(View view){
         Intent intent = new Intent(this, StoryReader.class);
@@ -260,7 +260,7 @@ public class StoryReader extends AppCompatActivity {
 
     /**
      * Activity switcher, displays pop-up requesting feedback. After feedback entered, writes to database (if in write mode).
-     * @param v
+     * @param v Current view
      */
     public void finishStory(final View v){
         final AlertDialog.Builder feedbackDialog = new AlertDialog.Builder(StoryReader.this);
@@ -296,7 +296,7 @@ public class StoryReader extends AppCompatActivity {
 
     /**
      * Activity switcher, ends current activity.
-     * @param view
+     * @param view Current view
      */
     public void exitStory(View view){
         finish();
@@ -304,7 +304,7 @@ public class StoryReader extends AppCompatActivity {
 
     /**
      * Writes given feedback to the database.
-     * @param feedback
+     * @param feedback Feedback integer to be stored in the database
      */
     public void recordStatistics(Integer feedback){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());

@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Method called when no database with constant field DATABASE_NAME exists.
-     * @param db
+     * @param db The database
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -108,9 +108,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Method called when database version is updated.
      * This method contains any updates to the database that occur after official release.
      *
-     * @param db
-     * @param oldVersion
-     * @param newVersion
+     * @param db The database
+     * @param oldVersion The old database version
+     * @param newVersion The new database version
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Method called every time the database is accessed, method ensures foreign keys are active.
      *
-     * @param db
+     * @param db The database
      */
     @Override
     public void onConfigure(SQLiteDatabase db) {

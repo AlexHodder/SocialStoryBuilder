@@ -44,7 +44,7 @@ public class ConfigurePages extends AppCompatActivity {
      * Method called on activity creation.
      * Initialises properties through loading intent files.
      * Initialises adapters to store the currently selected page.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class ConfigurePages extends AppCompatActivity {
      * Activity switcher called on button press.
      * Initialises a new page in the database, and then switches to PageEditor activity with reference to created page id.
      * Also updates page list, therefore when activity resumed the page list accurately reflects pages.
-     * @param view
+     * @param view Current view
      */
     public void newPage(View view){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
@@ -102,7 +102,7 @@ public class ConfigurePages extends AppCompatActivity {
     /**
      * Activity switcher called on button press.
      * Switches to PageEditor with reference to selected page id.
-     * @param view
+     * @param view Current view
      */
     public void editPage(View view){
         if (pageHashAdapter.itemSelected()) {
@@ -118,7 +118,7 @@ public class ConfigurePages extends AppCompatActivity {
     /**
      * Method to delete currently selected page, if a page is selected.
      * Method updates page list to accurately reflect current pages in story.
-     * @param view
+     * @param view Current view
      */
     public void removePage(View view){
         if (pageHashAdapter.itemSelected()){
@@ -143,7 +143,7 @@ public class ConfigurePages extends AppCompatActivity {
 
     /**
      * Activity switcher, ends the current activity after flushing the changes made to the story.
-     * @param view
+     * @param view Current view
      */
     public void confirm(View view){
         flushDynamicPageChanges();
@@ -153,7 +153,7 @@ public class ConfigurePages extends AppCompatActivity {
     /**
      * Activity switcher, cancelling changes.
      * Creates a pop-up asking if user is sure they want to cancel, and ends current activity if confirmed.
-     * @param view
+     * @param view Current view
      */
     public void cancel(View view){
         cancelConfirmDialog = new AlertDialog.Builder(ConfigurePages.this);
