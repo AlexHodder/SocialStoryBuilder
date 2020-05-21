@@ -15,14 +15,32 @@ import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper;
 
+/**
+ * Activity for creating a new Adult
+ * This activity displays the resources to enter username and password
+ * and then add to the database.
+ *
+ * @since 1.0
+ */
+
 public class AdultCreateActivity extends AppCompatActivity {
 
+    /**
+     * Username input text field
+     * Password input text field
+     * Password confirmation input text field
+     * Popup for errors in password fields
+     */
     private EditText nameInput;
     private EditText passwordInput;
     private EditText passwordConfirmationInput;
     private AlertDialog.Builder errorDialog;
 
-
+    /**
+     * Method called on activity creation and initialising the properties
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +56,21 @@ public class AdultCreateActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Create Account and switch to logged in account if new account details valid,
+     * else display error messages.
+     *
+     * @param view
+     */
     public void createAccount(View view){
-        String username = nameInput.getText().toString();
+        String username = getNameInput();
         if(TextUtils.isEmpty(username)) {
             nameInput.setError("Name can't be empty");
             return;
         }
 
-        String password = passwordInput.getText().toString();
-        String confirmPassword = passwordConfirmationInput.getText().toString();
+        String password = getPasswordInput();
+        String confirmPassword = getPasswordConfirmationInput();
 
         if(TextUtils.isEmpty(password)) {
             passwordInput.setError("Password can't be empty");
@@ -71,7 +95,7 @@ public class AdultCreateActivity extends AppCompatActivity {
                 errorDialog.show();
             }
             else{
-                switchToAdultInitial(view, String.valueOf(rowID));
+                switchToAdultInitial(String.valueOf(rowID));
             }
 
         }
@@ -81,16 +105,52 @@ public class AdultCreateActivity extends AppCompatActivity {
         }
     }
 
-    public void switchToAdultInitial(View view, String rowID) {
+    /**
+     * Starts a new AdultInitial activity with the created user account.
+     *
+     * @param rowID the ID in the database of the created user.
+     */
+    public void switchToAdultInitial(String rowID) {
         Intent intent = new Intent(this, AdultInitialActivity.class);
         intent.putExtra("user_id", rowID);
-        intent.putExtra("user", nameInput.getText().toString());
+        intent.putExtra("user", getNameInput());
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Ends the activity at the top of the stack
+     *
+     * @param view
+     */
     public void switchToAdultLogin(View view) {
         finish();
     }
 
+    /**
+     * Method to return the text entered in the username input field.
+     *
+     * @return username string
+     */
+    public String getNameInput() {
+        return nameInput.getText().toString();
+    }
+
+    /**
+     * Method to return the text entered in the password input field.
+     *
+     * @return password string
+     */
+    public String getPasswordInput() {
+        return passwordInput.getText().toString();
+    }
+
+    /**
+     * Method to return the text entered in the confirmation password input field.
+     *
+     * @return confirmed password string
+     */
+    public String getPasswordConfirmationInput() {
+        return passwordConfirmationInput.getText().toString();
+    }
 }

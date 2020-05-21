@@ -24,7 +24,11 @@ import com.example.socialstorybuilder.storyedit.StoryReader;
 
 import java.util.ArrayList;
 
-
+/**
+ * Activity for Adult account stories.
+ *
+ * @since 1.2.3
+ */
 public class AdultStoryPageActivity extends AppCompatActivity {
 
     private ListRecyclerAdapter listAdapter;
@@ -38,7 +42,11 @@ public class AdultStoryPageActivity extends AppCompatActivity {
     private AlertDialog.Builder deleteConfirmDialog;
     private AlertDialog.Builder hintDialog;
 
-
+    /**
+     * Method called on activity creation, initialising properties.
+     * ClickListeners generated, and adapters set.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +75,10 @@ public class AdultStoryPageActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method called when activity refreshed.
+     * Refreshes list with up to date stories.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -74,6 +86,10 @@ public class AdultStoryPageActivity extends AppCompatActivity {
         listAdapter.refresh(storyList);
     }
 
+    /**
+     * Activity switcher to read selected story.
+     * @param view
+     */
     public void switchToRead(View view){
         if (selectedItem != RecyclerView.NO_POSITION) {
             Intent intent = new Intent(this, StoryReader.class);
@@ -83,6 +99,10 @@ public class AdultStoryPageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Activity switcher to edit selected story.
+     * @param view
+     */
     public void switchToEdit(View view){
         if (selectedItem != RecyclerView.NO_POSITION){
             Intent intent = new Intent(this, ConfigureStory.class);
@@ -92,6 +112,11 @@ public class AdultStoryPageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to ensure user confirms page deletion.
+     * Calls confirmDelete if user confirms.
+     * @param view
+     */
     public void deletePage(final View view){
         if (selectedItem != RecyclerView.NO_POSITION) {
             deleteConfirmDialog = new AlertDialog.Builder(AdultStoryPageActivity.this);
@@ -107,6 +132,11 @@ public class AdultStoryPageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Removes selected story from story database and updates list.
+     *
+     * @param view
+     */
     public void confirmDelete(View view){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -116,17 +146,29 @@ public class AdultStoryPageActivity extends AppCompatActivity {
         listAdapter.itemRemoved(selectedItem);
     }
 
+    /**
+     * Activity switcher to create a new story, passes userID.
+     * @param view
+     */
     public void switchToCreate(View view){
         Intent intent = new Intent(this, ConfigureStory.class);
         intent.putExtra("user_id", userID);
         startActivity(intent);
     }
 
+    /**
+     * Activity switcher to statistics viewer.
+     * @param view
+     */
     public void switchToStatistics(View view){
         Intent intent = new Intent(this, StatisticViewer.class);
         startActivity(intent);
     }
 
+    /**
+     * Ends the activity, switching to top of stack.
+     * @param view
+     */
     public void back(View view){
         finish();
     }

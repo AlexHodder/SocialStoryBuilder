@@ -42,6 +42,9 @@ import java.util.ArrayList;
 
 import static com.example.socialstorybuilder.ActivityHelper.*;
 
+/**
+ * Activity used to edit individual pages.
+ */
 public class PageEditor extends AppCompatActivity {
 
     private EditText text;
@@ -57,6 +60,12 @@ public class PageEditor extends AppCompatActivity {
     private ImageButton playSoundImage;
     private AlertDialog.Builder sampleSentenceDialog;
 
+    /**
+     * Method called on activity creation.
+     * Initialises properties from intent.
+     * Sets up the page layout.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +109,13 @@ public class PageEditor extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Method called when returning from a different activity.
+     * Used to update image or audio files.
+     * @param requestCode code passed to previous activity on its creation
+     * @param resultCode code returned from previous activity on destruction
+     * @param data data returned from previous activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -133,6 +148,11 @@ public class PageEditor extends AppCompatActivity {
             }
     }
 
+    /**
+     * Activity switcher that ends the current activity.
+     * Method also flushes all changes, to the database.
+     * @param view
+     */
     public void confirm(View view) {
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -173,6 +193,10 @@ public class PageEditor extends AppCompatActivity {
         if (rowID > 0) finish();
     }
 
+    /**
+     * Method to remove selected image from the page.
+     * @param view
+     */
     public void removeImage(View view){
         if (selectedImage != null){
             String uri = (String) selectedImage.getTag();
@@ -185,6 +209,10 @@ public class PageEditor extends AppCompatActivity {
         }
     }
 
+    /**
+     * Activity switcher to select an image from the gallery.
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void selectImage(View view) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -192,16 +220,30 @@ public class PageEditor extends AppCompatActivity {
         startActivityForResult(intent, ActivityHelper.GALLERY_REQUEST_CODE);
     }
 
+    /**
+     * Activity switcher to select a sound file from files.
+     * @param view
+     */
     public void selectSound(View view) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("audio/*");
         startActivityForResult(intent, ActivityHelper.AUDIO_REQUEST_CODE);
     }
 
+    /**
+     * Method to remove the current sound file.
+     * @param view
+     */
     public void removeSound(View view) {
         soundFile = null;
     }
 
+    /**
+     * Method to play the currently loaded file.
+     * If no file loaded displays message to the user.
+     * @param view
+     * @throws IOException if file not found
+     */
     public void playSound(View view) throws IOException {
         if (mp == null){
             try {
@@ -244,13 +286,17 @@ public class PageEditor extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Method to populate the layout with information from the database.
+     * @throws IOException
+     */
     private void populateLayout() throws IOException {
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] selectionArgs = {pageID};
 
+        // Query selects text and sound from the PageEntry table with the page with matching id.
         Cursor textCursor = db.rawQuery("SELECT "+ PageEntry.COLUMN_TEXT + ", " + PageEntry.COLUMN_SOUND + " FROM " + PageEntry.TABLE_NAME + " WHERE " + PageEntry._ID + " = ?", selectionArgs);
         textCursor.moveToFirst();
         text.setText(textCursor.getString(textCursor.getColumnIndex(PageEntry.COLUMN_TEXT)));
@@ -263,6 +309,7 @@ public class PageEditor extends AppCompatActivity {
         String[] projection = {ImageEntry.COLUMN_URI};
         String selection = ImageEntry.COLUMN_PAGE_ID + "= ?";
 
+        // Query selects image URI's (in string format) from ImageEntry table with page matching id.
         Cursor imageCursor = db.query(ImageEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
         while (imageCursor.moveToNext()){
             String uriString = imageCursor.getString(imageCursor.getColumnIndex(ImageEntry.COLUMN_URI));
@@ -294,6 +341,11 @@ public class PageEditor extends AppCompatActivity {
         db.close();
     }
 
+    /**
+     * Activity switcher, cancelling changes.
+     * Creates a pop-up asking if user is sure they want to cancel, and ends current activity if confirmed.
+     * @param view
+     */
     public void cancel(final View view){
         cancelConfirmDialog = new AlertDialog.Builder(PageEditor.this);
         cancelConfirmDialog.setTitle(R.string.cancel);
@@ -308,6 +360,10 @@ public class PageEditor extends AppCompatActivity {
         cancelConfirmDialog.show();
     }
 
+    /**
+     * Method creating a pop-up, with a list of sample sentences.
+     * @param view
+     */
     public void sampleSentence(View view){
         sampleSentenceDialog = new AlertDialog.Builder(PageEditor.this);
         sampleSentenceDialog.setTitle(R.string.sample_sentence_title);
@@ -322,6 +378,9 @@ public class PageEditor extends AppCompatActivity {
         sampleSentenceDialog.show();
     }
 
+    /**
+     * Method to release the sound file resources on activity exit.
+     */
     @Override
     protected void onDestroy() {
         if (mp != null){

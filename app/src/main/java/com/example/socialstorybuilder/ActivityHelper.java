@@ -1,12 +1,9 @@
 package com.example.socialstorybuilder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.net.Uri;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,21 +12,25 @@ import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
 
-import static android.database.DatabaseUtils.queryNumEntries;
-
+/**
+ * Helper method to reduce repeated code, and store constants.
+ *
+ * @since 1.0
+ */
 public class ActivityHelper extends AppCompatActivity {
 
     public static final int GALLERY_REQUEST_CODE = 123;
     public static final int AUDIO_REQUEST_CODE = 246;
 
     public ActivityHelper(){
-
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @return ArrayList of the colour codes paired with colour.
+     */
     public static ArrayList<IdData> colorWheel(Context context){
         ArrayList<IdData> colorList = new ArrayList<>();
         colorList.add(new IdData('#' + Integer.toHexString(context.getResources().getColor(R.color.white)), "White"));
@@ -49,6 +50,11 @@ public class ActivityHelper extends AppCompatActivity {
         return colorList;
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @return ArrayList of the child users in the database.
+     */
     public static ArrayList<String> getChildUsers(Context context) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -66,6 +72,11 @@ public class ActivityHelper extends AppCompatActivity {
         return childList;
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @return ArrayList of pairs of current child users, with corresponding ID
+     */
     public static ArrayList<IdData> getChildUserArray(Context context) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -84,6 +95,12 @@ public class ActivityHelper extends AppCompatActivity {
         return childList;
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @param storyID to be selected from database
+     * @return ArrayList of pairs of current pages, with corresponding ID
+     */
     public static ArrayList<IdData> getPageList(Context context, String storyID){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase dbRead = dbHelper.getReadableDatabase();
@@ -105,6 +122,12 @@ public class ActivityHelper extends AppCompatActivity {
         return pageList;
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @param storyID to be selected from database
+     * @return ArrayList of pairs of current users, with corresponding ID
+     */
     public static ArrayList<IdData> getUserList(Context context, String storyID){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -119,14 +142,18 @@ public class ActivityHelper extends AppCompatActivity {
         while(userCursor.moveToNext()) {
             String childID = userCursor.getString(userCursor.getColumnIndex(DatabaseNameHelper.UserStoryEntry.COLUMN_USER_ID));
             String childName = getChildNameFromID(context, childID);
-            userList.add(new IdData(childID.toString(), childName));
+            userList.add(new IdData(childID, childName));
         }
         userCursor.close();
         return userList;
     }
 
-
-
+    /**
+     *
+     * @param context current context of the program
+     * @param user_id of adult
+     * @return ArrayList of pairs of current story names, with corresponding ID that meet selection
+     */
     public static ArrayList<IdData> getAdultStoryList(Context context, String user_id){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -148,7 +175,12 @@ public class ActivityHelper extends AppCompatActivity {
         return list;
     }
 
-
+    /**
+     *
+     * @param context current context of the program
+     * @param user_id of child
+     * @return ArrayList of pairs of current stories, with corresponding ID that meet selection
+     */
     public static ArrayList<IdData> getChildStoryList(Context context, String user_id) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -195,6 +227,12 @@ public class ActivityHelper extends AppCompatActivity {
         return storyMap;
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @param user to select avatar from
+     * @return avatar URI as a string
+     */
     public static String getAvatarURI(Context context, String user){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -210,6 +248,12 @@ public class ActivityHelper extends AppCompatActivity {
         return avatarFile;
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @param id of story to be selected
+     * @return title of story
+     */
     public static String getTitleFromID(Context context, String id){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -225,7 +269,12 @@ public class ActivityHelper extends AppCompatActivity {
         return title;
     }
 
-
+    /**
+     *
+     * @param context current context of the program
+     * @param id of child to be selected
+     * @return child name
+     */
     public static String getChildNameFromID(Context context, String id){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -242,6 +291,12 @@ public class ActivityHelper extends AppCompatActivity {
         return name;
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @param id of adult to be selected
+     * @return adult name
+     */
     public static String getAdultNameFromID(Context context, Integer id){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -258,6 +313,12 @@ public class ActivityHelper extends AppCompatActivity {
         return name;
     }
 
+    /**
+     *
+     * @param context current context of the program
+     * @param story_id of story to be selected
+     * @return true if story is not empty, else false
+     */
     public static boolean isStoryReadable(Context context, String story_id){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();

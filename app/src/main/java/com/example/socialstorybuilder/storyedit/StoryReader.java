@@ -42,6 +42,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 
+/**
+ * Activity to display story information.
+ *
+ * @since 1.1
+ */
 public class StoryReader extends AppCompatActivity {
 
     private int pageNo;
@@ -56,6 +61,13 @@ public class StoryReader extends AppCompatActivity {
 
     private ImageButton playSoundImage;
 
+    /**
+     * Method called on activity creation.
+     * Initialises properties with information from intent, and database queries.
+     * Sets up text-to-speech and buttons on page (such as next/back)
+     *
+     * @param savedInstanceState
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,6 +212,10 @@ public class StoryReader extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method called to play loaded sound file.
+     * @param view
+     */
     public void playSound(View view){
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
@@ -216,6 +232,10 @@ public class StoryReader extends AppCompatActivity {
         }
     }
 
+    /**
+     * Activity switcher, loads same activity with incremented page number.
+     * @param view
+     */
     public void nextPage(View view){
         Intent intent = new Intent(this, StoryReader.class);
         intent.putExtra("page_no", pageNo + 1);
@@ -225,6 +245,10 @@ public class StoryReader extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Activity switcher, loads same activity with decremented page number.
+     * @param view
+     */
     public void prevPage(View view){
         Intent intent = new Intent(this, StoryReader.class);
         intent.putExtra("page_no", pageNo - 1);
@@ -234,6 +258,10 @@ public class StoryReader extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Activity switcher, displays pop-up requesting feedback. After feedback entered, writes to database (if in write mode).
+     * @param v
+     */
     public void finishStory(final View v){
         final AlertDialog.Builder feedbackDialog = new AlertDialog.Builder(StoryReader.this);
 
@@ -266,10 +294,18 @@ public class StoryReader extends AppCompatActivity {
 
     }
 
+    /**
+     * Activity switcher, ends current activity.
+     * @param view
+     */
     public void exitStory(View view){
         finish();
     }
 
+    /**
+     * Writes given feedback to the database.
+     * @param feedback
+     */
     public void recordStatistics(Integer feedback){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -283,6 +319,9 @@ public class StoryReader extends AppCompatActivity {
         db.close();
     }
 
+    /**
+     * Method to release the sound file resources on activity exit.
+     */
     @Override
     protected void onDestroy() {
         if (textToSpeech != null){

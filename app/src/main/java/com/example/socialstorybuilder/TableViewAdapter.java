@@ -12,16 +12,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * Custom adapter to display tables
+ */
 public class TableViewAdapter extends RecyclerView.Adapter {
 
     private ArrayList<ArrayList<String>> data;
-    ArrayList<String> headings;
 
+    /**
+     * Constructor
+     * @param data 2d array of initial data
+     */
     public TableViewAdapter(ArrayList<ArrayList <String>> data){
         this.data = data;
     }
 
-
+    /**
+     * Method called on creation.
+     * @param parent
+     * @param viewType
+     * @return created TableViewHolder from resource layout table_view
+     */
     @NonNull
     @Override
     public TableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,9 +40,15 @@ public class TableViewAdapter extends RecyclerView.Adapter {
         return new TableViewHolder(view);
     }
 
+    /**
+     * Method called on ViewHolder updates.
+     * @param holder to update
+     * @param position to be updated
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         TableViewHolder tableHolder = (TableViewHolder) holder;
+        // Set headings to particular style
         if (position == 0){
             tableHolder.col1.setBackgroundResource(R.drawable.table_header_cell);
             tableHolder.col2.setBackgroundResource(R.drawable.table_header_cell);
@@ -75,13 +92,18 @@ public class TableViewAdapter extends RecyclerView.Adapter {
         tableHolder.col2.setVisibility(View.GONE);
     }
 
-
-
+    /**
+     *
+     * @return size of data list
+     */
     @Override
     public int getItemCount() {
         return data.size();
     }
 
+    /**
+     * Inner ViewHolder class
+     */
     public class TableViewHolder extends RecyclerView.ViewHolder {
         TextView col1;
         TextView col2;
@@ -91,7 +113,12 @@ public class TableViewAdapter extends RecyclerView.Adapter {
         TextView col6;
         TextView col7;
         TextView col8;
-        public TableViewHolder(@NonNull View itemView) {
+
+        /**
+         * Constructor initialising fields with respective columns
+         * @param itemView
+         */
+        TableViewHolder(@NonNull View itemView) {
             super(itemView);
             col1 = itemView.findViewById(R.id.storyNameHeading);
             col2 = itemView.findViewById(R.id.nameHeading);

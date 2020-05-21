@@ -32,15 +32,26 @@ import com.example.socialstorybuilder.R;
 
 import java.io.IOException;
 
+/**
+ * Activity for creating Child accounts.
+ *
+ * @since 1.0
+ */
 public class ChildCreateActivity extends AppCompatActivity {
 
     private Uri childAvatarImage;
-
     private ImageView avatar;
+
+
+
     private EditText nameInput;
     private String childID;
     private AlertDialog.Builder hintDialog;
 
+    /**
+     * Method called on activity creation, initialises from layout resource.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +60,24 @@ public class ChildCreateActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.child_name_input);
     }
 
+    /**
+     * Method to start a new activity for users to select images.
+     *
+     * @param view
+     */
     public void selectImage(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, ActivityHelper.GALLERY_REQUEST_CODE);
     }
 
+    /**
+     * Method called when Activity result ends.
+     *
+     * @param requestCode Code passed to previous activity
+     * @param resultCode Code returned from previous activity
+     * @param data Intent returned from previous activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -72,8 +95,13 @@ public class ChildCreateActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method called on create child button.
+     * Tests if name is valid, and if so adds to database. Else displays hint.
+     * @param view
+     */
     public void createChild(View view) {
-        String name = nameInput.getText().toString();
+        String name = getNameInput();
 
         if(TextUtils.isEmpty(name)) {
             nameInput.setError("Name can't be empty");
@@ -106,14 +134,30 @@ public class ChildCreateActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Activity switcher to ChildInitial passing child name and database id.
+     * @param view
+     */
     public void switchToChildInitial(View view) {
         Intent intent = new Intent(this, ChildInitialActivity.class);
-        intent.putExtra("user", nameInput.getText().toString());
+        intent.putExtra("user", getNameInput());
         intent.putExtra("user_id", childID);
         startActivity(intent);
     }
 
+    /**
+     * Ends current activity, returning to top of stack.
+     * @param view
+     */
     public void switchToChildLogin(View view) {
         finish();
+    }
+
+    /**
+     * Getter for text in EditText nameInput
+     * @return
+     */
+    public String getNameInput() {
+        return nameInput.getText().toString();
     }
 }

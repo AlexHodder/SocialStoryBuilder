@@ -1,5 +1,8 @@
 package com.example.socialstorybuilder.adultactivity;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +18,12 @@ import com.example.socialstorybuilder.R;
 
 import java.util.ArrayList;
 
+/**
+ * Activity to display the tutorial images to the user.
+ *
+ * @since 1.2.3
+ */
+
 public class Tutorial extends AppCompatActivity {
 
     private ImageSwitcher root;
@@ -23,6 +32,11 @@ public class Tutorial extends AppCompatActivity {
     private int i;
     private TextView description;
 
+    /**
+     * Method called on activity creation, initialising image roots.
+     * Adds description for each image and sets up listeners for next/back buttons.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +87,13 @@ public class Tutorial extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method updates image and description, and buttons available.
+     * @param i current image position
+     * @param size number of images total
+     * @param resource the next resource id
+     * @param desc the next description update
+     */
     private void updateView(int i, int size, int resource, String desc){
         if (i==0){
             backButton.setVisibility(View.INVISIBLE);
@@ -96,6 +117,11 @@ public class Tutorial extends AppCompatActivity {
         description.setText(desc);
     }
 
+
+    /**
+     * Ends the activity, returning to next top in activity stack.
+     * @param view
+     */
     public void finishTutorial(View view){
         finish();
     }

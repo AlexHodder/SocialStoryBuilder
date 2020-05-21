@@ -31,6 +31,12 @@ import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
 import java.util.ArrayList;
 
+/**
+ * Activity to display the statistics of stories.
+ *
+ * @since 1.2.3
+ */
+
 public class StatisticViewer extends AppCompatActivity {
 
     private TableLayout tableLayout;
@@ -38,6 +44,11 @@ public class StatisticViewer extends AppCompatActivity {
     private TableViewAdapter adapter;
     private ArrayList<String> headings;
 
+    /**
+     * Method called on activity creation.
+     * Initialises table with all stories, loaded with all children data.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +107,10 @@ public class StatisticViewer extends AppCompatActivity {
 
     }
 
+    /**
+     * Method used to query the database, and update the table.
+     * @param childSelection the selected child's name to retrieve statistics. If 'All' returns all.
+     */
     private void query(String childSelection) {
         data.clear();
         data.add(headings);
@@ -158,6 +173,10 @@ public class StatisticViewer extends AppCompatActivity {
 
     }
 
+    /**
+     * Activity switcher, ends current activity.
+     * @param view
+     */
     public void back(View view){
         finish();
     }

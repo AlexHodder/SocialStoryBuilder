@@ -26,6 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Activity on child login, displaying stories available and avatar.
+ *
+ * @since 1.0
+ */
+
 public class ChildInitialActivity extends AppCompatActivity {
 
     private String userID;
@@ -33,6 +39,13 @@ public class ChildInitialActivity extends AppCompatActivity {
     private ListRecyclerAdapter adapter;
     private AlertDialog.Builder emptyBookWarning;
 
+    /**
+     * Method called on activity creation, initialising properties.
+     * Sets up alert for empty book readings.
+     * Sets up list of books available to child.
+     * Loads saved avatar in.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +93,10 @@ public class ChildInitialActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Activity switcher to read story, passing story_id and user_id.
+     * @param view
+     */
     public void readStory(View view){
         if (adapter.itemSelected()){
             if (ActivityHelper.isStoryReadable(getApplicationContext(), selectedStory)){
@@ -94,6 +111,10 @@ public class ChildInitialActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Activity switcher to log out user, and switch to the home initial activity.
+     * @param view
+     */
     public void logout(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

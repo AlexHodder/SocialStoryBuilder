@@ -17,12 +17,29 @@ import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.database.DatabaseHelper;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 
+/**
+ * Activity for Adult users to login to their account.
+ *
+ * @since 1.0
+ */
+
 public class AdultLoginActivity extends AppCompatActivity {
 
+
+    /**
+     * Name input field
+     * Password input field
+     * Popup for incorrect login
+     */
     private EditText nameInput;
     private EditText passwordInput;
     private AlertDialog.Builder incorrectLogin;
 
+    /**
+     * Method called on activity creation, initialises properties.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +52,15 @@ public class AdultLoginActivity extends AppCompatActivity {
         incorrectLogin.setPositiveButton(R.string.popup_close, null);
     }
 
+    /**
+     * Tests if sign in details are correct in database.
+     * If correct switches to signed in adult activity.
+     * Else displays error message.
+     * @param view
+     */
     public void signIn(View view){
-        String username = nameInput.getText().toString();
-        String password = passwordInput.getText().toString();
+        String username = getNameInput();
+        String password = getPasswordInput();
 
         if(TextUtils.isEmpty(username)) {
             nameInput.setError("Name can't be empty");
@@ -63,7 +86,7 @@ public class AdultLoginActivity extends AppCompatActivity {
             String id = cursor.getString(cursor.getColumnIndex(AdultUserEntry._ID));
             cursor.close();
             db.close();
-            switchToAdultInitial(view, id);
+            switchToAdultInitial(id);
         }
         else {
             cursor.close();
@@ -72,20 +95,48 @@ public class AdultLoginActivity extends AppCompatActivity {
         }
     }
 
-    public void switchToAdultInitial(View view, String rowID) {
+    /**
+     * Starts a new AdultInitial activity with the created user account.
+     * @param rowID
+     */
+    public void switchToAdultInitial(String rowID) {
         Intent intent = new Intent(this, AdultInitialActivity.class);
         intent.putExtra("user_id", rowID);
-        intent.putExtra("user", nameInput.getText().toString());
+        intent.putExtra("user", getNameInput());
         startActivity(intent);
     }
 
+    /**
+     * Starts a new CreateAdult activity.
+     * @param view
+     */
     public void switchToAdultCreate(View view) {
         Intent intent = new Intent(this, AdultCreateActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Ends the activity, switching to top of stack.
+     * @param view
+     */
     public void back(View view){
         finish();
+    }
+
+    /**
+     * Get text from name input field.
+     * @return name input.
+     */
+    public String getNameInput() {
+        return nameInput.getText().toString();
+    }
+
+    /**
+     * Get password from password input field.
+     * @return password input.
+     */
+    public String getPasswordInput() {
+        return passwordInput.getText().toString();
     }
 
 }

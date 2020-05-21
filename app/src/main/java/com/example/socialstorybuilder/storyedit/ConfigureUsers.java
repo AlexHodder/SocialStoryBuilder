@@ -23,6 +23,11 @@ import com.example.socialstorybuilder.database.DatabaseNameHelper;
 
 import java.util.ArrayList;
 
+/**
+ * Activity to edit readers of a story.
+ *
+ * @since 1.2.1
+ */
 public class ConfigureUsers extends AppCompatActivity {
 
     private String storyID;
@@ -39,6 +44,12 @@ public class ConfigureUsers extends AppCompatActivity {
 
     private AlertDialog.Builder cancelConfirmDialog;
 
+    /**
+     * Method called on activity creation.
+     * Initialises properties through the intent.
+     * Sets up list and adapter to select child users.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +76,12 @@ public class ConfigureUsers extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method called on button press to add a new user.
+     * Creates a pop-up window populated with children not currently able to read the story.
+     * On confirm, adds selected child to story.
+     * @param view
+     */
     public void newChild(View view){
         childPickDialog = new AlertDialog.Builder(ConfigureUsers.this);
         LayoutInflater childInflater = getLayoutInflater();
@@ -105,6 +122,12 @@ public class ConfigureUsers extends AppCompatActivity {
         childPickDialog.setNegativeButton(R.string.cancel, null);
         childPickDialog.show();
     }
+
+    /**
+     * Method called on button press.
+     * Removes selected child from story.
+     * @param view
+     */
     public void removeChild(View view){
         if (childListAdapter.itemSelected()){
             childList.remove(selectedChild);
@@ -114,11 +137,15 @@ public class ConfigureUsers extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to update database with user changes.
+     */
     public void flushDynamicUserChanges(){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ArrayList<IdData> currentUserMapDB = ActivityHelper.getUserList(getApplication(), storyID);
+        // Loop deletes all children from the database not in current list that were originally able to read story.
         for (IdData idData : currentUserMapDB) {
             if (!childList.contains(idData)) {
                 String selectionChild = DatabaseNameHelper.UserStoryEntry.COLUMN_STORY_ID + " = ? AND " + DatabaseNameHelper.UserStoryEntry.COLUMN_USER_ID + " = ?";
@@ -126,6 +153,7 @@ public class ConfigureUsers extends AppCompatActivity {
                 db.delete(DatabaseNameHelper.UserStoryEntry.TABLE_NAME, selectionChild, args);
             }
         }
+        // Loop adds children to the database, who originally were not present.
         for (IdData idData : childList) {
             if (!currentUserMapDB.contains(idData)) {
                 ContentValues values = new ContentValues();
@@ -137,11 +165,20 @@ public class ConfigureUsers extends AppCompatActivity {
         db.close();
     }
 
+    /**
+     * Activity switcher, ends current activity after flushing changes to the database.
+     * @param view
+     */
     public void confirm(View view){
         flushDynamicUserChanges();
         finish();
     }
 
+    /**
+     * Activity switcher, cancelling changes.
+     * Creates a pop-up asking if user is sure they want to cancel, and ends current activity if confirmed.
+     * @param view
+     */
     public void cancel(View view){
         cancelConfirmDialog = new AlertDialog.Builder(ConfigureUsers.this);
         cancelConfirmDialog.setTitle(R.string.cancel);

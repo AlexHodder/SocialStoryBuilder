@@ -9,15 +9,26 @@ import android.provider.ContactsContract;
 import com.example.socialstorybuilder.database.DatabaseNameHelper.*;
 import androidx.annotation.Nullable;
 
+
+/**
+ * Helper class to access the database.
+ *
+ * @since 1.0
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "storynarrative.db";
     private static final int DATABASE_VERSION = 1;
 
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Method called when no database with constant field DATABASE_NAME exists.
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_STORY_TABLE = "CREATE TABLE IF NOT EXISTS " +
@@ -93,10 +104,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Method called when database version is updated.
+     * This method contains any updates to the database that occur after official release.
+     *
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
+    /**
+     * Method called every time the database is accessed, method ensures foreign keys are active.
+     *
+     * @param db
+     */
     @Override
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);

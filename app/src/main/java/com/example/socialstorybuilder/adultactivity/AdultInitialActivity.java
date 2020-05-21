@@ -13,10 +13,25 @@ import com.example.socialstorybuilder.MainActivity;
 import com.example.socialstorybuilder.R;
 import com.example.socialstorybuilder.storyedit.ConfigureStory;
 
+/**
+ * Activity for signed in adults.
+ * This activity displays the adult initial layout.
+ *
+ * @since 1.0
+ */
 public class AdultInitialActivity extends AppCompatActivity {
 
+    /**
+     * A string to store the users ID
+     */
     private String userID;
 
+    /**
+     * Method called on activity creation and initialising the properties
+     * Set listeners on required buttons.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,26 +56,50 @@ public class AdultInitialActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Activity switcher to story page activity, with user ID passed.
+     * @param view
+     */
     public void switchToStoryPageActivity(View view){
         Intent intent = new Intent(this, AdultStoryPageActivity.class);
-        intent.putExtra("user_id", userID);
+        intent.putExtra("user_id", getUserID());
         startActivity(intent);
     }
 
+    /**
+     * Activity switcher to tutorial.
+     * @param view
+     */
     public void switchToTutorial(View view){
         Intent intent = new Intent(this, Tutorial.class);
         startActivity(intent);
     }
 
+    /**
+     * Activity switcher to create a new story, with user ID passed.
+     * @param view
+     */
     public void switchToCreate(View view){
         Intent intent = new Intent(this, ConfigureStory.class);
-        intent.putExtra("user_id", userID);
+        intent.putExtra("user_id", getUserID());
         startActivity(intent);
     }
 
+    /**
+     * Activity switcher to log out user, and switch to the home initial activity.
+     * @param view
+     */
     public void logout(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * Getter method for userID
+     * @return userID string.
+     */
+    public String getUserID() {
+        return userID;
     }
 }

@@ -30,6 +30,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Activity to edit current story features.
+ *
+ * @since 1.0
+ */
 public class ConfigureStory extends AppCompatActivity {
 
     private String title;
@@ -46,8 +51,11 @@ public class ConfigureStory extends AppCompatActivity {
     private AlertDialog.Builder colorPickerDialog;
     private AlertDialog.Builder cancelConfirmDialog;
 
-
-
+    /**
+     * Method called on activity creation.
+     * Initialises properties using intent, and calls to the database to retrieve story information.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +119,10 @@ public class ConfigureStory extends AppCompatActivity {
         super.onResume();
     }
 
+    /**
+     * Method called via button press.
+     * Creates a pop-up, with a list of colours that can be selected for the story.
+     */
     public void colorPicker(){
         colorPickerDialog = new AlertDialog.Builder(ConfigureStory.this);
         LayoutInflater childInflater = getLayoutInflater();
@@ -147,30 +159,44 @@ public class ConfigureStory extends AppCompatActivity {
         colorPickerDialog.show();
     }
 
+    /**
+     * Activity switcher to ConfigureUsers, passing current story ID.
+     * @param view
+     */
     public void switchToConfigureUsers(View view){
         Intent intent = new Intent(this, ConfigureUsers.class);
         intent.putExtra("story_id", storyID);
         startActivity(intent);
     }
 
+    /**
+     * Activity switcher to ConfigurePages, passing current story ID.
+     * @param view
+     */
     public void switchToConfigurePages(View view){
         Intent intent = new Intent(this, ConfigurePages.class);
         intent.putExtra("story_id", storyID);
         startActivity(intent);
     }
 
+    /**
+     * Method to update database, with current title and background colour.
+     */
     public void flushDynamicChanges(){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(StoryEntry.COLUMN_TITLE, storyTitle.getText().toString());
-        values.put(StoryEntry.COLUMN_DATE, "01-01-2020");
         values.put(StoryEntry.BACKGROUND_COLOR, backgroundColour);
         String[] args = {storyID};
         db.update(StoryEntry.TABLE_NAME, values, "_id = ?", args);
         db.close();
     }
 
+    /**
+     * Activity switcher to StoryReader, passing the story ID.
+     * @param view
+     */
     public void preview(View view){
         flushDynamicChanges();
         Intent intent = new Intent(this, StoryReader.class);
@@ -178,6 +204,11 @@ public class ConfigureStory extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Activity switcher, cancelling changes.
+     * Creates a pop-up asking if user is sure they want to cancel, and ends current activity if confirmed.
+     * @param view
+     */
     public void cancel(View view){
         cancelConfirmDialog = new AlertDialog.Builder(ConfigureStory.this);
         cancelConfirmDialog.setTitle(R.string.cancel);
@@ -192,15 +223,27 @@ public class ConfigureStory extends AppCompatActivity {
         cancelConfirmDialog.show();
     }
 
+    /**
+     * Activity switcher, ends current activity and flushes changes to the database.
+     * @param view
+     */
     public void confirm(View view){
         flushDynamicChanges();
         finish();
     }
 
+    /**
+     *
+     * @return current background colour
+     */
     public String getBackgroundDBColour() {
         return backgroundColour;
     }
 
+    /**
+     * Sets background colour and changes the colour of the background button.
+     * @param backgroundColour background colour to set
+     */
     public void setBackgroundColour(String backgroundColour) {
         this.backgroundColour = backgroundColour;
         this.backgroundColourButton.setBackgroundColor(Color.parseColor(backgroundColour));

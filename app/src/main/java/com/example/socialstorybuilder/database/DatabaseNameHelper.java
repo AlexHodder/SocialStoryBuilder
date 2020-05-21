@@ -3,7 +3,11 @@ package com.example.socialstorybuilder.database;
 
 import android.provider.BaseColumns;
 
-
+/**
+ * Helper Class to store database table and column names
+ *
+ * @since 1.0
+ */
 
 public class DatabaseNameHelper {
 

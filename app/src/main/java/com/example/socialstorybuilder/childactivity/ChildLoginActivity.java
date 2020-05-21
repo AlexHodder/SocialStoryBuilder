@@ -15,6 +15,11 @@ import com.example.socialstorybuilder.R;
 
 import java.util.ArrayList;
 
+/**
+ * Activity to allow Child login, shows a list of child accounts.
+ *
+ * @since 1.0
+ */
 public class ChildLoginActivity extends AppCompatActivity {
 
     // Defining string adapter to handle ListView data
@@ -27,6 +32,10 @@ public class ChildLoginActivity extends AppCompatActivity {
 
     private ArrayList<IdData> childMap;
 
+    /**
+     * Method called on activity creation, displaying Child list.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +58,10 @@ public class ChildLoginActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Activity switcher to initial child login passing child's name and id if child selected.
+     * @param view
+     */
     public void toChildInitial(View view){
         if (adapter.isItemChecked(selectedItem)) {
             Intent intent = new Intent(this, ChildInitialActivity.class);
@@ -62,11 +74,19 @@ public class ChildLoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Activity switcher to create a new child.
+     * @param view
+     */
     public void toChildCreate(View view){
         Intent intent = new Intent(this, ChildCreateActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Ends activity, switching to top of stack.
+     * @param view
+     */
     public void back(View view){
         finish();
     }

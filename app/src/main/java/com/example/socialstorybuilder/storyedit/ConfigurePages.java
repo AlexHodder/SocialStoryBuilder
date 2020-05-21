@@ -22,6 +22,12 @@ import com.example.socialstorybuilder.database.DatabaseNameHelper;
 
 import java.util.ArrayList;
 
+/**
+ * Activity to allow an individual page to be chosen for configuration.
+ *
+ * @since 1.2.1
+ */
+
 public class ConfigurePages extends AppCompatActivity {
 
     private String storyID;
@@ -34,6 +40,12 @@ public class ConfigurePages extends AppCompatActivity {
     private DecoratedRecyclerView pageView;
     private AlertDialog.Builder cancelConfirmDialog;
 
+    /**
+     * Method called on activity creation.
+     * Initialises properties through loading intent files.
+     * Initialises adapters to store the currently selected page.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +72,12 @@ public class ConfigurePages extends AppCompatActivity {
         });
     }
 
+    /**
+     * Activity switcher called on button press.
+     * Initialises a new page in the database, and then switches to PageEditor activity with reference to created page id.
+     * Also updates page list, therefore when activity resumed the page list accurately reflects pages.
+     * @param view
+     */
     public void newPage(View view){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -81,6 +99,11 @@ public class ConfigurePages extends AppCompatActivity {
         pageHashAdapter.itemAdded(insertIndex, data);
     }
 
+    /**
+     * Activity switcher called on button press.
+     * Switches to PageEditor with reference to selected page id.
+     * @param view
+     */
     public void editPage(View view){
         if (pageHashAdapter.itemSelected()) {
             Intent intent = new Intent(this, PageEditor.class);
@@ -92,6 +115,11 @@ public class ConfigurePages extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to delete currently selected page, if a page is selected.
+     * Method updates page list to accurately reflect current pages in story.
+     * @param view
+     */
     public void removePage(View view){
         if (pageHashAdapter.itemSelected()){
 
@@ -113,11 +141,20 @@ public class ConfigurePages extends AppCompatActivity {
         }
     }
 
+    /**
+     * Activity switcher, ends the current activity after flushing the changes made to the story.
+     * @param view
+     */
     public void confirm(View view){
         flushDynamicPageChanges();
         finish();
     }
 
+    /**
+     * Activity switcher, cancelling changes.
+     * Creates a pop-up asking if user is sure they want to cancel, and ends current activity if confirmed.
+     * @param view
+     */
     public void cancel(View view){
         cancelConfirmDialog = new AlertDialog.Builder(ConfigurePages.this);
         cancelConfirmDialog.setTitle(R.string.cancel);
@@ -132,10 +169,14 @@ public class ConfigurePages extends AppCompatActivity {
         cancelConfirmDialog.show();
     }
 
+    /**
+     * Method to write changes to the database.
+     */
     public void flushDynamicPageChanges(){
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        // Loops through current pages to update the database with new page numbers.
         for (IdData data : pageNumberList){
             String id = data.getId();
             ContentValues values = new ContentValues();
@@ -147,8 +188,10 @@ public class ConfigurePages extends AppCompatActivity {
             db.update(DatabaseNameHelper.PageEntry.TABLE_NAME, values, "_id = ?", args);
         }
 
+
         StringBuilder inQuery = new StringBuilder();
 
+        // Builds a string containing each page ID. Removes any page that is no longer in the database.
         inQuery.append("(");
         boolean first = true;
         for (IdData data : pageNumberList) {
