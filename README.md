@@ -4,4 +4,4 @@
 
 # The latest release is 1.3.1 and can be found [here](https://github.com/AlexHodder/SocialStoryBuilder/blob/master/app/release/app-release-1-3-1.apk).
 
-# The project report can be found <u>[here](https://github.com/AlexHodder/SocialStoryBuilder/blob/master/FinalReport.pdf)</u>.
+# The project report can be found [here](https://github.com/AlexHodder/SocialStoryBuilder/blob/master/FinalReport.pdf).
